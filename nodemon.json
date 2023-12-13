@@ -1,0 +1,7 @@
+{
+	"$schema": "./.vscode/nodemonSchema.json",
+	"watch": ["src", "prisma/seed.ts"],
+	"ext": "ts",
+	"exec": "tsc && node build/src",
+	"ignore": ["src/views/*"]
+}

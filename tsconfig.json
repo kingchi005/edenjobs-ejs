@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		"target": "es6",
+		"module": "commonjs",
+		"outDir": "./build",
+		"sourceMap": true,
+		"esModuleInterop": true,
+		"strict": true,
+		"moduleResolution": "node",
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"declaration": false,
+		"removeComments": true,
+		"allowJs": true,
+		"resolveJsonModule": true
+	},
+	"include": [
+		"src/**/*",
+		"prisma/seed.ts" /*  "prisma/index.ts", "prisma/seed.ts", "index.ts" */
+	]
+}

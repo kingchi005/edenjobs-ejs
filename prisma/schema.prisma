@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String     @unique @default(cuid())
+  username          String     @unique
+  email             String     @unique
+  first_name        String
+  last_name         String
+  password          String
+  is_applicant      Boolean?   @default(true)
+  applicant_details Applicant? @relation(fields: [applicant_id], references: [id])
+  applicant_id      String?    @unique
+  employer_details  Employer?  @relation(fields: [employer_id], references: [id])
+  employer_id       String?    @unique
+  created_at        DateTime   @default(now())
+  updated_at        DateTime   @updatedAt
+}
+
+model Applicant {
+  id                  String        @unique @default(cuid())
+  user                User?
+  avatar              String
+  job_field           String
+  skill_set           String
+  cv_resume_url       String
+  years_of_experience Int
+  skill_level         String
+  preferred_job_type  String
+  work_schedule       String
+  job_stability       String
+  location_type       String
+  location            String
+  applications        Application[]
+  created_at          DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+}
+
+model Employer {
+  id                  String   @unique @default(cuid())
+  user                User?
+  company_name        String   @unique
+  company_email       String
+  company_description String
+  company_logo        String
+  company_website     String
+  company_size        String
+  industry            String
+  location            String
+  culture             String
+  jobs                Job[]
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+}
+
+model Job {
+  id                        String        @unique @default(cuid())
+  title                     String
+  employment_type           String
+  description               String
+  is_remote                 Boolean
+  city_location             String
+  state_location            String
+  benefits                  String
+  expires_at                DateTime
+  required_experience_years Int
+  required_skills           String
+  min_salary                Int
+  max_salary                Int
+  salary_period             String
+  responsibilities          String
+  category                  JobCategory   @relation(fields: [category_id], references: [id])
+  category_id               Int
+  publisher                 Employer      @relation(fields: [publisher_id], references: [id])
+  publisher_id              String
+  applications              Application[]
+  published_at              DateTime      @default(now())
+  created_at                DateTime      @default(now())
+  updated_at                DateTime      @updatedAt
+}
+
+model JobCategory {
+  id         Int      @id @default(autoincrement())
+  name       String   @unique
+  jobs       Job[]
+  created_at DateTime @default(now())
+}
+
+model Application {
+  id           Int       @id @default(autoincrement())
+  content      String
+  job          Job       @relation(fields: [job_id], references: [id])
+  job_id       String
+  applicant    Applicant @relation(fields: [applicant_id], references: [id])
+  applicant_id String
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+}

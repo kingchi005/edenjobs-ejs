@@ -1,0 +1,299 @@
+<%- include('./partials/head.ejs') %>
+<!--  -->
+<% if (job) { %>
+<main>
+	<div>
+		<div
+			class="top-0 left-0 mx-auto flex max-w-[1500px] flex-col items-start justify-between gap-10 xl:flex-row"
+		>
+			<div class="lg:flex-1">
+				<div class="border bg-white p-12 shadow-lg">
+					<div
+						class="flex flex-col justify-start gap-10 rounded-md transition duration-200 md:flex-row md:justify-between md:gap-0"
+					>
+						<div class="flex h-fit items-center gap-6">
+							<div>
+								<img
+									alt="SalesPlat Recruitment logo"
+									src="<%= job. %>"
+									width="60"
+									height="60"
+									decoding="async"
+									data-nimg="1"
+									loading="lazy"
+									style="color: transparent"
+								/>
+							</div>
+							<div>
+								<div class="flex items-start justify-between">
+									<div>
+										<h2 class="text-left text-sm font-bold sm:text-base">
+											Chief Technology Officer
+										</h2>
+										<p
+											class="flex items-center text-left text-xs text-gray-400 sm:text-sm"
+										>
+											<button type="button" class="hover:underline">
+												SalesPlat Recruitment</button
+											><svg
+												stroke="currentColor"
+												fill="currentColor"
+												stroke-width="0"
+												viewBox="0 0 16 16"
+												class="text-left text-lg text-gray-400"
+												height="1em"
+												width="1em"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
+												></path></svg
+											>Ondo, Akure
+										</p>
+									</div>
+									<div></div>
+								</div>
+								<div
+									class="items mt-2 flex flex-wrap items-center gap-1 whitespace-nowrap text-[10px]"
+								>
+									<span class="text-xs text-gray-400">Posted 9 days ago</span>
+									<div class="text-base text-gray-400">
+										<svg
+											stroke="currentColor"
+											fill="currentColor"
+											stroke-width="0"
+											viewBox="0 0 16 16"
+											height="1em"
+											width="1em"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
+											></path>
+										</svg>
+									</div>
+									<span class="text-xs text-[#EB5757]"
+										><p>Closing in 20 days</p></span
+									>
+									<div class="text-base text-gray-400">
+										<svg
+											stroke="currentColor"
+											fill="currentColor"
+											stroke-width="0"
+											viewBox="0 0 16 16"
+											height="1em"
+											width="1em"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
+											></path>
+										</svg>
+									</div>
+									<span class="text-xs text-gray-400">1 Opening</span>
+									<div class="text-xs text-gray-400">
+										<svg
+											stroke="currentColor"
+											fill="currentColor"
+											stroke-width="0"
+											viewBox="0 0 16 16"
+											height="1em"
+											width="1em"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
+											></path>
+										</svg>
+									</div>
+									<span class="text-blue-400">1 Applicant</span>
+								</div>
+							</div>
+						</div>
+						<div class="flex flex-col items-start justify-between">
+							<div class="flex items-center justify-between space-x-2">
+								<button
+									type="button"
+									class="flex items-center gap-1 rounded-lg bg-[#16BF44] py-1 px-2 text-sm text-white"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="18"
+										height="18"
+										viewBox="0 0 24 24"
+										fill="none"
+									>
+										<path
+											d="M16.96 6.17c2 1.39 3.38 3.6 3.66 6.15M3.49 12.37a8.601 8.601 0 0 1 3.6-6.15M8.19 20.94c1.16.59 2.48.92 3.87.92 1.34 0 2.6-.3 3.73-.85M12.06 7.7a2.78 2.78 0 1 0 0-5.56 2.78 2.78 0 0 0 0 5.56ZM4.83 19.92a2.78 2.78 0 1 0 0-5.56 2.78 2.78 0 0 0 0 5.56ZM19.17 19.92a2.78 2.78 0 1 0 0-5.56 2.78 2.78 0 0 0 0 5.56Z"
+											stroke="#ffff"
+											stroke-width="1.5"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										></path></svg
+									>Share</button
+								><button
+									type="button"
+									class="flex items-center gap-1 rounded-lg border border-[#FF8A65] py-1 px-2 text-sm text-[#FF8A65]"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="18"
+										height="18"
+										viewBox="0 0 24 24"
+										fill="none"
+									>
+										<path
+											d="m16.52 5.65-3.1-2.4c-.4-.4-1.3-.6-1.9-.6h-3.8c-1.2 0-2.5.9-2.8 2.1l-2.4 7.3c-.5 1.4.4 2.6 1.9 2.6h4c.6 0 1.1.5 1 1.2l-.5 3.2c-.2.9.4 1.9 1.3 2.2.8.3 1.8-.1 2.2-.7l4.1-6.1"
+											stroke="#FF8A65"
+											stroke-width="1.5"
+											stroke-miterlimit="10"
+										></path>
+										<path
+											d="M21.62 5.65v9.8c0 1.4-.6 1.9-2 1.9h-1c-1.4 0-2-.5-2-1.9v-9.8c0-1.4.6-1.9 2-1.9h1c1.4 0 2 .5 2 1.9Z"
+											stroke="#FF8A65"
+											stroke-width="1.5"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										></path></svg
+									>Report
+								</button>
+							</div>
+						</div>
+					</div>
+					<div
+						class="mt-10 grid gap-4 rounded-lg border border-[#E6E5E5] py-6 px-4 md:grid-cols-3 md:flex-row"
+					>
+						<div class="border-r border-[#E6E5E5] px-2">
+							<p class="whitespace-nowrap text-xs">Job Location</p>
+							<p
+								class="mt-1 cursor-pointer truncate whitespace-nowrap text-sm font-medium"
+								aria-label="Lagos"
+							>
+								Lagos
+							</p>
+							<hr class="my-2" />
+							<p class="whitespace-nowrap text-xs">Minimum Qualification</p>
+							<p class="mt-1 whitespace-nowrap text-sm font-medium">
+								Bachelor's Degree
+							</p>
+						</div>
+						<div class="border-r border-[#E6E5E5] px-2">
+							<p class="whitespace-nowrap text-xs">Experience Level</p>
+							<p
+								class="mt-1 whitespace-nowrap text-sm font-medium line-clamp-1"
+							>
+								Management Level (10 - 15 years)
+							</p>
+							<hr class="my-2" />
+							<p class="whitespace-nowrap text-xs">Experience Length</p>
+							<p class="mt-1 whitespace-nowrap text-sm font-medium">10 years</p>
+						</div>
+						<div class="px-2">
+							<p class="whitespace-nowrap text-xs">Employment Type</p>
+							<p class="mt-1 whitespace-nowrap text-sm font-medium capitalize">
+								Full time (onsite)
+							</p>
+							<hr class="my-2" />
+							<p class="whitespace-nowrap text-xs">Salary</p>
+							<p
+								class="mt-1 whitespace-nowrap text-sm font-medium line-clamp-1"
+							>
+								₦800,000<span> - ₦800,000 </span> / <span>month</span>
+							</p>
+						</div>
+					</div>
+					<div class="mt-5 border-b p-2 text-sm font-light">
+						<h5 class="text-[16px] font-normal">Job Summary</h5>
+						<p class="mb-4 mt-2 leading-6">
+							Oversee data security, management, and governance. Manage
+							strategic vendor and technology partner relationships. Manage IT
+							resource allocation, goal/KPI setting, and performance metrics.
+							Define the company's overall technology strategy to support
+							business objectives.
+						</p>
+					</div>
+					<h5 class="pt-6 text-[16px] font-normal">
+						Job Description/Requirements
+					</h5>
+					<div class="job-description mt-2 text-base">
+						<p><strong>Responsibilities:</strong></p>
+						<ul>
+							<li>
+								Lead the development and management of the company's technology,
+								including core banking and APIs.
+							</li>
+							<li>
+								Ensure a resilient digital infrastructure using scalable cloud
+								technology.
+							</li>
+							<li>
+								Drive innovation, evaluate new technologies, and enhance
+								customer experience.
+							</li>
+							<li>
+								Provide leadership in technology, automation, and policy
+								communication.
+							</li>
+							<li>
+								Strategically plan and implement technology investments to meet
+								company goals.
+							</li>
+						</ul>
+						<p></p>
+						<p><strong>Relevant Qualifications:</strong></p>
+						<ul>
+							<li>
+								B. Eng. / B. Sc, MSc / MBA in Computer-related fields, project
+								management certifications, and MCP.
+							</li>
+							<li>
+								Extensive experience leading banking technology solutions and
+								system integration.
+							</li>
+							<li>
+								Background in FINTECH or digital Microfinance as a CTO/CIO or in
+								top levels of a commercial bank's tech department.
+							</li>
+							<li>
+								Digital business leader with strong end-user focus and
+								cybersecurity expertise.
+							</li>
+							<li>
+								Proficient in managing IT infrastructure, networks, and end-user
+								computing.
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="rounded-lg bg-white shadow-lg">
+				<div
+					class="flex w-full items-center justify-center py-16 text-center text-sm lg:w-[400px] lg:py-0"
+				>
+					<div class="text-center mb-10">
+						<% if (!user) { %>
+
+						<p class="mt-7 mb-2 text-center font-light text-gray-400">
+							You have to be logged in to apply for this job.
+						</p>
+						<div class="mx-auto">
+							<button
+								class="inline-block rounded border-1 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-primary-600 focus:border-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
+								data-te-ripple-init
+							>
+								<span class="mx-2"
+									><a href="/login">Apply for this Job</a></span
+								>
+							</button>
+						</div>
+						<% } %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+
+<% } %>
+<!--  -->
+<%- include('./partials/footer.ejs') %>
