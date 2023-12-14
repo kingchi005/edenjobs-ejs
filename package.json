@@ -5,6 +5,8 @@
 	"main": "app.ts",
 	"scripts": {
 		"test": "ts-node src/test",
+		"start": "node build/src",
+		"dev": "tsc && node build/src",
 		"css": "tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
 		"db:seed": "ts-node prisma/seed",
 		"db:sync": "prisma db push",
