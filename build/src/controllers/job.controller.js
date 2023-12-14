@@ -37,7 +37,14 @@ const getJobs = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.getJobs = getJobs;
 const getJobDetail = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const job = yield prisma_1.default.job.findFirst({ where: { id: req.params.id } });
+    const job = yield prisma_1.default.job.findFirst({
+        where: { id: req.params.id },
+        include: {
+            _count: { select: { applications: true } },
+            publisher: true,
+            category: true,
+        },
+    });
     res.locals.job = job;
     next();
 });

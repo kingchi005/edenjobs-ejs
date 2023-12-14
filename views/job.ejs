@@ -1,6 +1,11 @@
 <%- include('./partials/head.ejs') %>
 <!--  -->
 <% if (job) { %>
+<link href="/quill/dist/quill.snow.css" rel="stylesheet" />
+
+<!-- Create the editor container -->
+
+<!-- Include the Quill library -->
 <main>
 	<div>
 		<div
@@ -15,7 +20,7 @@
 							<div>
 								<img
 									alt="SalesPlat Recruitment logo"
-									src="<%= job. %>"
+									src="<%= job.publisher.company_logo %>"
 									width="60"
 									height="60"
 									decoding="async"
@@ -28,14 +33,15 @@
 								<div class="flex items-start justify-between">
 									<div>
 										<h2 class="text-left text-sm font-bold sm:text-base">
-											Chief Technology Officer
+											<%= job.title %>
 										</h2>
 										<p
 											class="flex items-center text-left text-xs text-gray-400 sm:text-sm"
 										>
 											<button type="button" class="hover:underline">
-												SalesPlat Recruitment</button
-											><svg
+												<%= job.publisher.company_name %></button
+											>
+                      <svg
 												stroke="currentColor"
 												fill="currentColor"
 												stroke-width="0"
@@ -47,8 +53,25 @@
 											>
 												<path
 													d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
-												></path></svg
-											>Ondo, Akure
+												></path>
+											</svg>
+											<%= job.publisher.company_location_city %> 		
+                      <svg
+												stroke="currentColor"
+												fill="currentColor"
+												stroke-width="0"
+												viewBox="0 0 16 16"
+												class="text-left text-lg text-gray-400"
+												height="1em"
+												width="1em"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
+												></path>
+											</svg>
+                    <%= job.publisher.company_location_state %>
+
 										</p>
 									</div>
 									<div></div>
@@ -56,7 +79,9 @@
 								<div
 									class="items mt-2 flex flex-wrap items-center gap-1 whitespace-nowrap text-[10px]"
 								>
-									<span class="text-xs text-gray-400">Posted 9 days ago</span>
+									<span class="text-xs text-gray-400"
+										>Posted <%= helper.formatDate(job.published_at) %>
+									</span>
 									<div class="text-base text-gray-400">
 										<svg
 											stroke="currentColor"
@@ -73,7 +98,12 @@
 										</svg>
 									</div>
 									<span class="text-xs text-[#EB5757]"
-										><p>Closing in 20 days</p></span
+										><p>
+											<% const _time =
+											helper.formatDate(job.expires_at).replace("ago","") %>
+											<!--  -->
+											<%= _time==="just now"?"Closed": "Closing in "+_time %>
+										</p></span
 									>
 									<div class="text-base text-gray-400">
 										<svg
@@ -106,7 +136,9 @@
 											></path>
 										</svg>
 									</div>
-									<span class="text-blue-400">1 Applicant</span>
+									<span class="text-blue-400">
+										<%= job._count.applications %> Applicant</span
+									>
 								</div>
 							</div>
 						</div>
@@ -129,8 +161,9 @@
 											stroke-width="1.5"
 											stroke-linecap="round"
 											stroke-linejoin="round"
-										></path></svg
-									>Share</button
+										></path>
+									</svg>
+									Share</button
 								><button
 									type="button"
 									class="flex items-center gap-1 rounded-lg border border-[#FF8A65] py-1 px-2 text-sm text-[#FF8A65]"
@@ -154,8 +187,9 @@
 											stroke-width="1.5"
 											stroke-linecap="round"
 											stroke-linejoin="round"
-										></path></svg
-									>Report
+										></path>
+									</svg>
+									Report
 								</button>
 							</div>
 						</div>
@@ -169,7 +203,7 @@
 								class="mt-1 cursor-pointer truncate whitespace-nowrap text-sm font-medium"
 								aria-label="Lagos"
 							>
-								Lagos
+								<%= job.city_location %> 
 							</p>
 							<hr class="my-2" />
 							<p class="whitespace-nowrap text-xs">Minimum Qualification</p>
@@ -180,90 +214,40 @@
 						<div class="border-r border-[#E6E5E5] px-2">
 							<p class="whitespace-nowrap text-xs">Experience Level</p>
 							<p
-								class="mt-1 whitespace-nowrap text-sm font-medium line-clamp-1"
+								class="mt-1 whitespace-nowrap text-sm font-medium line-clamp-1 capitalize"
 							>
-								Management Level (10 - 15 years)
+								<%= job.experience_level %>
 							</p>
 							<hr class="my-2" />
 							<p class="whitespace-nowrap text-xs">Experience Length</p>
-							<p class="mt-1 whitespace-nowrap text-sm font-medium">10 years</p>
+							<p class="mt-1 whitespace-nowrap text-sm font-medium">
+								<%= job.required_experience_years %> years
+							</p>
 						</div>
 						<div class="px-2">
 							<p class="whitespace-nowrap text-xs">Employment Type</p>
 							<p class="mt-1 whitespace-nowrap text-sm font-medium capitalize">
-								Full time (onsite)
+								<%= job.employment_type %> (<%=
+								job.is_remote?"Remote":"Onsite"%>)
 							</p>
 							<hr class="my-2" />
 							<p class="whitespace-nowrap text-xs">Salary</p>
 							<p
 								class="mt-1 whitespace-nowrap text-sm font-medium line-clamp-1"
 							>
-								₦800,000<span> - ₦800,000 </span> / <span>month</span>
+								₦<%= job.min_salary %>
+								<span> - ₦<%= job.max_salary %> </span>
+								<span> (<%= job.salary_period %>) </span>
 							</p>
 						</div>
 					</div>
 					<div class="mt-5 border-b p-2 text-sm font-light">
 						<h5 class="text-[16px] font-normal">Job Summary</h5>
-						<p class="mb-4 mt-2 leading-6">
-							Oversee data security, management, and governance. Manage
-							strategic vendor and technology partner relationships. Manage IT
-							resource allocation, goal/KPI setting, and performance metrics.
-							Define the company's overall technology strategy to support
-							business objectives.
-						</p>
+						<p class="mb-4 mt-2 leading-6"><%= job.summary %></p>
 					</div>
-					<h5 class="pt-6 text-[16px] font-normal">
-						Job Description/Requirements
-					</h5>
-					<div class="job-description mt-2 text-base">
-						<p><strong>Responsibilities:</strong></p>
-						<ul>
-							<li>
-								Lead the development and management of the company's technology,
-								including core banking and APIs.
-							</li>
-							<li>
-								Ensure a resilient digital infrastructure using scalable cloud
-								technology.
-							</li>
-							<li>
-								Drive innovation, evaluate new technologies, and enhance
-								customer experience.
-							</li>
-							<li>
-								Provide leadership in technology, automation, and policy
-								communication.
-							</li>
-							<li>
-								Strategically plan and implement technology investments to meet
-								company goals.
-							</li>
-						</ul>
-						<p></p>
-						<p><strong>Relevant Qualifications:</strong></p>
-						<ul>
-							<li>
-								B. Eng. / B. Sc, MSc / MBA in Computer-related fields, project
-								management certifications, and MCP.
-							</li>
-							<li>
-								Extensive experience leading banking technology solutions and
-								system integration.
-							</li>
-							<li>
-								Background in FINTECH or digital Microfinance as a CTO/CIO or in
-								top levels of a commercial bank's tech department.
-							</li>
-							<li>
-								Digital business leader with strong end-user focus and
-								cybersecurity expertise.
-							</li>
-							<li>
-								Proficient in managing IT infrastructure, networks, and end-user
-								computing.
-							</li>
-						</ul>
-					</div>
+					<h5 class="pt-6 text-[18px]">Job Description/Requirements</h5>
+					<div class="job-description text-base">
+						<%- job.description_and_requirement %>
 				</div>
 			</div>
 			<div class="rounded-lg bg-white shadow-lg">
@@ -271,8 +255,22 @@
 					class="flex w-full items-center justify-center py-16 text-center text-sm lg:w-[400px] lg:py-0"
 				>
 					<div class="text-center mb-10">
-						<% if (!user) { %>
+						<% if (user) { %>
+						<div class="mx-auto">
+							<button
+								type="button"
+								class="inline-block rounded border-1 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-primary-600 focus:border-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
+								data-te-ripple-init
+								data-te-toggle="modal"
+								data-te-target="#staticBackdrop"
+								data-te-ripple-init
+								data-te-ripple-color="light"
+							>
+								Apply for this Job
+							</button>
+						</div>
 
+						<% }else{ %>
 						<p class="mt-7 mb-2 text-center font-light text-gray-400">
 							You have to be logged in to apply for this job.
 						</p>
@@ -294,6 +292,119 @@
 	</div>
 </main>
 
+<!-- Modal -->
+<div
+	data-te-modal-init
+	class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+	id="staticBackdrop"
+	data-te-backdrop="static"
+	data-te-keyboard="false"
+	tabindex="-1"
+	aria-labelledby="staticBackdropLabel"
+	aria-hidden="true"
+>
+	<div
+		data-te-modal-dialog-ref
+		class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]"
+	>
+		<div
+			class="min-[576px]:shadow-[0_0.5rem_1rem_rgba(#000, 0.15)] pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600"
+		>
+			<div
+				class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50"
+			>
+				<!--Modal title-->
+				<h5
+					class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+					id="staticBackdropLabel"
+				>
+					Applying for <strong> <%= job.title %> </strong>
+				</h5>
+				<!--Close button-->
+				<button
+					type="button"
+					class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+					data-te-modal-dismiss
+					aria-label="Close"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="h-6 w-6"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M6 18L18 6M6 6l12 12"
+						/>
+					</svg>
+				</button>
+			</div>
+
+			<!--Modal body-->
+			<div data-te-modal-body-ref class="relative p-4">
+				<form>
+					<div id="editor">
+						<p><br /></p>
+					</div>
+				</form>
+			</div>
+
+			<!--Modal footer-->
+			<div
+				class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50"
+			>
+				<button
+					type="button"
+					class="inline-block rounded bg-danger-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-danger-700 transition duration-150 ease-in-out hover:bg-danger-accent-100 focus:bg-danger-accent-100 focus:outline-none focus:ring-0 active:bg-danger-accent-200"
+					data-te-modal-dismiss
+					data-te-ripple-init
+					data-te-ripple-color="light"
+				>
+					Cancel
+				</button>
+				<button
+					id="submit"
+					type="button"
+					class="ml-1 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+					data-te-ripple-init
+					data-te-ripple-color="light"
+				>
+					Apply
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/quill/dist/quill.js"></script>
+<script src="/quill-delta-to-html/dist/browser/QuillDeltaToHtmlConverter.bundle.js"></script>
+
+<!-- Initialize Quill editor -->
+<script>
+	const quill = new Quill("#editor", {
+		theme: "snow",
+		placeholder: "Let us know why you are a good fit",
+	});
+
+	document.querySelector("#submit").addEventListener("click", () => {
+		const delta = quill.getContents();
+		console.log(delta);
+
+		let converter = new QuillDeltaToHtmlConverter(delta.ops, {});
+		const content = converter.convert();
+		console.log(content);
+	});
+</script>
+
+<% } else{ %>
+  <script>
+    location.assign("/")
+  </script>
 <% } %>
+
+
 <!--  -->
 <%- include('./partials/footer.ejs') %>

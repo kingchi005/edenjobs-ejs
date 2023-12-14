@@ -46,46 +46,51 @@ model Applicant {
 }
 
 model Employer {
-  id                  String   @unique @default(cuid())
-  user                User?
-  company_name        String   @unique
-  company_email       String
-  company_description String
-  company_logo        String
-  company_website     String
-  company_size        String
-  industry            String
-  location            String
-  culture             String
-  jobs                Job[]
-  created_at          DateTime @default(now())
-  updated_at          DateTime @updatedAt
+  id                      String   @unique @default(cuid())
+  user                    User?
+  company_name            String   @unique
+  company_email           String
+  company_description     String
+  company_location_state  String
+  company_location_city   String
+  company_location_street String
+  company_logo            String
+  company_website         String
+  company_size            String
+  industry                String
+  culture                 String
+  jobs                    Job[]
+  created_at              DateTime @default(now())
+  updated_at              DateTime @updatedAt
 }
 
 model Job {
-  id                        String        @unique @default(cuid())
-  title                     String
-  employment_type           String
-  description               String
-  is_remote                 Boolean
-  city_location             String
-  state_location            String
-  benefits                  String
-  expires_at                DateTime
-  required_experience_years Int
-  required_skills           String
-  min_salary                Int
-  max_salary                Int
-  salary_period             String
-  responsibilities          String
-  category                  JobCategory   @relation(fields: [category_id], references: [id])
-  category_id               Int
-  publisher                 Employer      @relation(fields: [publisher_id], references: [id])
-  publisher_id              String
-  applications              Application[]
-  published_at              DateTime      @default(now())
-  created_at                DateTime      @default(now())
-  updated_at                DateTime      @updatedAt
+  id                          String        @unique @default(cuid())
+  title                       String
+  employment_type             String
+  summary                     String
+  description_and_requirement String
+  min_quaification            String
+  is_remote                   Boolean
+  city_location               String
+  state_location              String
+  benefits                    String
+  expires_at                  DateTime
+  required_experience_years   Int
+  experience_level            String
+  required_skills             String
+  min_salary                  Int
+  max_salary                  Int
+  salary_period               String
+  responsibilities            String
+  category                    JobCategory   @relation(fields: [category_id], references: [id])
+  category_id                 Int
+  publisher                   Employer      @relation(fields: [publisher_id], references: [id])
+  publisher_id                String
+  applications                Application[]
+  published_at                DateTime      @default(now())
+  created_at                  DateTime      @default(now())
+  updated_at                  DateTime      @updatedAt
 }
 
 model JobCategory {
@@ -98,6 +103,7 @@ model JobCategory {
 model Application {
   id           Int       @id @default(autoincrement())
   content      String
+  // cv_resume String?
   job          Job       @relation(fields: [job_id], references: [id])
   job_id       String
   applicant    Applicant @relation(fields: [applicant_id], references: [id])

@@ -31,7 +31,7 @@ export const onlyEmployers = async (
 	next();
 };
 
-export const onlyUsers = async (
+export const onlyAuthenticated = async (
 	req: Request,
 	res: Response,
 	next: NextFunction
@@ -56,11 +56,37 @@ export const onlyUsers = async (
 
 	if (exp && hasExpired(exp))
 		throw new AppError("API key has expired", resCode.UNAUTHORIZED);
-	const user = await db.user.findFirst({ where: { id } });
 
-	if (!user) throw new AppError("Invalid user", resCode.UNAUTHORIZED);
+	res.locals.user_id = id;
 
-	res.locals.user = user;
+	next();
+};
+
+export const checkAuth = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const isValid = z.object({ "@authed": z.string() }).safeParse(req.cookies);
+
+	if (isValid.success) {
+		const providedToken = isValid.data["@authed"];
+		const veriedToken: unknown = jwt.verify(providedToken, env.HASH_SECRET);
+		if (isValidToken(veriedToken)) {
+			const { id, exp } = veriedToken;
+			const user = await db.user.findFirst({ where: { id } });
+			res.locals.user = user;
+		} else {
+			res.locals.user = null;
+		}
+	}
+
+	// const providedToken = isValid.data.authed.split(" ")?.[1]?.trim();
+
+	// if (!providedToken) throw new AppError("Invalid API key", resCode.UNAUTHORIZED);
+
+	// if (exp && hasExpired(exp)) throw new AppError("API key has expired", resCode.UNAUTHORIZED);
+	// if (!user throw new AppError("Invalid user", resCode.UNAUTHORIZED);
 
 	next();
 };

@@ -131,7 +131,7 @@
 						<a
 							class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 							aria-current="page"
-							href="#"
+							href="/jobs"
 							data-te-nav-link-ref
 							>Jobs</a
 						>
@@ -184,14 +184,14 @@
 					</span>
 				</div>
 				<div class="flex items-center">
-					<button
-						type="button"
+					<a
+						href="/login"
 						data-te-ripple-init
 						data-te-ripple-color="light"
 						class="mr-3 inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:bg-neutral-100 hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 motion-reduce:transition-none"
 					>
 						Login
-					</button>
+					</a>
 					<button
 						type="button"
 						data-te-ripple-init
@@ -424,7 +424,7 @@
 							class="[word-wrap: break-word] my-[5px] mr-4 flex h-[32px] cursor-pointer items-center justify-between rounded-[16px] bg-[#eceff1] px-[12px] py-0 text-[13px] font-normal normal-case leading-loose text-[#4a2363] shadow-none transition-[opacity] duration-300 ease-linear hover:!shadow-none active:bg-[#cacfd1] dark:bg-neutral-600 dark:text-neutral-200"
 							data-te-close="true"
 						>
-							<%= job.type|| "Full-time" %>
+							<%= job.employment_type|| "Full-time" %>
 						</div>
 						<div
 							data-te-chip-init
@@ -486,8 +486,11 @@
 							</svg>
 						</div>
 						<span class="ml-1 text-red-600">
-							Closing in <%= helper.formatDate(job.expires_at).replace("ago","")
-							%>
+							<!--  -->
+							<% const _time =
+							helper.formatDate(job.expires_at).replace("ago","") %>
+							<!--  -->
+							<%= _time==="just now"?"Closed": "Closing in "+_time %>
 						</span>
 					</div>
 				</div>

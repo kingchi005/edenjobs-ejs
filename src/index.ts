@@ -4,11 +4,13 @@ import cookieParser from "cookie-parser";
 import env from "../env";
 import errorController, {
 	ValidationError,
+	middlewareWapper,
 } from "./controllers/response.controller";
 import { apiRoute, pageRoute } from "./routes";
 import path from "path";
 import { z } from "zod";
 import { getStringValidation } from "./validations/schema";
+import { checkAuth } from "./controllers/middleware.controller";
 
 const PORT = process.env.PORT || 500;
 const app = express();
@@ -23,6 +25,7 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(path.resolve("public"))));
 app.use(express.static(path.join(path.resolve("node_modules"))));
 
+app.get("*", middlewareWapper(checkAuth));
 app.use(pageRoute);
 app.use("/api", apiRoute);
 

@@ -13,26 +13,28 @@ import { formatDate } from "../controllers/helpers.controller";
 const pageRoute = Router();
 
 pageRoute.get("*", (req, res, next) => {
-	res.locals.user = null;
+	res.locals.helper = { formatDate };
 	next();
 });
 // homepages
-pageRoute.get("/", middlewareWapper(getRecentJobs), (req, res) => {
+pageRoute.get("/", middlewareWapper(getRecentJobs), (req, res) =>
 	res.render("index", {
 		title: "Find any kind of jobs in edenjobs",
-		helper: { formatDate },
-	});
-});
+	})
+);
 
 // job pages
-pageRoute.get("/jobs", middlewareWapper(getJobs), (req, res) => {
-	res.render("jobs", { title: "Edenjobs | jobs" });
-});
-pageRoute.get("/job/:id", middlewareWapper(getJobDetail), (req, res) => {
-	res.render("job", { title: "Edenjobs | job" });
-});
+pageRoute.get("/jobs", middlewareWapper(getJobs), (req, res) =>
+	res.render("jobs", { title: "Edenjobs | jobs" })
+);
+pageRoute.get("/job/:id", middlewareWapper(getJobDetail), (req, res) =>
+	res.render("job", { title: "Edenjobs | job" })
+);
 
 // auth pages
+pageRoute.get("/login", (req, res) =>
+	res.render("login", { title: "Edenjobs login" })
+);
 
 // Applicant pages
 // pageRoute.get("/job/:id", middlewareWapper(getJobDetail), (req, res) => {

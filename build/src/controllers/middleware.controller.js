@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.onlyUsers = exports.onlyEmployers = exports.onlyApplicants = void 0;
+exports.checkAuth = exports.onlyAuthenticated = exports.onlyEmployers = exports.onlyApplicants = void 0;
 const zod_1 = require("zod");
 const response_controller_1 = require("./response.controller");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -33,7 +33,7 @@ const onlyEmployers = (req, res, next) => __awaiter(void 0, void 0, void 0, func
     next();
 });
 exports.onlyEmployers = onlyEmployers;
-const onlyUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const onlyAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const isValid = zod_1.z.object({ authed: zod_1.z.string() }).safeParse(req.cookies);
     if (!isValid.success)
         throw new response_controller_1.AppError("Not logged in", response_controller_1.resCode.UNAUTHORIZED);
@@ -46,11 +46,25 @@ const onlyUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     const { id, exp } = veriedToken;
     if (exp && (0, helpers_controller_1.hasExpired)(exp))
         throw new response_controller_1.AppError("API key has expired", response_controller_1.resCode.UNAUTHORIZED);
-    const user = yield prisma_1.default.user.findFirst({ where: { id } });
-    if (!user)
-        throw new response_controller_1.AppError("Invalid user", response_controller_1.resCode.UNAUTHORIZED);
-    res.locals.user = user;
+    res.locals.user_id = id;
     next();
 });
-exports.onlyUsers = onlyUsers;
+exports.onlyAuthenticated = onlyAuthenticated;
+const checkAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const isValid = zod_1.z.object({ "@authed": zod_1.z.string() }).safeParse(req.cookies);
+    if (isValid.success) {
+        const providedToken = isValid.data["@authed"];
+        const veriedToken = jsonwebtoken_1.default.verify(providedToken, env_1.default.HASH_SECRET);
+        if ((0, helpers_controller_1.isValidToken)(veriedToken)) {
+            const { id, exp } = veriedToken;
+            const user = yield prisma_1.default.user.findFirst({ where: { id } });
+            res.locals.user = user;
+        }
+        else {
+            res.locals.user = null;
+        }
+    }
+    next();
+});
+exports.checkAuth = checkAuth;
 //# sourceMappingURL=middleware.controller.js.map

@@ -24,7 +24,6 @@ export const getJobs = async (
 		},
 	});
 	res.locals.recentJobs = jobs;
-	jobs[0].publisher.company_logo;
 	next();
 };
 
@@ -33,7 +32,14 @@ export const getJobDetail = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const job = await db.job.findFirst({ where: { id: req.params.id } });
+	const job = await db.job.findFirst({
+		where: { id: req.params.id },
+		include: {
+			_count: { select: { applications: true } },
+			publisher: true,
+			category: true,
+		},
+	});
 	res.locals.job = job;
 	next();
 };
@@ -52,6 +58,7 @@ export const getRecentJobs = async (
 		},
 	});
 	res.locals.recentJobs = recentJobs;
+
 	next();
 };
 

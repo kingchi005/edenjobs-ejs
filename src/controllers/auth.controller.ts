@@ -40,8 +40,9 @@ export const loginUser = async (req: Request, res: Response) => {
 	});
 
 	res.locals.user = _user;
+	const { password, ...user } = _user;
 
-	return new ApiResponse(res, "login here").send();
+	return new ApiResponse(res, "login here", { user }).send();
 };
 
 export const registerUser = async (req: Request, res: Response) => {

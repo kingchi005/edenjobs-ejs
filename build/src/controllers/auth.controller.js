@@ -50,7 +50,8 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         maxAge: 1 * 24 * 60 * 60 * 1000,
     });
     res.locals.user = _user;
-    return new response_controller_1.ApiResponse(res, "login here").send();
+    const { password } = _user, user = __rest(_user, ["password"]);
+    return new response_controller_1.ApiResponse(res, "login here", { user }).send();
 });
 exports.loginUser = loginUser;
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
