@@ -11,7 +11,7 @@ HASH_SECRET=# any secrete phrase
 
 Then run the following command one after the other
 
-```bash
+```cmd
 npm run db:sync
 npm run db:seed
 npm run dev
@@ -25,7 +25,7 @@ To contribute to the project you will need to have `nodemon` installed globally 
 
 Run the following command in two different terminals to start a development server for contributing
 
-```bash
+```cmd
 npm run css
 # open another terminal and run
 nodemon
