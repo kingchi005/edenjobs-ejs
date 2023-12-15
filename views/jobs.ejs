@@ -92,6 +92,20 @@
 			/>
 		</div>
 	</div>
+	<div class="flex justify-center items-center">
+		<button
+			id="search-btn"
+			type="button"
+			class="inline-block mt-5 rounded bg-primary-700 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary-50 transition duration-150 ease-in-out hover:border-primary-600 hover:text-primary-50 focus:outline-none focus:ring-0 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
+			data-te-ripple-init
+			data-te-toggle="modal"
+			data-te-target="#staticBackdrop"
+			data-te-ripple-init
+			data-te-ripple-color="light"
+		>
+			Search
+		</button>
+	</div>
 </section>
 <section class="recent max-w-[85rem] m-auto">
 	<!-- <strong class="text-2xl inline-block relative py-4">Jobs List</strong>
@@ -206,12 +220,14 @@
 	const searchIcon = document.querySelector("#search-icon");
 	const remoteJob = document.querySelector("#remote-jobs");
 	const category = document.querySelector("#category");
+	const searchBtn = document.querySelector("#search-btn");
 
 	// remoteJob.addEventListener("change", (e) => {
 	// 	is_remote = e.target.checked;
 	// });
 
 	searchIcon.addEventListener("click", searchJob);
+	searchBtn.addEventListener("click", searchJob);
 	searchEle.addEventListener("keypress", (e) => {
 		if (e.key === "Enter") {
 			searchJob();
@@ -256,6 +272,15 @@
 				</div>
 
 				<div class="tags flex items-center gap-5">
+					<span class="inline-block whitespace-nowrap rounded bg-primary-100 px-2 py-1 text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700 capitalize" >
+						${job.employment_type}
+					</span>
+					<span class="inline-block whitespace-nowrap rounded bg-primary-100 px-2 py-1 text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700 capitalize" >
+						${job.is_remote ? "Remote" : "Onsite"}
+					</span>
+					<span class="inline-block whitespace-nowrap rounded bg-primary-100 px-2 py-1 text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700 capitalize" >
+						${job.experience_level}
+					</span>
 				</div>
 
 				<p class="my-4">${job.summary}</p>
