@@ -1,63 +1,5 @@
 <%- include('./partials/head.ejs') %> <% const p13 = { name:"mark", age:30 } %>
 <header>
-	<!-- <nav class="w-full px-20 py-5 bg-white flex items-center justify-between">
-				<a href="#" class="relative overflow-hidden">
-					<h3 class="m-0 p-0">EdenJobs</h3>
-				</a>
-				<ul class="m-0 p-0">
-					<li class="inline-block mx-2">
-						<button
-							id="jobs"
-							class="bg-transparent text-base cursor-pointer relative px-4 py-2 overflow-hidden rounded-lg"
-						>
-							Jobs
-						</button>
-					</li>
-					<li class="inline-block mx-2">
-						<button
-							id="recruiter"
-							class="bg-transparent text-base cursor-pointer relative px-4 py-2 overflow-hidden rounded-lg"
-						>
-							Recruiter
-						</button>
-					</li>
-					<li class="inline-block mx-2">
-						<button
-							id="resources"
-							class="bg-transparent text-base cursor-pointer relative px-4 py-2 overflow-hidden rounded-lg"
-						>
-							Resources
-						</button>
-					</li>
-					<li class="inline-block mx-2">
-						<button
-							id="training"
-							class="bg-transparent text-base cursor-pointer relative px-4 py-2 overflow-hidden rounded-lg"
-						>
-							Training
-						</button>
-					</li>
-					<li class="inline-block mx-2">
-						<button
-							id="login"
-							class="bg-transparent text-base cursor-pointer relative px-4 py-2 overflow-hidden rounded-lg"
-						>
-							Login
-						</button>
-					</li>
-					<li class="inline-block mx-2">
-						<button
-							id="post-job"
-							class="px-4 py-2 rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-800 shadow-md"
-						>
-							Post a Job <i class="fas fa-arrow-right"></i>
-						</button>
-					</li>
-				</ul>
-				<i class="fas fa-bars"></i>
-			</nav>
-		 -->
-
 	<!-- Main navigation container -->
 	<nav
 		class="relative flex w-full flex-wrap items-center justify-between bg-[#FBFBFB] py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:py-4"
@@ -219,7 +161,64 @@
 					</button> -->
 				</div>
 				<% } else {%>
-				<div class="flex items-center"></div>
+
+				<div
+					class="relative"
+					data-te-dropdown-ref
+					data-te-dropdown-alignment="end"
+				>
+					<!-- Second dropdown trigger -->
+					<a
+						class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
+						href="#"
+						id="profile-drop-down"
+						role="button"
+						data-te-dropdown-toggle-ref
+						aria-expanded="false"
+					>
+						<!-- User avatar -->
+						<%# JSON.stringify(user) %>
+						<img
+							src="<%= user.is_applicant ? user.applicant_details?.avatar:user.employer_details.company_logo %>"
+							class="rounded-full"
+							style="height: 25px; width: 25px"
+							alt=""
+							loading="lazy"
+						/>
+					</a>
+					<!-- Second dropdown menu -->
+					<ul
+						class="absolute z-[1000] float-left right-0 m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+						aria-labelledby="profile-drop-down"
+						data-te-dropdown-menu-ref
+					>
+						<!-- Second dropdown menu items -->
+						<li>
+							<a
+								class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+								href="<%= user.is_applicant?"/dashboard":"/employer" %>"
+								data-te-dropdown-item-ref
+								>Profile</a
+							>
+						</li>
+						<li>
+							<a
+								class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+								href="#"
+								data-te-dropdown-item-ref
+								>Edit profile</a
+							>
+						</li>
+						<li>
+							<a
+								class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+								href="/api/auth/logout"
+								data-te-dropdown-item-ref
+								>Log out</a
+							>
+						</li>
+					</ul>
+				</div>
 
 				<% } %>
 			</div>
@@ -258,56 +257,6 @@
 				Search
 			</button>
 		</div>
-		<!-- 
-				<div
-					class="filter-box min-w-300px text-gray-600 p-4 rounded-lg bg-white shadow-md my-4"
-				>
-					<b class="m-0 p-0">Filter</b>
-					<div class="filters flex items-center">
-						<label for="location" class="m-0 p-0">Location</label>
-						<div
-							class="check border border-blue-600 rounded-md w-5 h-5 ml-2 flex items-center justify-center relative overflow-hidden"
-						>
-							<div
-								class="mark w-full h-full bg-blue-600 relative pointer-events-none"
-							></div>
-							<input
-								type="checkbox"
-								name="location"
-								id="location"
-								class="cursor-pointer absolute left-0 h-full block w-full border border-blue-600"
-							/>
-						</div>
-						<label for="remote" class="ml-4">Remote</label>
-						<div
-							class="check border border-blue-600 rounded-md w-5 h-5 ml-2 flex items-center justify-center relative overflow-hidden"
-						>
-							<div
-								class="mark w-full h-full bg-blue-600 relative pointer-events-none"
-							></div>
-							<input
-								type="checkbox"
-								name="remote"
-								id="remote"
-								class="cursor-pointer absolute left-0 h-full block w-full border border-blue-600"
-							/>
-						</div>
-						<label for="onsite" class="ml-4">On-Site</label>
-						<div
-							class="check border border-blue-600 rounded-md w-5 h-5 ml-2 flex items-center justify-center relative overflow-hidden"
-						>
-							<div
-								class="mark w-full h-full bg-blue-600 relative pointer-events-none"
-							></div>
-							<input
-								type="checkbox"
-								name="onsite"
-								id="onsite"
-								class="cursor-pointer absolute left-0 h-full block w-full border border-blue-600"
-							/>
-						</div>
-					</div>
-				</div> -->
 
 		<a
 			href="#"
@@ -328,7 +277,7 @@
 		<img
 			src="/images/pexels-andrea-piacquadio-3755440.jpg"
 			alt=""
-			class="w-full rounded-2xl shadow-lg mb-5 md:max-w-[500px]"
+			class="w-full h-[800px] rounded-2xl shadow-lg mb-5 md:max-w-[500px]"
 		/>
 		<div class="flex flex-col justify-center">
 			<h2 class="text-4xl font-bold mb-4">
@@ -491,8 +440,7 @@
 						</div>
 						<span class="ml-1 text-red-600">
 							<!--  -->
-							<% const _time =
-							helper.formatDate(job.expires_at).replace("ago","") %>
+							<% const _time = helper.formatDate(job.expires_at,true) %>
 							<!--  -->
 							<%= _time==="just now"?"Closed": "Closing in "+_time %>
 						</span>

@@ -14,7 +14,7 @@ export const onlyApplicants = async (
 ) => {
 	const user = res.locals.user as TUser;
 
-	if (!user.is_applicant) throw new AppError("Forbidden", resCode.FORBIDDEN);
+	if (!user?.is_applicant) throw new AppError("Forbidden", resCode.FORBIDDEN);
 
 	next();
 };
@@ -26,7 +26,7 @@ export const onlyEmployers = async (
 ) => {
 	const user = res.locals.user as TUser;
 
-	if (user.is_applicant) throw new AppError("Forbidden", resCode.FORBIDDEN);
+	if (user?.is_applicant) throw new AppError("Forbidden", resCode.FORBIDDEN);
 
 	next();
 };
@@ -36,13 +36,13 @@ export const onlyAuthenticated = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const isValid = z.object({ authed: z.string() }).safeParse(req.cookies);
+	const isValid = z.object({ "@authed": z.string() }).safeParse(req.cookies);
 
 	if (!isValid.success)
 		throw new AppError("Not logged in", resCode.UNAUTHORIZED);
 
-	// const providedToken = isValid.data.authed.split(" ")?.[1]?.trim();
-	const providedToken = isValid.data.authed;
+	// const providedToken = isValid.data."@authed".split(" ")?.[1]?.trim();
+	const providedToken = isValid.data["@authed"];
 
 	if (!providedToken)
 		throw new AppError("Invalid API key", resCode.UNAUTHORIZED);
@@ -75,7 +75,10 @@ export const checkAuth = async (
 		const veriedToken: unknown = jwt.verify(providedToken, env.HASH_SECRET);
 		if (isValidToken(veriedToken)) {
 			const { id, exp } = veriedToken;
-			const user = await db.user.findFirst({ where: { id } });
+			const user = await db.user.findFirst({
+				where: { id },
+				include: { applicant_details: true, employer_details: true },
+			});
 			res.locals.user = user;
 		} else {
 			res.locals.user = null;

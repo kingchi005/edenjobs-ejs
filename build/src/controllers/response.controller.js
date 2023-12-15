@@ -88,6 +88,15 @@ exports.possiblePrismaError = {
 function errorController(error, req, res, next) {
     var _a, _b;
     console.log(error);
+    console.log(req.path);
+    if (req.path.split("/")[1] !== "api") {
+        if (error.statusCode === exports.resCode.UNAUTHORIZED) {
+            return res.redirect("/login");
+        }
+        if (error.statusCode === exports.resCode.FORBIDDEN) {
+            return res.redirect("/");
+        }
+    }
     if (error instanceof AppError)
         return res.status(error.statusCode).json({
             ok: false,

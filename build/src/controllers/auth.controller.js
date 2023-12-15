@@ -23,7 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerEmployer = exports.registerApplicant = exports.registerUser = exports.loginUser = void 0;
+exports.registerEmployer = exports.registerApplicant = exports.logOut = exports.registerUser = exports.loginUser = void 0;
 const response_controller_1 = require("./response.controller");
 const input_validation_1 = __importDefault(require("../validations/input.validation"));
 const prisma_1 = __importDefault(require("../../prisma"));
@@ -67,6 +67,15 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     return new response_controller_1.ApiResponse(res, "register user here", {}).send();
 });
 exports.registerUser = registerUser;
+const logOut = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res
+        .cookie("@authed", "", {
+        httpOnly: true,
+        maxAge: 1,
+    })
+        .redirect("/");
+});
+exports.logOut = logOut;
 const registerApplicant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return new response_controller_1.ApiResponse(res, "register here", {}).send();
 });

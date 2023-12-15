@@ -61,6 +61,15 @@ export const registerUser = async (req: Request, res: Response) => {
 	return new ApiResponse(res, "register user here", {}).send();
 };
 
+export const logOut = async (req: Request, res: Response) => {
+	res
+		.cookie("@authed", "", {
+			httpOnly: true,
+			maxAge: 1,
+		})
+		.redirect("/");
+};
+
 export const registerApplicant = async (req: Request, res: Response) => {
 	return new ApiResponse(res, "register here", {}).send();
 };

@@ -166,8 +166,7 @@
 						alertContainer.innerHTML = res.error.message;
 						alertInstance.show();
 					} else {
-						if (res.details.user.is_applicant)
-							location.assign("/applicant/dashboard");
+						if (res.details.user.is_applicant) location.assign("/dashboard");
 						else location.assign("/employer/dashboard");
 					}
 				} catch (error) {

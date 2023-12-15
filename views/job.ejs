@@ -98,8 +98,7 @@
 									</div>
 									<span class="text-xs text-[#EB5757]"
 										><p>
-											<% const _time =
-											helper.formatDate(job.expires_at).replace("ago","") %>
+											<% const _time = helper.formatDate(job.expires_at,true) %>
 											<!--  -->
 											<%= _time==="just now"?"Closed": "Closing in "+_time %>
 										</p></span

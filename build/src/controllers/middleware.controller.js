@@ -21,23 +21,23 @@ const helpers_controller_1 = require("./helpers.controller");
 const prisma_1 = __importDefault(require("../../prisma"));
 const onlyApplicants = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const user = res.locals.user;
-    if (!user.is_applicant)
+    if (!(user === null || user === void 0 ? void 0 : user.is_applicant))
         throw new response_controller_1.AppError("Forbidden", response_controller_1.resCode.FORBIDDEN);
     next();
 });
 exports.onlyApplicants = onlyApplicants;
 const onlyEmployers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const user = res.locals.user;
-    if (user.is_applicant)
+    if (user === null || user === void 0 ? void 0 : user.is_applicant)
         throw new response_controller_1.AppError("Forbidden", response_controller_1.resCode.FORBIDDEN);
     next();
 });
 exports.onlyEmployers = onlyEmployers;
 const onlyAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const isValid = zod_1.z.object({ authed: zod_1.z.string() }).safeParse(req.cookies);
+    const isValid = zod_1.z.object({ "@authed": zod_1.z.string() }).safeParse(req.cookies);
     if (!isValid.success)
         throw new response_controller_1.AppError("Not logged in", response_controller_1.resCode.UNAUTHORIZED);
-    const providedToken = isValid.data.authed;
+    const providedToken = isValid.data["@authed"];
     if (!providedToken)
         throw new response_controller_1.AppError("Invalid API key", response_controller_1.resCode.UNAUTHORIZED);
     const veriedToken = jsonwebtoken_1.default.verify(providedToken, env_1.default.HASH_SECRET);
@@ -58,7 +58,10 @@ const checkAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         const veriedToken = jsonwebtoken_1.default.verify(providedToken, env_1.default.HASH_SECRET);
         if ((0, helpers_controller_1.isValidToken)(veriedToken)) {
             const { id, exp } = veriedToken;
-            const user = yield prisma_1.default.user.findFirst({ where: { id } });
+            const user = yield prisma_1.default.user.findFirst({
+                where: { id },
+                include: { applicant_details: true, employer_details: true },
+            });
             res.locals.user = user;
         }
         else {

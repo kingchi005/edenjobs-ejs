@@ -98,6 +98,16 @@ export default function errorController(
 	next: NextFunction
 ) {
 	console.log(error);
+	console.log(req.path);
+	if (req.path.split("/")[1] !== "api") {
+		if (error.statusCode === resCode.UNAUTHORIZED) {
+			return res.redirect("/login");
+		}
+		if (error.statusCode === resCode.FORBIDDEN) {
+			return res.redirect("/");
+		}
+	}
+
 	if (error instanceof AppError)
 		return res.status(error.statusCode).json(<ErrorResponse<any>>{
 			ok: false,
