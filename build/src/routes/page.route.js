@@ -12,7 +12,7 @@ pageRoute.get("*", (req, res, next) => {
 pageRoute.get("/", (0, response_controller_1.middlewareWapper)(job_controller_1.getRecentJobs), (req, res) => res.render("index", {
     title: "Find any kind of jobs in edenjobs",
 }));
-pageRoute.get("/jobs", (0, response_controller_1.middlewareWapper)(job_controller_1.getJobs), (req, res) => res.render("jobs", { title: "Edenjobs | jobs" }));
+pageRoute.get("/jobs", (0, response_controller_1.middlewareWapper)(job_controller_1.getJobs), (0, response_controller_1.middlewareWapper)(job_controller_1.getJobCategory), (req, res) => res.render("jobs", { title: "Edenjobs | jobs" }));
 pageRoute.get("/job/:id", (0, response_controller_1.middlewareWapper)(job_controller_1.getJobDetail), (req, res) => res.render("job", { title: "Edenjobs | job" }));
 pageRoute.get("/login", (req, res) => res.render("login", { title: "Edenjobs login" }));
 pageRoute.get("/modal", (req, res) => res.render("modal"));

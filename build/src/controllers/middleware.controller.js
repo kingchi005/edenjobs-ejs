@@ -52,6 +52,7 @@ const onlyAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, 
 exports.onlyAuthenticated = onlyAuthenticated;
 const checkAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const isValid = zod_1.z.object({ "@authed": zod_1.z.string() }).safeParse(req.cookies);
+    res.locals.user = null;
     if (isValid.success) {
         const providedToken = isValid.data["@authed"];
         const veriedToken = jsonwebtoken_1.default.verify(providedToken, env_1.default.HASH_SECRET);

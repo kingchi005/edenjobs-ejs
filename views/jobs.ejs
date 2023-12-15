@@ -1,0 +1,327 @@
+<%- include('./partials/head.ejs') %>
+
+<section class="flex flex-col max-w-[85rem] m-auto bg-primary-900 px-5 py-10">
+	<h1 class="font-bold text-3xl text-center text-neutral-200 mb-5">
+		Search for job based on your preference
+	</h1>
+	<div
+		class="items-center md:flex justify-evenly text-center align-baseline md:text-start"
+	>
+		<div class="ml-5 mb-5 flex items-center justify-between">
+			<input
+				type="search"
+				id="search-keyword"
+				class="relative m-0 block min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-300 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-300 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none motion-reduce:transition-none dark:border-neutral-500 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+				placeholder="Enter a keyword or job title"
+				aria-label="Search"
+				aria-describedby="button-addon2"
+			/>
+
+			<!--Search icon-->
+			<span
+				class="input-group-text cursor-pointer flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-300 dark:text-neutral-200"
+				id="search-icon"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 20 20"
+					fill="currentColor"
+					class="h-5 w-5"
+				>
+					<path
+						fill-rule="evenodd"
+						d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+						clip-rule="evenodd"
+					/>
+				</svg>
+			</span>
+		</div>
+
+		<!-- <div class="items-center justify-center mb-5">
+			<input
+				class="relative mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-neutral-600 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
+				type="checkbox"
+				value=""
+				id="remote-jobs"
+			/>
+			<label
+				class="inline-block pl-[0.15rem] hover:cursor-pointer text-neutral-300"
+				for="remote-jobs"
+			>
+				Remote jobs
+			</label>
+		</div> -->
+		<div class="mb-5">
+			<select
+				data-te-select-init
+				data-te-select-placeholder="Select job type"
+				class="text-neutral-300 mb-5 focus:active:text-neutral-300"
+				id="remote-jobs"
+			>
+				<option class="text-neutral-300" value="1">Remote</option>
+				<option class="text-neutral-300" value="0">Onsite</option>
+			</select>
+		</div>
+		<div class="mb-5">
+			<select
+				data-te-select-init
+				data-te-select-placeholder="Select category"
+				class="text-neutral-300 mb-5"
+				id="category"
+			>
+				<% jobCategories.map(category=>{ %>
+				<option class="text-neutral-300" value="<%= category.id %>">
+					<%= category.name %>
+				</option>
+				<% }) %>
+			</select>
+		</div>
+		<div class="">
+			<label
+				for="range-el"
+				id="range-label"
+				class="mb-2 inline-block text-neutral-300 dark:text-neutral-700"
+			>
+				Salary
+			</label>
+			<input
+				type="range"
+				id="range-el"
+				max="50000"
+				class="transparent h-[4px] w-full cursor-pointer appearance-none border-transparent bg-neutral-200 dark:bg-neutral-600"
+			/>
+		</div>
+	</div>
+</section>
+<section class="recent max-w-[85rem] m-auto">
+	<!-- <strong class="text-2xl inline-block relative py-4">Jobs List</strong>
+	<br class="m-0 p-0 box-border outline-none border-none" /> -->
+
+	<div
+		class="recent-jobs md:grid md:grid-cols-2 gap-20 md:gap-4 my-10 px-10"
+		id="job-container"
+	>
+		<!-- Repeat the recent-card div for additional job postings -->
+		<% jobs.map(job => { %>
+		<a href="/job/<%= job.id %>" class="cursor-pointer">
+			<div class="recent-card shadow-md hover:shadow-xl p-5 rounded-md">
+				<div class="recent-head flex items-center mb-4">
+					<img
+						src="<%= job.publisher.company_logo %>"
+						alt=""
+						class="rounded-full w-10 h-10 object-cover inline-block mr-4"
+					/>
+					<div class="m-0 p-0 box-border outline-none border-none">
+						<b class="name block"><%= job.title %></b>
+						<small class="desc text-gray-700"><%= job.category.name %> </small>
+					</div>
+				</div>
+
+				<div class="tags flex items-center gap-5">
+					<%- include('./components/badge.ejs',{text:job.employment_type||
+					"Full-time"}) %>
+					<!--  -->
+					<%-
+					include('./components/badge.ejs',{text:job.is_remote?"Remote":"Onsite"})
+					%>
+					<!--  -->
+					<%- include('./components/badge.ejs',{text:job.experience_level})%>
+				</div>
+
+				<p class="my-4"><%= job.summary %></p>
+
+				<div
+					class="botton pt-4 border-t border-gray-200 flex items-center justify-between text-sm text-gray-700"
+				>
+					<div class="salary">
+						Salary: N<%= job.min_salary %>.00 - N<%= job.max_salary %>.00 (<%=
+						job.salary_period %>)
+					</div>
+					<!-- <div class="posted"></div> -->
+				</div>
+
+				<div class="items flex items-center gap-1 text-xs mt-5">
+					<span class="text-xs text-gray-400"
+						>Posted <%= helper.formatDate(job.published_at) %></span
+					>
+					<div class="text-lg text-gray-400">
+						<svg
+							stroke="currentColor"
+							fill="currentColor"
+							stroke-width="0"
+							viewBox="0 0 16 16"
+							height="1em"
+							width="1em"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
+						</svg>
+					</div>
+					<span class="text-blue-400"
+						><%= job._count.applications %> Applicant</span
+					>
+					<div class="text-lg text-gray-400">
+						<svg
+							stroke="currentColor"
+							fill="currentColor"
+							stroke-width="0"
+							viewBox="0 0 16 16"
+							height="1em"
+							width="1em"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
+						</svg>
+					</div>
+					<span class="ml-1 text-red-600">
+						<!--  -->
+						<% const _time = helper.formatDate(job.expires_at).replace("ago","")
+						%>
+						<!--  -->
+						<%= _time==="just now"?"Closed": "Closing in "+_time %>
+					</span>
+				</div>
+			</div>
+		</a>
+		<% }) %>
+	</div>
+</section>
+<%- include('./partials/footer.ejs') %>
+
+<script src="/js/utils.js"></script>
+
+<script>
+	let min_salary;
+	const salaryRange = document.querySelector("#range-el"); //
+	const salaryRangeLable = document.querySelector("#range-label"); //
+
+	salaryRange.addEventListener("input", (e) => {
+		min_salary = e.target.value;
+		salaryRangeLable.textContent = `Salary N${e.target.value}`;
+	});
+</script>
+<script>
+	const jobDiv = document.querySelector("#job-container");
+	const searchEle = document.querySelector("#search-keyword");
+	const searchIcon = document.querySelector("#search-icon");
+	const remoteJob = document.querySelector("#remote-jobs");
+	const category = document.querySelector("#category");
+
+	// remoteJob.addEventListener("change", (e) => {
+	// 	is_remote = e.target.checked;
+	// });
+
+	searchIcon.addEventListener("click", searchJob);
+	searchEle.addEventListener("keypress", (e) => {
+		if (e.key === "Enter") {
+			searchJob();
+		}
+	});
+
+	async function searchJob() {
+		// category_id=4&search_word=officer gdgf&remote=0&min_salary=2000
+
+		const query = new URLSearchParams();
+
+		if (min_salary) {
+			query.append("min_salary", salaryRange.value);
+		}
+		if (remoteJob.value !== "") {
+			query.append("remote", remoteJob.value);
+		}
+		if (category.value) {
+			query.append("category_id", category.value);
+		}
+
+		query.append("search_word", searchEle.value);
+
+		/**@type{Job} */
+		const res = await (await fetch("/api/job/s?" + query.toString())).json();
+		if (res.ok) {
+			jobDiv.innerHTML = res.details.jobs
+				.map(
+					(job) => `
+					<a href="/job/${job.id}" class="cursor-pointer">
+			<div class="recent-card shadow-md hover:shadow-xl p-5 rounded-md">
+				<div class="recent-head flex items-center mb-4">
+					<img
+						src="${job.publisher.company_logo}"
+						alt=""
+						class="rounded-full w-10 h-10 object-cover inline-block mr-4"
+					/>
+					<div class="m-0 p-0 box-border outline-none border-none">
+						<b class="name block">${job.title}</b>
+						<small class="desc text-gray-700">${job.category.name} </small>
+					</div>
+				</div>
+
+				<div class="tags flex items-center gap-5">
+				</div>
+
+				<p class="my-4">${job.summary}</p>
+
+				<div
+					class="botton pt-4 border-t border-gray-200 flex items-center justify-between text-sm text-gray-700"
+				>
+					<div class="salary">
+						Salary: N${job.min_salary}.00 - N${job.max_salary}.00 (${job.salary_period})
+					</div>
+					<!-- <div class="posted"></div> -->
+				</div>
+
+				<div class="items flex items-center gap-1 text-xs mt-5">
+					<span class="text-xs text-gray-400"
+						>Posted ${formatDate(job.published_at)}</span
+					>
+					<div class="text-lg text-gray-400">
+						<svg
+							stroke="currentColor"
+							fill="currentColor"
+							stroke-width="0"
+							viewBox="0 0 16 16"
+							height="1em"
+							width="1em"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
+						</svg>
+					</div>
+					<span class="text-blue-400"
+						>${job._count.applications} Applicant</span
+					>
+					<div class="text-lg text-gray-400">
+						<svg
+							stroke="currentColor"
+							fill="currentColor"
+							stroke-width="0"
+							viewBox="0 0 16 16"
+							height="1em"
+							width="1em"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
+						</svg>
+					</div>
+					<span class="ml-1 text-red-600">
+						<!--  -->
+						<!--  -->
+						${
+							formatDate(job.expires_at).replace("ago", "") === "just now"
+								? "Closed"
+								: "Closing in " + formatDate(job.expires_at).replace("ago", "")
+						}
+					</span>
+				</div>
+			</div>
+		</a>
+			`
+				)
+				.join("");
+		}
+		console.log(res);
+	}
+</script>
+
+<script>
+	/**@def type {} */
+</script>

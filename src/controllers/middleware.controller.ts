@@ -68,6 +68,7 @@ export const checkAuth = async (
 	next: NextFunction
 ) => {
 	const isValid = z.object({ "@authed": z.string() }).safeParse(req.cookies);
+	res.locals.user = null;
 
 	if (isValid.success) {
 		const providedToken = isValid.data["@authed"];

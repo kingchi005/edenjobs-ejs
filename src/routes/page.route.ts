@@ -4,6 +4,7 @@ import {
 	tryCatchWapper,
 } from "../controllers/response.controller";
 import {
+	getJobCategory,
 	getJobDetail,
 	getJobs,
 	getRecentJobs,
@@ -24,7 +25,7 @@ pageRoute.get("/", middlewareWapper(getRecentJobs), (req, res) =>
 );
 
 // job pages
-pageRoute.get("/jobs", middlewareWapper(getJobs), (req, res) =>
+pageRoute.get("/jobs", middlewareWapper(getJobs),middlewareWapper(getJobCategory), (req, res) =>
 	res.render("jobs", { title: "Edenjobs | jobs" })
 );
 pageRoute.get("/job/:id", middlewareWapper(getJobDetail), (req, res) =>
