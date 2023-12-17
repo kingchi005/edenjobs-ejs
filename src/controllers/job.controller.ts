@@ -70,6 +70,23 @@ export const getRecentJobs = async (
 	next();
 };
 
+export const getRecomendedJobs = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const recommendedJobs = await db.job.findMany({
+		take: 5,
+		include: {
+			_count: { select: { applications: true } },
+			publisher: true,
+			category: true,
+		},
+	});
+	res.locals.recommendedJobs = recommendedJobs;
+	next();
+};
+
 export const searchJobs = async (req: Request, res: Response) => {
 	const page = +(req.query.page || 1);
 	const skip = (page - 1) * NO_PER_PAGE;

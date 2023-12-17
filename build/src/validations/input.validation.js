@@ -15,6 +15,10 @@ const ValidationSchema = {
         last_name: (0, schema_1.getStringValidation)("last_name"),
         is_applicant: (0, schema_1.getBooleanValidation)("is_applicant"),
     }),
+    appliyForJob: zod_1.z.object({
+        job_id: (0, schema_1.getStringValidation)("job_id"),
+        content: (0, schema_1.getStringValidation)("content"),
+    }),
 };
 exports.default = ValidationSchema;
 //# sourceMappingURL=input.validation.js.map

@@ -86,7 +86,7 @@ exports.possiblePrismaError = {
     ALREADY_EXISTS: "",
 };
 function errorController(error, req, res, next) {
-    var _a, _b;
+    var _a, _b, _c;
     console.log(error);
     console.log(req.path);
     if (req.path.split("/")[1] !== "api") {
@@ -123,10 +123,18 @@ function errorController(error, req, res, next) {
                 details: error,
             },
         });
+    if (error instanceof library_1.PrismaClientKnownRequestError && error.code == "P2025")
+        return res.status(exports.resCode.NOT_FOUND).json({
+            ok: false,
+            error: {
+                message: `${((_c = error.meta) === null || _c === void 0 ? void 0 : _c.cause).split(" ")[1]} not found`,
+                details: error,
+            },
+        });
     return res.status(exports.resCode.INTERNAL_SERVER_ERROR).json({
         ok: false,
         error: {
-            message: "Something went wrong. Error: " + (error === null || error === void 0 ? void 0 : error.message),
+            message: "Something went wrong.",
             details: error,
         },
     });

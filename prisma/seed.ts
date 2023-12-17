@@ -4,14 +4,25 @@ import db from "./index";
 function randomFromArray<T>(arr: T[]): T {
 	return arr[Math.floor(Math.random() * arr.length)];
 }
+function uniqueRandomFromArray<T>(arr: T[]): () => T | null {
+	const remainingEle = [...arr];
+	return function () {
+		if (remainingEle.length === 0) {
+			return null;
+		}
+
+		let randInd = Math.floor(Math.random() * remainingEle.length);
+		return remainingEle.splice(randInd, 1)[0];
+	};
+}
 
 const NO_OF = {
-	USER: 5,
+	USER: 30,
 	APPLICANT: 5,
 	EMPLOYER: 5,
 	JOB: 30,
 	JOBCATEGORY: 5,
-	APPLICATION: 5,
+	APPLICATION: 10,
 } as const;
 
 const company_size_enum = ["startup", "small", "medium", "large", "others"];
@@ -37,8 +48,8 @@ async function seedDB() {
 				user.employer_details != undefined && user.employer_details != null
 		)
 		.map((user) => user.employer_details);
-
 	const jobs = await seedJob();
+	await seedApplication();
 
 	async function seedUser() {
 		const users = [];
@@ -49,7 +60,8 @@ async function seedDB() {
 					first_name: faker.person.firstName(),
 					last_name: faker.person.lastName(),
 					email: faker.internet.email({ provider: "gmail" }),
-					password: "password",
+					password:
+						"$2b$10$qTD1CXcTFhVxcozODRqnH.xgoUIiMBPAado2BqGnQ7qTNChfLXm.a",
 					username: faker.internet.userName(),
 					is_applicant: isApplicant,
 					applicant_details: isApplicant
@@ -116,7 +128,9 @@ async function seedDB() {
 					summary: faker.lorem.paragraph(),
 					employment_type: randomFromArray(job_type_enum),
 					experience_level: randomFromArray(experience_level_enum),
-					expires_at: faker.date.soon(),
+					expires_at: faker.date.soon({
+						days: faker.number.int({ max: 100, min: 1 }),
+					}),
 					description_and_requirement: faker.lorem.paragraphs(4),
 					min_quaification: randomFromArray([
 						"B. Sc",
@@ -140,6 +154,9 @@ async function seedDB() {
 					]),
 					category_id: randomFromArray(job_categories).id,
 					publisher_id: randomFromArray(employers)!.id,
+					published_at: faker.date.recent({
+						days: faker.number.int({ max: 4, min: 1 }),
+					}),
 				},
 			});
 			jobs.push(job);
@@ -159,7 +176,23 @@ async function seedDB() {
 		return cats;
 	}
 
-	async function seedApplication() {}
+	async function seedApplication() {
+		const applications = [];
+
+		for (let i = 0; i < applicants.length - 2; i++) {
+			const application = await db.application.create({
+				data: {
+					content: faker.lorem.paragraphs(30),
+					applicant: {
+						connect: { id: uniqueRandomFromArray(applicants)()?.id },
+					},
+					job: { connect: { id: randomFromArray(jobs).id } },
+				},
+			});
+			applications.push(application);
+		}
+		return applications;
+	}
 }
 
 seedDB().then(() => console.log("Database seeded successfully"));

@@ -14,6 +14,10 @@ const ValidationSchema = {
 		last_name: getStringValidation("last_name"),
 		is_applicant: getBooleanValidation("is_applicant"),
 	}),
+	appliyForJob: z.object({
+		job_id: getStringValidation("job_id"),
+		content: getStringValidation("content"),
+	}),
 	// register:z.object({}),
 	// register:z.object({}),
 	// register:z.object({}),

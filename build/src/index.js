@@ -52,7 +52,7 @@ app.use(express_1.default.text());
 app.set("view engine", "ejs");
 app.use(express_1.default.static(path_1.default.join(path_1.default.resolve("public"))));
 app.use(express_1.default.static(path_1.default.join(path_1.default.resolve("node_modules"))));
-app.get("*", (0, response_controller_1.middlewareWapper)(middleware_controller_1.checkAuth));
+app.use("*", (0, response_controller_1.middlewareWapper)(middleware_controller_1.checkAuth));
 app.use(routes_1.pageRoute);
 app.use("/api", routes_1.apiRoute);
 app.use(response_controller_1.default);

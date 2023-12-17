@@ -77,3 +77,9 @@ export const registerApplicant = async (req: Request, res: Response) => {
 export const registerEmployer = async (req: Request, res: Response) => {
 	return new ApiResponse(res, "register here", {}).send();
 };
+
+/* 
+const salt = bcrypt.genSaltSync(10);
+const pass = bcrypt.hashSync("password", salt);
+console.log(pass);
+ */

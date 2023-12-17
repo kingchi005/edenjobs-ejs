@@ -107,7 +107,7 @@ model Application {
   job          Job       @relation(fields: [job_id], references: [id])
   job_id       String
   applicant    Applicant @relation(fields: [applicant_id], references: [id])
-  applicant_id String
+  applicant_id String    
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt
 }

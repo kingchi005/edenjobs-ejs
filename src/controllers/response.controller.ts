@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { ErrorResponse } from "../types";
 import { JsonWebTokenError } from "jsonwebtoken";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { ZodError, z } from "zod";
+import { ZodError, string, z } from "zod";
 
 export class AppError extends Error {
 	constructor(
@@ -138,10 +138,19 @@ export default function errorController(
 			},
 		});
 
+	if (error instanceof PrismaClientKnownRequestError && error.code == "P2025")
+		return res.status(resCode.NOT_FOUND).json(<ErrorResponse<typeof error>>{
+			ok: false,
+			error: {
+				message: `${(error.meta?.cause as string).split(" ")[1]} not found`,
+				details: error,
+			},
+		});
+
 	return res.status(resCode.INTERNAL_SERVER_ERROR).json(<ErrorResponse<any>>{
 		ok: false,
 		error: {
-			message: "Something went wrong. Error: " + error?.message,
+			message: "Something went wrong.",
 			details: error,
 		},
 	});

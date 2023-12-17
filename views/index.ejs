@@ -225,7 +225,7 @@
 		</div>
 	</nav>
 	<section
-		class="hero relative w-full min-h-screen flex items-start justify-center flex-col py-20 bg-gradient-to-b from-black bg-opacity-30 to-black pl-10"
+		class="hero relative w-full  h-[500px] flex items-start justify-center flex-col py-20 bg-gradient-to-b from-black bg-opacity-30 to-black pl-10"
 		style="
 			background-image: url('/images/dream-job-2904780_1280.jpg');
 			background-blend-mode: darken;
@@ -270,14 +270,16 @@
 		/> -->
 	</section>
 </header>
-<main style="padding: 20px">
-	<strong class="text-2xl inline-block relative py-2">About Us</strong>
-	<br />
-	<section class="about md:flex md:gap-4">
+<main style="padding: 20px" class="">
+	<div class="text-center">
+
+		<strong class="text-2xl inline-block relative py-2">About Us</strong>
+	</div>
+	<section class="about md:flex md:gap-10 max-w-7xl m-auto mb-20">
 		<img
 			src="/images/pexels-andrea-piacquadio-3755440.jpg"
 			alt=""
-			class="w-full h-[800px] rounded-2xl shadow-lg mb-5 md:max-w-[500px]"
+			class="w-full rounded-2xl shadow-lg mb-5 md:max-w-[500px]"
 		/>
 		<div class="flex flex-col justify-center">
 			<h2 class="text-4xl font-bold mb-4">
@@ -299,9 +301,13 @@
 			</div>
 		</div>
 	</section>
-	<br /><br />
-	<strong class="text-2xl inline-block relative py-2">How It Works</strong>
+	<div class="text-center ">
+
+		<strong class="text-2xl inline-block relative py-2">How it works</strong>
+	</div>
 	<section class="action text-center">
+				<h4 class="text-xl font-bold my-4">Getting started is easy</h4>
+
 		<div
 			class="main-action flex justify-center mx-auto max-w-fit gap-4 px-4 py-2 shadow-md rounded-lg bg-white"
 		>
@@ -312,7 +318,6 @@
 				I am looking for a job
 			</button>
 		</div>
-		<h2 class="text-4xl font-bold my-4">Getting started is easy</h2>
 		<p class="my-4">
 			Create a profile and we’ll match you with the best candidates that meet
 			your company's standards
@@ -360,10 +365,10 @@
 	<br />
 	<br />
 	<section class="recent">
-		<strong class="text-2xl inline-block relative py-4">Recent Jobs</strong>
+		<strong class="text-2xl inline-block relative py-4 md:ml-10">Recent Jobs</strong>
 		<br class="m-0 p-0 box-border outline-none border-none" />
 
-		<div class="recent-jobs md:grid md:grid-cols-2 gap-10 md:gap-4 my-10 px-10">
+		<div class="recent-jobs md:grid md:grid-cols-2 gap-10 md:gap-4 my-10 lg:px-10">
 			<!-- Repeat the recent-card div for additional job postings -->
 			<% (recentJobs).map(job => { %>
 			<a href="/job/<%= job.id %>" class="cursor-pointer">

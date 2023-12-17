@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getJobCategory = exports.searchJobs = exports.getRecentJobs = exports.getJobDetail = exports.getJobs = exports.edithJob = exports.creatJob = void 0;
+exports.getJobCategory = exports.searchJobs = exports.getRecomendedJobs = exports.getRecentJobs = exports.getJobDetail = exports.getJobs = exports.edithJob = exports.creatJob = void 0;
 const response_controller_1 = require("./response.controller");
 const prisma_1 = __importDefault(require("../../prisma"));
 const NO_PER_PAGE = 8;
@@ -64,6 +64,19 @@ const getRecentJobs = (req, res, next) => __awaiter(void 0, void 0, void 0, func
     next();
 });
 exports.getRecentJobs = getRecentJobs;
+const getRecomendedJobs = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const recommendedJobs = yield prisma_1.default.job.findMany({
+        take: 5,
+        include: {
+            _count: { select: { applications: true } },
+            publisher: true,
+            category: true,
+        },
+    });
+    res.locals.recommendedJobs = recommendedJobs;
+    next();
+});
+exports.getRecomendedJobs = getRecomendedJobs;
 const searchJobs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const page = +(req.query.page || 1);
     const skip = (page - 1) * NO_PER_PAGE;

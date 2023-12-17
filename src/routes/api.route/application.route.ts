@@ -1,5 +1,13 @@
 import { Router, Request, Response } from "express";
-import { tryCatchWapper } from "../../controllers/response.controller";
+import {
+	middlewareWapper,
+	tryCatchWapper,
+} from "../../controllers/response.controller";
+import {
+	onlyApplicants,
+	onlyAuthenticated,
+} from "../../controllers/middleware.controller";
+import { appliyForJob } from "../../controllers/application.controller";
 
 const jobApplicationRoute = Router();
 
@@ -8,5 +16,12 @@ const jobApplicationRoute = Router();
 - get application /:id => user
 - edith application /:id => applicant
 */
+
+jobApplicationRoute.post(
+	"/",
+	middlewareWapper(onlyAuthenticated),
+	middlewareWapper(onlyApplicants),
+	tryCatchWapper(appliyForJob)
+);
 
 export default jobApplicationRoute;

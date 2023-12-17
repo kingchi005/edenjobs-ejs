@@ -8,12 +8,15 @@ import {
 	getJobDetail,
 	getJobs,
 	getRecentJobs,
+	getRecomendedJobs,
 } from "../controllers/job.controller";
 import { formatDate } from "../controllers/helpers.controller";
 import {
 	onlyApplicants,
 	onlyAuthenticated,
 } from "../controllers/middleware.controller";
+import { getUserJobApplications } from "../controllers/application.controller";
+import { getApplicantDetails } from "../controllers/applicant.controller";
 
 const pageRoute = Router();
 
@@ -49,6 +52,7 @@ pageRoute.get(
 	"/dashboard",
 	middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyApplicants),
+	middlewareWapper(getApplicantDetails),
 	(req, res) => {
 		res.render("applicant/index", { title: "Dashboard", page: "dashboard" });
 	}
@@ -57,7 +61,7 @@ pageRoute.get(
 	"/dashboard/jobs",
 	middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyApplicants),
-	// get applicant recommended jobs
+	middlewareWapper(getRecomendedJobs),
 	(req, res) => {
 		res.render("applicant/jobs", { title: "Recomended jobs", page: "jobs" });
 	}
@@ -66,7 +70,7 @@ pageRoute.get(
 	"/dashboard/applications",
 	middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyApplicants),
-	// get applicant job applications
+	middlewareWapper(getUserJobApplications),
 	(req, res) => {
 		res.render("applicant/application", {
 			title: "Applied jobs",
@@ -78,7 +82,7 @@ pageRoute.get(
 	"/dashboard/profile",
 	middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyApplicants),
-	// get applicant detais
+	middlewareWapper(getApplicantDetails),
 	(req, res) => {
 		res.render("applicant/profile", { title: "Profile", page: "profile" });
 	}

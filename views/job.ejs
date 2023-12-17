@@ -134,7 +134,7 @@
 											></path>
 										</svg>
 									</div>
-									<span class="text-blue-400">
+									<span class="text-blue-400" id="no-of-applicant">
 										<%= job._count.applications %> Applicant</span
 									>
 								</div>
@@ -254,6 +254,8 @@
 					>
 						<div class="text-center mb-10">
 							<% if (user) { %>
+							<!--  check if applied -->
+							<% if (true) { %>
 							<div class="mx-auto">
 								<button
 									type="button"
@@ -268,6 +270,11 @@
 								</button>
 							</div>
 
+							<% }else{ %>
+							<!-- you have applied already -->
+							<!--  -->
+							<% } %>
+							<!--  -->
 							<% }else{ %>
 							<p class="mt-7 mb-2 text-center font-light text-gray-400">
 								You have to be logged in to apply for this job.
@@ -345,8 +352,29 @@
 
 			<!--Modal body-->
 			<div data-te-modal-body-ref class="relative p-4">
+				<div
+					id="alert"
+					class="mb-4 rounded-lg hidden bg-danger-100 px-6 py-5 text-base text-danger-70"
+					role="alert"
+					data-te-alert-init
+					data-te-autohide="true"
+					data-te-delay="4000"
+				>
+					A simple danger alert—check it out!
+				</div>
 				<form>
 					<div id="editor">
+						<h2>Skills</h2>
+						<ul>
+							<li>...</li>
+							<li>...</li>
+						</ul>
+						<h2>Qualification</h2>
+						<ul>
+							<li>...</li>
+							<li>...</li>
+						</ul>
+
 						<p><br /></p>
 					</div>
 				</form>
@@ -384,19 +412,49 @@
 
 <!-- Initialize Quill editor -->
 <script>
+	const no_of_applied = document.querySelector("#no-of-applicant");
 	const modal = new te.Modal("#staticBackdrop");
+	const alertEl = document.getElementById("alert");
+	const _alert = te.Alert.getInstance(alertEl);
 	const quill = new Quill("#editor", {
 		theme: "snow",
 		placeholder: "Let us know why you are a good fit",
 	});
 
-	document.querySelector("#submit").addEventListener("click", () => {
+	document.querySelector("#submit").addEventListener("click", async () => {
+		let applied = no_of_applied.textContent.split(" ")[0];
+		const body = new FormData();
+
 		const delta = quill.getContents();
 
 		let converter = new QuillDeltaToHtmlConverter(delta.ops, {});
 		const content = converter.convert();
-		modal.hide();
 		console.log(content);
+
+		body.append("content", content);
+		body.append("job_id", "<%= job.id %>");
+		if (quill.getText().split(" ").length < 10) {
+			alertEl.textContent = "Your later must be 10 more more word";
+			_alert.show();
+			return;
+		}
+
+		const res = await (
+			await fetch("/api/job-application", {
+				method: "post",
+				body,
+			})
+		).json();
+
+		// console.log(res);
+		if (!res.ok) {
+			alertEl.textContent = res.error.message;
+			_alert.show();
+			return;
+		}
+		no_of_applied.textContent = `${+applied + 1} Applicant`;
+		alert(res.message);
+		modal.hide();
 	});
 </script>
 

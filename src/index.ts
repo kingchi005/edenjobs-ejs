@@ -25,7 +25,7 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(path.resolve("public"))));
 app.use(express.static(path.join(path.resolve("node_modules"))));
 
-app.get("*", middlewareWapper(checkAuth));
+app.use("*", middlewareWapper(checkAuth));
 app.use(pageRoute);
 app.use("/api", apiRoute);
 

@@ -17,13 +17,23 @@ const index_1 = __importDefault(require("./index"));
 function randomFromArray(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
+function uniqueRandomFromArray(arr) {
+    const remainingEle = [...arr];
+    return function () {
+        if (remainingEle.length === 0) {
+            return null;
+        }
+        let randInd = Math.floor(Math.random() * remainingEle.length);
+        return remainingEle.splice(randInd, 1)[0];
+    };
+}
 const NO_OF = {
-    USER: 5,
+    USER: 30,
     APPLICANT: 5,
     EMPLOYER: 5,
     JOB: 30,
     JOBCATEGORY: 5,
-    APPLICATION: 5,
+    APPLICATION: 10,
 };
 const company_size_enum = ["startup", "small", "medium", "large", "others"];
 const job_type_enum = ["part-time", "full-time", "contract"];
@@ -46,6 +56,7 @@ function seedDB() {
             .filter((user) => user.employer_details != undefined && user.employer_details != null)
             .map((user) => user.employer_details);
         const jobs = yield seedJob();
+        yield seedApplication();
         function seedUser() {
             return __awaiter(this, void 0, void 0, function* () {
                 const users = [];
@@ -56,7 +67,7 @@ function seedDB() {
                             first_name: faker_1.faker.person.firstName(),
                             last_name: faker_1.faker.person.lastName(),
                             email: faker_1.faker.internet.email({ provider: "gmail" }),
-                            password: "password",
+                            password: "$2b$10$qTD1CXcTFhVxcozODRqnH.xgoUIiMBPAado2BqGnQ7qTNChfLXm.a",
                             username: faker_1.faker.internet.userName(),
                             is_applicant: isApplicant,
                             applicant_details: isApplicant
@@ -123,7 +134,9 @@ function seedDB() {
                             summary: faker_1.faker.lorem.paragraph(),
                             employment_type: randomFromArray(job_type_enum),
                             experience_level: randomFromArray(experience_level_enum),
-                            expires_at: faker_1.faker.date.soon(),
+                            expires_at: faker_1.faker.date.soon({
+                                days: faker_1.faker.number.int({ max: 100, min: 1 }),
+                            }),
                             description_and_requirement: faker_1.faker.lorem.paragraphs(4),
                             min_quaification: randomFromArray([
                                 "B. Sc",
@@ -147,6 +160,9 @@ function seedDB() {
                             ]),
                             category_id: randomFromArray(job_categories).id,
                             publisher_id: randomFromArray(employers).id,
+                            published_at: faker_1.faker.date.recent({
+                                days: faker_1.faker.number.int({ max: 4, min: 1 }),
+                            }),
                         },
                     });
                     jobs.push(job);
@@ -167,7 +183,23 @@ function seedDB() {
             });
         }
         function seedApplication() {
-            return __awaiter(this, void 0, void 0, function* () { });
+            var _a;
+            return __awaiter(this, void 0, void 0, function* () {
+                const applications = [];
+                for (let i = 0; i < applicants.length - 2; i++) {
+                    const application = yield index_1.default.application.create({
+                        data: {
+                            content: faker_1.faker.lorem.paragraphs(30),
+                            applicant: {
+                                connect: { id: (_a = uniqueRandomFromArray(applicants)()) === null || _a === void 0 ? void 0 : _a.id },
+                            },
+                            job: { connect: { id: randomFromArray(jobs).id } },
+                        },
+                    });
+                    applications.push(application);
+                }
+                return applications;
+            });
         }
     });
 }
