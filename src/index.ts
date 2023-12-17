@@ -25,7 +25,10 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(path.resolve("public"))));
 app.use(express.static(path.join(path.resolve("node_modules"))));
 
-app.use("*", middlewareWapper(checkAuth));
+app.use("*", middlewareWapper(checkAuth), (req, res, next) => {
+	res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+	next();
+});
 app.use(pageRoute);
 app.use("/api", apiRoute);
 
@@ -37,3 +40,5 @@ app.use(errorController);
 app.listen(PORT, async () => {
 	console.log(`Serving at localhost:${PORT}`);
 });
+
+export default app;
