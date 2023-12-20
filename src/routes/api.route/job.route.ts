@@ -13,4 +13,7 @@ const jobRoute = Router();
 
 jobRoute.get("/s", tryCatchWapper(searchJobs));
 
+// you can pretect from here
+//  middlewareWapper(onlyAuthenticated),
+
 export default jobRoute;

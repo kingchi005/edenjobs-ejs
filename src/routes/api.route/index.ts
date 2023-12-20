@@ -13,7 +13,7 @@ const apiRoute = Router();
 apiRoute.use(formidableMiddleware());
 apiRoute.use("/auth", authRoute);
 
-apiRoute.use("/job", middlewareWapper(onlyAuthenticated), jobRoute);
+apiRoute.use("/job", jobRoute);
 apiRoute.use(
 	"/job-application",
 	middlewareWapper(onlyAuthenticated),

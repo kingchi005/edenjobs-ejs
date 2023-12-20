@@ -20,7 +20,7 @@ const formatDate = (date, future = false) => {
 		return diffInHrs + ` hrs${prefix}`;
 	} else if (diffInDays === 1) {
 		return "yesterday";
-	} else if (diffInDays < (future ? 30 : 6)) {
+	} else if (diffInDays < 90) {
 		return diffInDays + ` days${prefix}`;
 	} else {
 		return new Date(date).toLocaleDateString();
