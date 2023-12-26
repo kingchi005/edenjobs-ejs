@@ -2,8 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
-  binaryTargets = ["native","rhel-openssl-1.0.x"]
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
 datasource db {
@@ -18,6 +18,8 @@ model User {
   first_name        String
   last_name         String
   password          String
+  date_of_birth     DateTime
+  gender            String
   is_applicant      Boolean?   @default(true)
   applicant_details Applicant? @relation(fields: [applicant_id], references: [id])
   applicant_id      String?    @unique
@@ -32,7 +34,8 @@ model Applicant {
   user                User?
   avatar              String
   job_field           String
-  skill_set           String
+  skill_set           String // an array
+  qualifications      String //an array
   cv_resume_url       String
   years_of_experience Int
   skill_level         String
@@ -108,7 +111,7 @@ model Application {
   job          Job       @relation(fields: [job_id], references: [id])
   job_id       String
   applicant    Applicant @relation(fields: [applicant_id], references: [id])
-  applicant_id String    
+  applicant_id String
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt
 }

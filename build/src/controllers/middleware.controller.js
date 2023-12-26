@@ -21,7 +21,6 @@ const helpers_controller_1 = require("./helpers.controller");
 const prisma_1 = __importDefault(require("../../prisma"));
 const onlyApplicants = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const user = res.locals.user;
-    console.log(user);
     if (!(user === null || user === void 0 ? void 0 : user.is_applicant))
         throw new response_controller_1.AppError("Forbidden", response_controller_1.resCode.FORBIDDEN);
     next();

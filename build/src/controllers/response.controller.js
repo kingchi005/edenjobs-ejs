@@ -37,6 +37,7 @@ class ApiResponse {
         this.details = details;
         this.statusCode = statusCode;
         this.ok = ok;
+        this.send();
     }
     send() {
         return this.res.status(this.statusCode).json({

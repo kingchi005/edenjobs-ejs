@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import db from "./index";
+import jobsMetaData from "../src/models/jobs.json";
 
 function randomFromArray<T>(arr: T[]): T {
 	return arr[Math.floor(Math.random() * arr.length)];
@@ -25,10 +26,12 @@ const NO_OF = {
 	APPLICATION: 10,
 } as const;
 
+const another_enum = jobsMetaData.job_field;
 const company_size_enum = ["startup", "small", "medium", "large", "others"];
 const job_type_enum = ["part-time", "full-time", "contract"];
 const experience_level_enum = ["entry-level", "mid-level", "advance-level"];
-const work_schedule_enum = ["flexibly hours", "night shift", "day time"];
+const work_schedule_enum = jobsMetaData.work_schedule;
+const qualification_enum = jobsMetaData.qualifications;
 const job_stability_enum = ["long term", "short term"];
 const location_type_enum = ["remote", "on-site"];
 
@@ -63,25 +66,36 @@ async function seedDB() {
 					password:
 						"$2b$10$qTD1CXcTFhVxcozODRqnH.xgoUIiMBPAado2BqGnQ7qTNChfLXm.a",
 					username: faker.internet.userName(),
+					gender: Math.random() < 0.49 ? "M" : "F",
+					date_of_birth: faker.date.past({
+						years: randomFromArray([18, 19, 20, 21, 22, 23, 24, 25, 26]),
+					}),
 					is_applicant: isApplicant,
 					applicant_details: isApplicant
 						? {
 								create: {
 									avatar: faker.internet.avatar(),
 									cv_resume_url: faker.internet.url(),
-									job_field: randomFromArray([
-										"Tech",
-										"Finance",
-										"Business",
-										"others",
-									]),
+									job_field: JSON.stringify(randomFromArray(another_enum)),
+									qualifications: JSON.stringify(
+										[...Array(faker.number.int({ max: 6 }))].map((el) =>
+											randomFromArray(qualification_enum)
+										)
+									),
 									job_stability: randomFromArray(job_stability_enum),
 									location: faker.location.secondaryAddress(),
 									location_type: randomFromArray(location_type_enum),
 									years_of_experience: randomFromArray([1, 2, 3, 4, 4.5]),
-									skill_level: randomFromArray(experience_level_enum),
-									preferred_job_type: randomFromArray(job_type_enum),
-									skill_set: "others|eating|fooding",
+									skill_level: randomFromArray(jobsMetaData.job_level),
+									preferred_job_type: randomFromArray(jobsMetaData.job_type),
+									skill_set: JSON.stringify([
+										"Farming & Agriculture",
+										"Food Services & Catering",
+										"Health & Safety",
+										"Hospitality & Leisure",
+										"Human Resources",
+										"Legal Services",
+									]),
 									work_schedule: randomFromArray(work_schedule_enum),
 								},
 						  }
@@ -99,12 +113,7 @@ async function seedDB() {
 									company_location_city: faker.location.city(),
 									company_location_state: faker.location.state(),
 									company_location_street: faker.location.streetAddress(),
-									industry: randomFromArray([
-										"Tech",
-										"Finance",
-										"Business",
-										"others",
-									]),
+									industry: randomFromArray(another_enum),
 								},
 						  }
 						: {},
@@ -126,19 +135,13 @@ async function seedDB() {
 					city_location: faker.location.city(),
 					benefits: "good things|love|joy|fanta|etc",
 					summary: faker.lorem.paragraph(),
-					employment_type: randomFromArray(job_type_enum),
-					experience_level: randomFromArray(experience_level_enum),
+					employment_type: randomFromArray(jobsMetaData.job_type),
+					experience_level: randomFromArray(jobsMetaData.job_level),
 					expires_at: faker.date.soon({
 						days: faker.number.int({ max: 100, min: 1 }),
 					}),
 					description_and_requirement: faker.lorem.paragraphs(4),
-					min_quaification: randomFromArray([
-						"B. Sc",
-						"B. Tech",
-						"Masters",
-						"Phd",
-						"Prof",
-					]),
+					min_quaification: randomFromArray(qualification_enum),
 					is_remote: Math.random() < 0.5,
 					max_salary: faker.number.int({ min: 500, max: 5000 }),
 					min_salary: faker.number.int({ max: 100 }),
@@ -167,9 +170,9 @@ async function seedDB() {
 	async function seedJobCategory() {
 		const cats = [];
 
-		for (let i = 0; i < NO_OF.JOBCATEGORY; i++) {
+		for (let i = 0; i < jobsMetaData.job_categories.length; i++) {
 			const cat = await db.jobCategory.create({
-				data: { name: faker.internet.domainWord() },
+				data: { name: jobsMetaData.job_categories[i] },
 			});
 			cats.push(cat);
 		}

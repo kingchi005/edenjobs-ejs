@@ -17,11 +17,11 @@ const response_controller_1 = require("./response.controller");
 const prisma_1 = __importDefault(require("../../prisma"));
 const NO_PER_PAGE = 8;
 const creatJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    return new response_controller_1.ApiResponse(res, "create jobs here", {}).send();
+    return new response_controller_1.ApiResponse(res, "create jobs here", {});
 });
 exports.creatJob = creatJob;
 const edithJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    return new response_controller_1.ApiResponse(res, "edith jobs here", {}).send();
+    return new response_controller_1.ApiResponse(res, "edith jobs here", {});
 });
 exports.edithJob = edithJob;
 const getJobs = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -44,6 +44,7 @@ const getJobDetail = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
             _count: { select: { applications: true } },
             publisher: true,
             category: true,
+            applications: true,
         },
     });
     res.locals.job = job;
@@ -108,8 +109,8 @@ const searchJobs = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         },
     });
     if (!jobs)
-        return new response_controller_1.ApiResponse(res, "No jobs found", {}).send();
-    return new response_controller_1.ApiResponse(res, "success", { jobs }).send();
+        return new response_controller_1.ApiResponse(res, "No jobs found", {});
+    return new response_controller_1.ApiResponse(res, "success", { jobs });
 });
 exports.searchJobs = searchJobs;
 const getJobCategory = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

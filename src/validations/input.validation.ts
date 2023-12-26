@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { getBooleanValidation, getStringValidation } from "./schema";
+import {
+	dateSchema,
+	getBooleanValidation,
+	getStringValidation,
+} from "./schema";
 
 const ValidationSchema = {
 	login: z.object({
@@ -13,6 +17,8 @@ const ValidationSchema = {
 		first_name: getStringValidation("first_name"),
 		last_name: getStringValidation("last_name"),
 		is_applicant: getBooleanValidation("is_applicant"),
+		gender: getStringValidation("gender"),
+		date_of_birth: dateSchema,
 	}),
 	appliyForJob: z.object({
 		job_id: getStringValidation("job_id"),

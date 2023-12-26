@@ -8,6 +8,8 @@ import {
 	resCode,
 } from "./response.controller";
 import { TUser } from "../types";
+import { z } from "zod";
+import { getStringValidation } from "../validations/schema";
 
 export const appliyForJob = async (req: Request, res: Response) => {
 	const user = res.locals.user as TUser;
@@ -57,7 +59,7 @@ export const appliyForJob = async (req: Request, res: Response) => {
 		"Applied successfully",
 		{ application },
 		resCode.CREATED
-	).send();
+	);
 };
 
 export const getUserJobApplications = async (
@@ -73,6 +75,29 @@ export const getUserJobApplications = async (
 	});
 	res.locals.userJobApplications = userJobApplications;
 	next();
+};
+
+export const getJobApplicationDetails = async (req: Request, res: Response) => {
+	const id = +req.params.id;
+	if (isNaN(id)) throw new AppError("Invalid id", resCode.BAD_REQUEST);
+
+	const application = await db.application.findFirst({
+		where: { id },
+		include: {
+			// applicant: true,
+			job: {
+				include: {
+					category: true,
+					publisher: true,
+					_count: { select: { applications: true } },
+				},
+			},
+		},
+	});
+
+	if (!application) throw new AppError("Not found", resCode.NOT_FOUND);
+
+	return new ApiResponse(res, "Success", { application });
 };
 
 export const getApplications = async (

@@ -39,7 +39,9 @@ export class ApiResponse {
 		public details?: unknown,
 		public statusCode: number = resCode.OK,
 		public ok: boolean = true
-	) {}
+	) {
+		this.send();
+	}
 
 	public send() {
 		return this.res.status(this.statusCode).json({

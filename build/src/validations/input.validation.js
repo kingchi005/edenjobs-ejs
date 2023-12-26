@@ -14,6 +14,8 @@ const ValidationSchema = {
         first_name: (0, schema_1.getStringValidation)("first_name"),
         last_name: (0, schema_1.getStringValidation)("last_name"),
         is_applicant: (0, schema_1.getBooleanValidation)("is_applicant"),
+        gender: (0, schema_1.getStringValidation)("gender"),
+        date_of_birth: schema_1.dateSchema,
     }),
     appliyForJob: zod_1.z.object({
         job_id: (0, schema_1.getStringValidation)("job_id"),

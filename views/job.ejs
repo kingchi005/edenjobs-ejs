@@ -1,5 +1,7 @@
 <%- include('./partials/head.ejs') %>
 <!--  -->
+<%- include('./partials/nav.ejs') %>
+<!--  -->
 <% if (job) { %>
 <link href="/quill/dist/quill.snow.css" rel="stylesheet" />
 
@@ -200,6 +202,8 @@
 						<%- job.description_and_requirement %>
 					</div>
 				</div>
+				<% if (new Date(job.expires_at).getTime()>new Date().getTime()) { %>
+
 				<div class="rounded-lg bg-white shadow-lg">
 					<div
 						class="flex w-full items-center justify-center py-16 text-center text-sm lg:w-[400px] lg:py-0"
@@ -207,7 +211,14 @@
 						<div class="text-center mb-10">
 							<% if (user) { %>
 							<!--  check if applied -->
-							<% if (true) { %>
+							<% if
+							(job.applications.map(apl=>apl.applicant_id).includes(user.applicant_details?.id))
+							{ %>
+
+							<p class="mt-7 mb-2 text-center font-light text-gray-400">
+								You have applied for this job.
+							</p>
+							<% }else{ %>
 							<div class="mx-auto">
 								<button
 									type="button"
@@ -222,13 +233,11 @@
 								</button>
 							</div>
 
-							<% }else{ %>
-							<!-- you have applied already -->
 							<!--  -->
 							<% } %>
 							<!--  -->
 							<% }else{ %>
-							<p class="mt-7 mb-2 text-center font-light text-gray-400">
+							<p class="mt-7 mb-2 text-center font-light text-gray-700">
 								You have to be logged in to apply for this job.
 							</p>
 							<div class="mx-auto">
@@ -245,6 +254,7 @@
 						</div>
 					</div>
 				</div>
+				<% } %>
 			</div>
 		</div>
 	</div>

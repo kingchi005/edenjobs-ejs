@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getApplications = exports.getUserJobApplications = exports.appliyForJob = void 0;
+exports.getApplications = exports.getJobApplicationDetails = exports.getUserJobApplications = exports.appliyForJob = void 0;
 const prisma_1 = __importDefault(require("../../prisma"));
 const input_validation_1 = __importDefault(require("../validations/input.validation"));
 const response_controller_1 = require("./response.controller");
@@ -42,7 +42,7 @@ const appliyForJob = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     });
     if (!application)
         throw new response_controller_1.AppError("Application not created", response_controller_1.resCode.NOT_ACCEPTED, application);
-    return new response_controller_1.ApiResponse(res, "Applied successfully", { application }, response_controller_1.resCode.CREATED).send();
+    return new response_controller_1.ApiResponse(res, "Applied successfully", { application }, response_controller_1.resCode.CREATED);
 });
 exports.appliyForJob = appliyForJob;
 const getUserJobApplications = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -54,6 +54,27 @@ const getUserJobApplications = (req, res, next) => __awaiter(void 0, void 0, voi
     next();
 });
 exports.getUserJobApplications = getUserJobApplications;
+const getJobApplicationDetails = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = +req.params.id;
+    if (isNaN(id))
+        throw new response_controller_1.AppError("Invalid id", response_controller_1.resCode.BAD_REQUEST);
+    const application = yield prisma_1.default.application.findFirst({
+        where: { id },
+        include: {
+            job: {
+                include: {
+                    category: true,
+                    publisher: true,
+                    _count: { select: { applications: true } },
+                },
+            },
+        },
+    });
+    if (!application)
+        throw new response_controller_1.AppError("Not found", response_controller_1.resCode.NOT_FOUND);
+    return new response_controller_1.ApiResponse(res, "Success", { application });
+});
+exports.getJobApplicationDetails = getJobApplicationDetails;
 const getApplications = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getApplications = getApplications;

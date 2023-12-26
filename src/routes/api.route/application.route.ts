@@ -7,7 +7,10 @@ import {
 	onlyApplicants,
 	onlyAuthenticated,
 } from "../../controllers/middleware.controller";
-import { appliyForJob } from "../../controllers/application.controller";
+import {
+	appliyForJob,
+	getJobApplicationDetails,
+} from "../../controllers/application.controller";
 
 const jobApplicationRoute = Router();
 
@@ -22,6 +25,13 @@ jobApplicationRoute.post(
 	middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyApplicants),
 	tryCatchWapper(appliyForJob)
+);
+
+jobApplicationRoute.get(
+	"/:id",
+	middlewareWapper(onlyAuthenticated),
+	middlewareWapper(onlyApplicants),
+	tryCatchWapper(getJobApplicationDetails)
 );
 
 export default jobApplicationRoute;

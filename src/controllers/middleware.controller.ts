@@ -13,7 +13,6 @@ export const onlyApplicants = async (
 	next: NextFunction
 ) => {
 	const user = res.locals.user as TUser;
-	console.log(user);
 
 	if (!user?.is_applicant) throw new AppError("Forbidden", resCode.FORBIDDEN);
 

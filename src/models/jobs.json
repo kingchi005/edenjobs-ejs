@@ -1,0 +1,692 @@
+{
+	"job_type": [
+		"Apprenticeship",
+		"Casual/Temporary",
+		"Contract",
+		"Freelance",
+		"Full time",
+		"Internship",
+		"Part time",
+		"Permanent",
+		"Remote Working",
+		"Volunteer"
+	],
+	"work_schedule": ["flexibly hours", "night shift", "day time"],
+	"job_categories": [
+		"Data Analysis",
+		"Design / Video",
+		"Data Science",
+		"Admin / HR / Operations",
+		"Client / Customer Support",
+		"DevOps / Sysadmin",
+		"Engineering / Technical",
+		"Finance / Accounting",
+		"Media / Content / Writing",
+		"Product / Project Management",
+		"Sales and Marketing",
+		"Software Development (web/mobile)",
+		"General (Others)",
+		"Legal",
+		"Medical / Health",
+		"Education"
+	],
+	"job_field": [
+		"Accounting, Auditing & Finance",
+		"Admin & Office",
+		"Building & Architecture",
+		"Community & Social Services",
+		"Consulting & Strategy",
+		"Creative & Design",
+		"Customer Service & Support",
+		"Driver & Transport Services",
+		"Engineering & Technology",
+		"Estate Agents & Property Management",
+		"Farming & Agriculture",
+		"Food Services & Catering",
+		"Health & Safety",
+		"Hospitality & Leisure",
+		"Human Resources",
+		"Legal Services",
+		"Management & Business Development",
+		"Marketing & Communications",
+		"Medical & Pharmaceutical",
+		"Product & Project Management",
+		"Quality Control & Assurance ",
+		"Research, Teaching & Training",
+		"Sales",
+		"Software & Data",
+		"Supply Chain & Procurement",
+		"Trades & Services"
+	],
+	"qualifications": [
+		"High School (S.S.C.E)",
+		"HND",
+		"MBA / MSc",
+		"MBBS",
+		"MPhil / PhD",
+		"N.C.E",
+		"OND",
+		"Vocational",
+		"Others"
+	],
+	"skill_set": "fetch('https://scout.softstructures.co/api/common/skills',{method:'post',body:{name:'food'}})",
+	"job_level": [
+		"Director Level (15 - 20+ years)",
+		"Entry Level (0 - 2 years)",
+		"Executive Level (15 - 20+ years)",
+		"Junior/Associate Level (2 - 5 years)",
+		"Management Level (10 - 15 years)",
+		"Mid Level (5 - 10 years)",
+		"No Experience",
+		"Senior Level (10+ years)"
+	],
+	"states": [
+		{
+			"name": "Abia State",
+			"cities": [
+				"Abiriba",
+				"Akwete",
+				"Amawom",
+				"Arochukwu",
+				"Azumini",
+				"Eluoma",
+				"Mbot Abasi Kingdom",
+				"Mgboko",
+				"Mgboko Ngwa",
+				"Ndoro",
+				"Nkporo",
+				"Obinkita",
+				"Ohafia",
+				"Omoba, Abia",
+				"Owerrinta",
+				"Ozara, Abia State",
+				"Umudike",
+				"Umuogele",
+				"Umuogele Ntigha"
+			]
+		},
+		{
+			"name": "Adamawa",
+			"cities": [
+				"Yola",
+				"Mubi North",
+				"Tungo",
+				"Madagali",
+				"Guyuk",
+				"Lamurde",
+				"Girei",
+				"Hong",
+				"Jada",
+				"Maiha",
+				"Mubi",
+				"Ganye",
+				"Belel",
+				"Michika",
+				"Numan",
+				"Song",
+				"Jimeta",
+				"Jada"
+			]
+		},
+		{
+			"name": "Akwa Ibom",
+			"cities": [
+				"Mkpat-Enin",
+				"Esit-Eket",
+				"Uyo",
+				"Abak",
+				"Ikot Ekpene",
+				"Etim Ekpo",
+				"Ikot Afanga",
+				"Obolo"
+			]
+		},
+		{
+			"name": "Anambra",
+			"cities": [
+				"Akpu",
+				"Nnewi",
+				"Ihiala",
+				"Otuocha",
+				"Nawfia",
+				"Ihite",
+				"Ukwulu",
+				"Ebenebe",
+				"Abatete",
+				"Ideani",
+				"Oba",
+				"Nzam",
+				"Nanka",
+				"Abagana",
+				"Enugwu Ukwu",
+				"Nibo",
+				"Obosi",
+				"Neni",
+				"Uga",
+				"Nawfija",
+				"Umuawulu"
+			]
+		},
+		{
+			"name": "Bauchi",
+			"cities": [
+				"Ningi",
+				"Bauchi",
+				"Azare",
+				"Disina",
+				"Katagum",
+				"Zadawa",
+				"Faggo"
+			]
+		},
+		{
+			"name": "Bayelsa",
+			"cities": [
+				"Yenagoa",
+				"Akassa",
+				"Lobia",
+				"Wilberforce Island",
+				"Amassoma",
+				"Eniwari",
+				"Ekeremor",
+				"Aliebiri",
+				"Anyama-Ogbia",
+				"Anyama-Ijaw",
+				"Peretoru",
+				"Twon-Brass",
+				"Egwema-Brass",
+				"Kaiama",
+				"Nembe",
+				"Odi",
+				"Ogbia",
+				"Okpoama",
+				"Brass",
+				"Oporoma",
+				"Korokorosei",
+				"Otuan",
+				"Koroama",
+				"Okolobiri",
+				"Obunagha",
+				"Ogboloma",
+				"Sagbama",
+				"Olugbobiri",
+				"Peremabiri",
+				"Ekowe",
+				"Swali"
+			]
+		},
+		{
+			"name": "Benue",
+			"cities": ["Otukpo", "Makurdi", "Igumale", "Otukpa", "Obi", "Gbagbongom"]
+		},
+		{
+			"name": "Borno",
+			"cities": [
+				"Dikwa",
+				"Maiduguri",
+				"Kukawa",
+				"Kauwa",
+				"Wamdeo / Giwi",
+				"Rann",
+				"Doro Gowon"
+			]
+		},
+		{
+			"name": "Cross River",
+			"cities": ["Calabar", "Ugep", "Idomi", "Akpap", "Mkpani", "Creek Town"]
+		},
+		{
+			"name": "Delta",
+			"cities": [
+				"Warri",
+				"Illah",
+				"Igbuzor",
+				"Obiariku",
+				"Asaba",
+				"Abo",
+				"Ughelli",
+				"Sapele",
+				"Otor Udu",
+				"Orerokpe",
+				"Abraka",
+				"Ofagbe",
+				"Idumuje-Unor",
+				"Ozoro"
+			]
+		},
+		{
+			"name": "Ebonyi",
+			"cities": [
+				"Abakaliki",
+				"Afikpo",
+				"Ishiagu",
+				"Ishieke",
+				"Nkalagu",
+				"Onueke",
+				"Effium",
+				"Izzi",
+				"Ntezi-Aba",
+				"Unwana",
+				"Amaozara"
+			]
+		},
+		{
+			"name": "Edo",
+			"cities": [
+				"Benin City",
+				"Agenebode",
+				"Okpella",
+				"Uromi",
+				"Okpekpe",
+				"Ososo",
+				"Ekpoma",
+				"Iguododo",
+				"Auchi",
+				"Irrua",
+				"Igbanke",
+				"Uokha",
+				"Ewohimi",
+				"Ogwa Town",
+				"Ugboha",
+				"Ohordua",
+				"Uzairue",
+				"Uzebba",
+				"Ihievbe",
+				"Ughoton",
+				"Ibilo",
+				"Jattu",
+				"Obadan",
+				"Urhonigbe",
+				"Okada",
+				"Iyamho",
+				"Imiekuri"
+			]
+		},
+		{
+			"name": "Ekiti",
+			"cities": [
+				"Ilawe Ekiti",
+				"Ado Ekiti",
+				"Oye",
+				"Omuo",
+				"Ise",
+				"Iyin",
+				"Efon Alaaye",
+				"Ijero",
+				"Ido-Osi",
+				"Ido Ekiti",
+				"Ikoro",
+				"Ire Ekiti",
+				"Emure",
+				"Ijare",
+				"Oke Ila Orangun",
+				"Iwaraja"
+			]
+		},
+		{
+			"name": "Enugu",
+			"cities": [
+				"Abor",
+				"Ugwuoba",
+				"Enugu Inyi",
+				"Awgu",
+				"Nsukka",
+				"Okpogho",
+				"Eha Amufu",
+				"Abi",
+				"Enugu-Ezike",
+				"Ugbo",
+				"Obimo",
+				"Umulokpa",
+				"Achi",
+				"Edem",
+				"Aku",
+				"Ngwo",
+				"Mmaku",
+				"Nomeh Unateze",
+				"Ohum",
+				"Ikolo",
+				"Ozara, Enugu"
+			]
+		},
+		{
+			"name": "Gombe",
+			"cities": ["Bajoga", "Gwandum", "Kumo", "Deba Habe", "Shinga"]
+		},
+		{
+			"name": "Imo",
+			"cities": [
+				"Ohoba",
+				"Anara",
+				"Amaifeke",
+				"Oguta",
+				"Amike",
+				"Awo-Omamma",
+				"Okwele",
+				"Awaka",
+				"Arondizuogu",
+				"Okigwe",
+				"Nnarambia",
+				"Mbieri",
+				"Umuagwo",
+				"Ubomiri",
+				"Ekwereazu",
+				"Amaimo",
+				"Ozara",
+				"Umunoha",
+				"Ihiagwa",
+				"Umunumo",
+				"Dikenafai",
+				"Eziama Obiato",
+				"Okwudor",
+				"Ogbaku",
+				"Osina",
+				"Obodoukwu",
+				"Egbu"
+			]
+		},
+		{
+			"name": "Jigawa",
+			"cities": [
+				"Hadejia",
+				"Maigatari",
+				"Kiyawa",
+				"Birnin Kudu",
+				"Malam Maduri",
+				"Katanga",
+				"Fagam"
+			]
+		},
+		{
+			"name": "Kaduna",
+			"cities": [
+				"Ikara",
+				"Kafanchan",
+				"Kaura",
+				"Manchok",
+				"Samaru",
+				"Kamuru",
+				"Kwoi",
+				"Kubacha",
+				"Wusasa",
+				"Sadelafia",
+				"Samaru",
+				"Rahama",
+				"Kagoro",
+				"Badarawa",
+				"Saminaka"
+			]
+		},
+		{
+			"name": "Kano",
+			"cities": ["Sumaila", "Tudun Wada", "Tamburawa", "Birnin Kudu"]
+		},
+		{
+			"name": "Katsina",
+			"cities": ["Faskari", "Jibia", "Daura", "Cheranchi"]
+		},
+		{
+			"name": "Kebbi",
+			"cities": ["Illo", "Yelwa", "Gwandu", "Bin Yauri", "Aliero"]
+		},
+		{
+			"name": "Kogi",
+			"cities": [
+				"Okene",
+				"Ejule",
+				"Kabba",
+				"Ogidi",
+				"Ayegunle",
+				"Obajana",
+				"Idah",
+				"Ogaminana",
+				"Egbe",
+				"Ekinrin-Adde",
+				"Isanlu",
+				"Mopa",
+				"Okenyi",
+				"Amuro"
+			]
+		},
+		{
+			"name": "Kwara",
+			"cities": [
+				"Pategi",
+				"Omu-Aran",
+				"Ajasse Ipo",
+				"Lafiagi",
+				"Iloffa",
+				"Ijara Isin",
+				"Jebba",
+				"Okuta",
+				"Omupo",
+				"Arandun",
+				"Isanlu Isin",
+				"Edidi",
+				"Esie",
+				"Babanloma",
+				"Buari",
+				"Igbonla",
+				"Aran-Orin",
+				"Ilala",
+				"Share, Kwara"
+			]
+		},
+		{
+			"name": "Lagos",
+			"cities": [
+				"Lagos Island",
+				"Epe",
+				"Ikorodu",
+				"Akesan",
+				"Badagry",
+				"Ojo",
+				"Surulere",
+				"Agbowa Ikosi",
+				"Irewe",
+				"Lekki",
+				"Aja",
+				"Yaba"
+			]
+		},
+		{
+			"name": "Nasarawa",
+			"cities": [
+				"Keffi",
+				"Mararaba",
+				"Keana",
+				"Umaish",
+				"Masaka",
+				"Loko",
+				"Laminga",
+				"New Nyanya",
+				"Obi",
+				"Alizaga",
+				"Gidan Mangoro",
+				"Ara Town",
+				"Uke",
+				"New Karshi",
+				"Ado"
+			]
+		},
+		{
+			"name": "Niger",
+			"cities": [
+				"Suleja",
+				"Minna",
+				"Kontagora",
+				"Zungeru",
+				"Tegina",
+				"New Bussa",
+				"Kutigi",
+				"Madalla"
+			]
+		},
+		{
+			"name": "Ogun",
+			"cities": [
+				"Sagamu",
+				"Ijebu Ode",
+				"Ayetoro",
+				"Ijoko",
+				"Ilaro",
+				"Ota",
+				"Idiroko",
+				"Wasinmi",
+				"Atan",
+				"Ijebu Igbo",
+				"Mowe",
+				"Iju",
+				"Idogo",
+				"Iperu",
+				"Ogere",
+				"Ijebu Itele",
+				"Ifo",
+				"Mobalufon",
+				"Iwoye",
+				"Ifonyintedo",
+				"Isonyin",
+				"Oru",
+				"Ilara-Ogudo Yewa"
+			]
+		},
+		{
+			"name": "Ondo",
+			"cities": [
+				"Ikare",
+				"Ipele",
+				"Ijare",
+				"Idoani",
+				"Erusu",
+				"Igbara Oke",
+				"Akungba",
+				"Idanre",
+				"Supare Akoko",
+				"Ugbo Kingdom",
+				"Ibule-Soro"
+			]
+		},
+		{
+			"name": "Osun",
+			"cities": [
+				"Ilesa",
+				"Osogbo",
+				"Ikire",
+				"Ede",
+				"Ibokun",
+				"Bode-Osi",
+				"Apomu",
+				"Gbongan",
+				"Ifon-Osun",
+				"Iragbiji",
+				"Ikirun",
+				"Esa Oke",
+				"Modakeke I",
+				"Igbajo",
+				"Ode Omu",
+				"Imesi-Ile",
+				"Eti-Oni",
+				"Ipetu Ijesa I",
+				"Ayegunle",
+				"Iragberi",
+				"Ilobu",
+				"Otan Ayegbaju",
+				"Ikeji-Arakeji"
+			]
+		},
+		{
+			"name": "Oyo",
+			"cities": [
+				"Kishi",
+				"Igangan",
+				"Sepeteri",
+				"Okeho",
+				"Igbeti",
+				"Eruwa",
+				"Iroko",
+				"Ado Awaiye",
+				"Igboho",
+				"Lalupon",
+				"Bara",
+				"Ibadan"
+			]
+		},
+		{
+			"name": "Plateau",
+			"cities": [
+				"Langtang",
+				"Wase",
+				"Kurgwi",
+				"Jengre",
+				"Langtang North",
+				"Ganawuri"
+			]
+		},
+		{
+			"name": "Rivers",
+			"cities": [
+				"Bonny",
+				"Buguma",
+				"Abonnema",
+				"Elele",
+				"Odiabidi",
+				"Bane",
+				"Rumuokoro",
+				"Omoku",
+				"Onne",
+				"Igwuruta",
+				"Ataba",
+				"Oduoha-Emuoha",
+				"Rumuigbo",
+				"Ikpo",
+				"Rumukwuta",
+				"Akinima",
+				"Elelenwo",
+				"Bakana",
+				"Nkoroo",
+				"Rumudara"
+			]
+		},
+		{
+			"name": "Sokoto",
+			"cities": ["Isa", "Gidan Madi", "Makwa", "Balle"]
+		},
+		{
+			"name": "Taraba",
+			"cities": ["Ibi", "Nguroje", "Gembu", "Dorofi", "Muri"]
+		},
+		{
+			"name": "Yobe",
+			"cities": []
+		},
+		{
+			"name": "Zamfara",
+			"cities": ["Gusau", "Bagega"]
+		},
+		{
+			"name": "Federal Capital Territory (FCT)",
+			"cities": [
+				"Lokogoma",
+				"Galadimawa",
+				"Kado",
+				"Mpape",
+				"Jahi",
+				"Durumi",
+				"Wuse 2",
+				"Lugbe",
+				"Nyanya",
+				"Karu",
+				"Apo",
+				"Utako",
+				"Jabi",
+				"Kubwa",
+				"Gwarinpa",
+				"Asokoro",
+				"Garki",
+				"Wuse",
+				"Maitama",
+				"Central Business District (CBD)"
+			]
+		}
+	]
+}

@@ -10,11 +10,11 @@ import {
 
 const NO_PER_PAGE = 8;
 export const creatJob = async (req: Request, res: Response) => {
-	return new ApiResponse(res, "create jobs here", {}).send();
+	return new ApiResponse(res, "create jobs here", {});
 };
 
 export const edithJob = async (req: Request, res: Response) => {
-	return new ApiResponse(res, "edith jobs here", {}).send();
+	return new ApiResponse(res, "edith jobs here", {});
 };
 
 export const getJobs = async (
@@ -45,6 +45,7 @@ export const getJobDetail = async (
 			_count: { select: { applications: true } },
 			publisher: true,
 			category: true,
+			applications: true,
 		},
 	});
 	res.locals.job = job;
@@ -122,7 +123,7 @@ export const searchJobs = async (req: Request, res: Response) => {
 		},
 	});
 
-	if (!jobs) return new ApiResponse(res, "No jobs found", {}).send();
+	if (!jobs) return new ApiResponse(res, "No jobs found", {});
 
 	// const current_jobs_count = jobs.length || 0;
 	// const total_jobs_count = jobs || 0;
@@ -130,7 +131,7 @@ export const searchJobs = async (req: Request, res: Response) => {
 	// 	current_jobs_count < NO_PER_PAGE ? 0 : total_jobs_count - page * NO_PER_PAGE;
 	// const nextPage = !!remainning_jobs_count;
 
-	return new ApiResponse(res, "success", { jobs }).send();
+	return new ApiResponse(res, "success", { jobs });
 };
 
 export const getJobCategory = async (
@@ -144,9 +145,9 @@ export const getJobCategory = async (
 };
 
 // export const searchJobsByTitle = async (req: Request, res: Response) => {
-// 	return new ApiResponse(res, "searchJobsByTitle here", {}).send();
+// 	return new ApiResponse(res, "searchJobsByTitle here", {});
 // };
 
 // export const searchJobsByKeyWord = async (req: Request, res: Response) => {
-// 	return new ApiResponse(res, "searchJobsByKeyWord here", {}).send();
+// 	return new ApiResponse(res, "searchJobsByKeyWord here", {});
 // };

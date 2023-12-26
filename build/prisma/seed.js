@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const faker_1 = require("@faker-js/faker");
 const index_1 = __importDefault(require("./index"));
+const jobs_json_1 = __importDefault(require("../src/models/jobs.json"));
 function randomFromArray(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -35,10 +36,12 @@ const NO_OF = {
     JOBCATEGORY: 5,
     APPLICATION: 10,
 };
+const another_enum = jobs_json_1.default.job_field;
 const company_size_enum = ["startup", "small", "medium", "large", "others"];
 const job_type_enum = ["part-time", "full-time", "contract"];
 const experience_level_enum = ["entry-level", "mid-level", "advance-level"];
 const work_schedule_enum = ["flexibly hours", "night shift", "day time"];
+const qualification_enum = jobs_json_1.default.qualifications;
 const job_stability_enum = ["long term", "short term"];
 const location_type_enum = ["remote", "on-site"];
 function seedDB() {
@@ -69,25 +72,32 @@ function seedDB() {
                             email: faker_1.faker.internet.email({ provider: "gmail" }),
                             password: "$2b$10$qTD1CXcTFhVxcozODRqnH.xgoUIiMBPAado2BqGnQ7qTNChfLXm.a",
                             username: faker_1.faker.internet.userName(),
+                            gender: Math.random() < 0.49 ? "M" : "F",
+                            date_of_birth: faker_1.faker.date.past({
+                                years: randomFromArray([18, 19, 20, 21, 22, 23, 24, 25, 26]),
+                            }),
                             is_applicant: isApplicant,
                             applicant_details: isApplicant
                                 ? {
                                     create: {
                                         avatar: faker_1.faker.internet.avatar(),
                                         cv_resume_url: faker_1.faker.internet.url(),
-                                        job_field: randomFromArray([
-                                            "Tech",
-                                            "Finance",
-                                            "Business",
-                                            "others",
-                                        ]),
+                                        job_field: JSON.stringify(randomFromArray(another_enum)),
+                                        qualifications: JSON.stringify([...Array(faker_1.faker.number.int({ max: 6 }))].map((el) => randomFromArray(qualification_enum))),
                                         job_stability: randomFromArray(job_stability_enum),
                                         location: faker_1.faker.location.secondaryAddress(),
                                         location_type: randomFromArray(location_type_enum),
                                         years_of_experience: randomFromArray([1, 2, 3, 4, 4.5]),
-                                        skill_level: randomFromArray(experience_level_enum),
-                                        preferred_job_type: randomFromArray(job_type_enum),
-                                        skill_set: "others|eating|fooding",
+                                        skill_level: randomFromArray(jobs_json_1.default.job_level),
+                                        preferred_job_type: randomFromArray(jobs_json_1.default.job_type),
+                                        skill_set: JSON.stringify([
+                                            "Farming & Agriculture",
+                                            "Food Services & Catering",
+                                            "Health & Safety",
+                                            "Hospitality & Leisure",
+                                            "Human Resources",
+                                            "Legal Services",
+                                        ]),
                                         work_schedule: randomFromArray(work_schedule_enum),
                                     },
                                 }
@@ -105,12 +115,7 @@ function seedDB() {
                                         company_location_city: faker_1.faker.location.city(),
                                         company_location_state: faker_1.faker.location.state(),
                                         company_location_street: faker_1.faker.location.streetAddress(),
-                                        industry: randomFromArray([
-                                            "Tech",
-                                            "Finance",
-                                            "Business",
-                                            "others",
-                                        ]),
+                                        industry: randomFromArray(another_enum),
                                     },
                                 }
                                 : {},
@@ -132,19 +137,13 @@ function seedDB() {
                             city_location: faker_1.faker.location.city(),
                             benefits: "good things|love|joy|fanta|etc",
                             summary: faker_1.faker.lorem.paragraph(),
-                            employment_type: randomFromArray(job_type_enum),
-                            experience_level: randomFromArray(experience_level_enum),
+                            employment_type: randomFromArray(jobs_json_1.default.job_type),
+                            experience_level: randomFromArray(jobs_json_1.default.job_level),
                             expires_at: faker_1.faker.date.soon({
                                 days: faker_1.faker.number.int({ max: 100, min: 1 }),
                             }),
                             description_and_requirement: faker_1.faker.lorem.paragraphs(4),
-                            min_quaification: randomFromArray([
-                                "B. Sc",
-                                "B. Tech",
-                                "Masters",
-                                "Phd",
-                                "Prof",
-                            ]),
+                            min_quaification: randomFromArray(qualification_enum),
                             is_remote: Math.random() < 0.5,
                             max_salary: faker_1.faker.number.int({ min: 500, max: 5000 }),
                             min_salary: faker_1.faker.number.int({ max: 100 }),
@@ -173,9 +172,9 @@ function seedDB() {
         function seedJobCategory() {
             return __awaiter(this, void 0, void 0, function* () {
                 const cats = [];
-                for (let i = 0; i < NO_OF.JOBCATEGORY; i++) {
+                for (let i = 0; i < jobs_json_1.default.job_categories.length; i++) {
                     const cat = yield index_1.default.jobCategory.create({
-                        data: { name: faker_1.faker.internet.domainWord() },
+                        data: { name: jobs_json_1.default.job_categories[i] },
                     });
                     cats.push(cat);
                 }

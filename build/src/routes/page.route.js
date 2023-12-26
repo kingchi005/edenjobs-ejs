@@ -1,4 +1,7 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const response_controller_1 = require("../controllers/response.controller");
@@ -7,6 +10,7 @@ const helpers_controller_1 = require("../controllers/helpers.controller");
 const middleware_controller_1 = require("../controllers/middleware.controller");
 const application_controller_1 = require("../controllers/application.controller");
 const applicant_controller_1 = require("../controllers/applicant.controller");
+const jobs_json_1 = __importDefault(require("../models/jobs.json"));
 const pageRoute = (0, express_1.Router)();
 pageRoute.get("*", (req, res, next) => {
     res.locals.helper = { formatDate: helpers_controller_1.formatDate };
@@ -31,7 +35,15 @@ pageRoute.get("/dashboard/applications", (0, response_controller_1.middlewareWap
     });
 });
 pageRoute.get("/dashboard/profile", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyApplicants), (0, response_controller_1.middlewareWapper)(applicant_controller_1.getApplicantDetails), (req, res) => {
-    res.render("applicant/profile", { title: "Profile", page: "profile" });
+    res.render("applicant/profile", {
+        title: "Profile",
+        page: "profile",
+        qualifications: jobs_json_1.default.qualifications,
+        job_field: jobs_json_1.default.job_field,
+        job_level: jobs_json_1.default.job_level,
+        job_type: jobs_json_1.default.job_type,
+        work_schedule: jobs_json_1.default.work_schedule,
+    });
 });
 pageRoute.get("/modal", (req, res) => res.render("modal"));
 exports.default = pageRoute;

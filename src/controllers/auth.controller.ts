@@ -42,7 +42,7 @@ export const loginUser = async (req: Request, res: Response) => {
 	res.locals.user = _user;
 	const { password, ...user } = _user;
 
-	return new ApiResponse(res, "login here", { user }).send();
+	return new ApiResponse(res, "login here", { user });
 };
 
 export const registerUser = async (req: Request, res: Response) => {
@@ -58,7 +58,7 @@ export const registerUser = async (req: Request, res: Response) => {
 	const user = await db.user.create({
 		data: { ...data, password },
 	});
-	return new ApiResponse(res, "register user here", {}).send();
+	return new ApiResponse(res, "register user here", {});
 };
 
 export const logOut = async (req: Request, res: Response) => {
@@ -71,11 +71,11 @@ export const logOut = async (req: Request, res: Response) => {
 };
 
 export const registerApplicant = async (req: Request, res: Response) => {
-	return new ApiResponse(res, "register here", {}).send();
+	return new ApiResponse(res, "register here", {});
 };
 
 export const registerEmployer = async (req: Request, res: Response) => {
-	return new ApiResponse(res, "register here", {}).send();
+	return new ApiResponse(res, "register here", {});
 };
 
 /* 

@@ -51,7 +51,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     });
     res.locals.user = _user;
     const { password } = _user, user = __rest(_user, ["password"]);
-    return new response_controller_1.ApiResponse(res, "login here", { user }).send();
+    return new response_controller_1.ApiResponse(res, "login here", { user });
 });
 exports.loginUser = loginUser;
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -64,7 +64,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const user = yield prisma_1.default.user.create({
         data: Object.assign(Object.assign({}, data), { password }),
     });
-    return new response_controller_1.ApiResponse(res, "register user here", {}).send();
+    return new response_controller_1.ApiResponse(res, "register user here", {});
 });
 exports.registerUser = registerUser;
 const logOut = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -77,11 +77,11 @@ const logOut = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.logOut = logOut;
 const registerApplicant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    return new response_controller_1.ApiResponse(res, "register here", {}).send();
+    return new response_controller_1.ApiResponse(res, "register here", {});
 });
 exports.registerApplicant = registerApplicant;
 const registerEmployer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    return new response_controller_1.ApiResponse(res, "register here", {}).send();
+    return new response_controller_1.ApiResponse(res, "register here", {});
 });
 exports.registerEmployer = registerEmployer;
 //# sourceMappingURL=auth.controller.js.map

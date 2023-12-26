@@ -17,6 +17,7 @@ import {
 } from "../controllers/middleware.controller";
 import { getUserJobApplications } from "../controllers/application.controller";
 import { getApplicantDetails } from "../controllers/applicant.controller";
+import jobsMetaData from "../models/jobs.json";
 
 const pageRoute = Router();
 
@@ -84,7 +85,15 @@ pageRoute.get(
 	middlewareWapper(onlyApplicants),
 	middlewareWapper(getApplicantDetails),
 	(req, res) => {
-		res.render("applicant/profile", { title: "Profile", page: "profile" });
+		res.render("applicant/profile", {
+			title: "Profile",
+			page: "profile",
+			qualifications: jobsMetaData.qualifications,
+			job_field: jobsMetaData.job_field,
+			job_level: jobsMetaData.job_level,
+			job_type: jobsMetaData.job_type,
+			work_schedule: jobsMetaData.work_schedule,
+		});
 	}
 );
 

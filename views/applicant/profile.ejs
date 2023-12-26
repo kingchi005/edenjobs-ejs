@@ -1,3 +1,406 @@
 <%- include('./partials/head.ejs') %>
-<main>Profile</main>
+<main class="max-w-7xl mx-auto px-5">
+	<section class="items-end flex-1">
+		<h2 class="text-3xl font-semibold mb-5 mt-10">Personal profile</h2>
+		<div class="md:flex md:justify-center md:gap-5 md:items-stretch">
+			<div
+				class="block rounded-lg text-center border bg-white p-6 dark:bg-neutral-700 flex-1"
+			>
+				<div class="flex justify-center items-center mb-3 relative">
+					<img
+						id="avater"
+						class="rounded-full min-w-52 w-52 align-middle"
+						src="<%= user.applicant_details.avatar %>"
+						alt="<%= user.username %>"
+					/>
+					<div class="image-upload absolute bottom-0 cursor-pointer w-10">
+						<label for="file-input-avater">
+							<img
+								src="https://icons.iconarchive.com/icons/dtafalonso/android-lollipop/128/Downloads-icon.png"
+							/>
+						</label>
+
+						<input id="file-input-avater" class="hidden" type="file" />
+					</div>
+					<!-- <input
+						type="file"
+						placeholder="change"
+						class="w-7 absolute bottom-0 cursor-pointer bg-neutral-500 "
+					/> -->
+				</div>
+				<small class="flex justify-center" id="save-avater-container"> </small>
+
+				<p class="text-lg"><%= user.first_name+" "+user.last_name %></p>
+				<small><%= user.applicant_details.location %></small>
+				<!-- Required font awesome -->
+			</div>
+			<div
+				class="block rounded-lg border bg-white p-6 dark:bg-neutral-700 flex-auto pt-10"
+			>
+				<form id="personal-details">
+					<div class="sm:flex gap-5">
+						<!--First name input-->
+						<div class="relative mb-6 flex-1" data-te-input-wrapper-init>
+							<input
+								type="text"
+								class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+								id="exampleInput123"
+								aria-describedby="emailHelp123"
+								placeholder="First name"
+								value="<%= user.first_name  %>"
+							/>
+							<label
+								for="emailHelp123"
+								class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+								>First name
+							</label>
+						</div>
+
+						<!--Last name input-->
+						<div class="relative mb-6 flex-1" data-te-input-wrapper-init>
+							<input
+								type="text"
+								class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+								id="exampleInput124"
+								aria-describedby="emailHelp124"
+								placeholder="Last name"
+								value="<%= user.last_name  %>"
+							/>
+							<label
+								for="exampleInput124"
+								class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+								>Last name
+							</label>
+						</div>
+					</div>
+					<div class="sm:flex gap-5">
+						<!--Email input-->
+						<div class="relative mb-6 flex-1" data-te-input-wrapper-init>
+							<input
+								type="email"
+								class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+								id="exampleInput125"
+								placeholder="Email address"
+								value="<%= user.email   %>"
+							/>
+							<label
+								for="exampleInput125"
+								class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
+								>Email address
+							</label>
+						</div>
+
+						<!--Address input-->
+						<div class="relative mb-6 flex-1" data-te-input-wrapper-init>
+							<input
+								type="text"
+								class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+								id="exampleInput126"
+								placeholder="Address"
+								value="<%= user.applicant_details.location %>"
+							/>
+							<label
+								for="exampleInput126"
+								class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
+								>Address
+							</label>
+						</div>
+					</div>
+					<!--Submit button-->
+					<div class="flex justify-end">
+						<button
+							id="update-pd"
+							type="submit"
+							class="inline-block w-full sm:w-fit s rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+							data-te-ripple-init
+							data-te-ripple-color="light"
+						>
+							Save details
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+	<section class="items-end flex-1">
+		<h2 class="text-3xl font-semibold mb-5 mt-10">Work information</h2>
+		<div class="md:flex md:justify-center md:gap-5">
+			<div
+				class="block border rounded-lg text-center bg-white p-6 mb-5 dark:bg-neutral-700 flex-1"
+			>
+				<h2 class="text-xl font-semibold mb-5 mt-10">CV / Resume</h2>
+				<iframe
+					src="<%= user.applicant_details.cv_resume_url %>"
+					width="100%"
+					height="500px"
+				>
+				</iframe>
+			</div>
+			<div class="block dark:bg-neutral-700 flex-1">
+				<div class="block rounded-lg border p-6 mb-5 bg-white">
+					<h2 class="text-xl font-semibold mb-5 mt-10">Work details</h2>
+					<div>
+						<div id="work-details">
+							<div class="sm:flex gap-5">
+								<!--Job field input-->
+								<div class="mb-6 flex-1">
+									<select
+										class=""
+										id="job-field-sel"
+										data-te-select-init
+										data-te-select-filter="true"
+									>
+										<% job_field.map(jf=>{ %>
+										<option value="<%= jf %>"><%= jf %></option>
+										<% }) %>
+									</select>
+									<label data-te-select-label-ref>Job field</label>
+								</div>
+
+								<!--Qualification input-->
+
+								<div class="mb-6 flex-1">
+									<select
+										class=""
+										id="qualifications-sel"
+										data-te-select-init
+										multiple
+									>
+										<% qualifications.map(qu=>{ %>
+
+										<option value="<%= qu %>"><%= qu %></option>
+										<% }) %>
+									</select>
+									<label data-te-select-label-ref>Qualifications</label>
+								</div>
+							</div>
+							<!--skills input-->
+
+							<div class="mb-6 flex-1">
+								<div
+									id="skil-set"
+									data-te-chips-initial
+									class="mb-0 min-h-[45px] border-none pb-0 shadow-none outline-none transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:cursor-text flex-1"
+								></div>
+							</div>
+							<div class="sm:flex gap-5">
+								<!--skill level input-->
+								<div class="mb-6 flex-1">
+									<select
+										class=""
+										id="skill-level-sel"
+										data-te-select-init
+										data-te-select-filter="true"
+									>
+										<% job_level.map(jf=>{ %>
+										<option value="<%= jf %>"><%= jf %></option>
+										<% }) %>
+									</select>
+									<label data-te-select-label-ref>Experoence Level</label>
+								</div>
+							</div>
+
+							<!--Submit button-->
+							<div class="flex justify-end">
+								<button
+									id="update-pd"
+									type="save"
+									class="inline-block w-full sm:w-fit s rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+									data-te-ripple-init
+									data-te-ripple-color="light"
+								>
+									Save details
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="block rounded-lg border p-6 mb-5 bg-white">
+					<h2 class="text-xl font-semibold mb-5 mt-10">Job preferences</h2>
+					<div>
+						<div id="job-pref">
+							<div class="sm:flex gap-5">
+								<!--preferred_job_type input-->
+								<div class="mb-6 flex-1">
+									<select
+										class=""
+										id="job-type-sel"
+										data-te-select-init
+										data-te-select-filter="true"
+									>
+										<% job_type.map(jf=>{ %>
+										<option value="<%= jf %>"><%= jf %></option>
+										<% }) %>
+									</select>
+									<label data-te-select-label-ref>Job type</label>
+								</div>
+
+								<!--work_schedule input-->
+								<div class="mb-6 flex-1">
+									<select class="" id="work-schedule-sel" data-te-select-init>
+										<% work_schedule.map(jf=>{ %>
+										<option value="<%= jf %>"><%= jf %></option>
+										<% }) %>
+									</select>
+									<label data-te-select-label-ref>Work schedule</label>
+								</div>
+							</div>
+
+							<div class="sm:flex gap-5">
+								<!--location_type input-->
+								<div class="mb-6 flex-1">
+									<select class="" id="job-location-sel" data-te-select-init>
+										<% ["remote", "on-site"].map(jf=>{ %>
+										<option value="<%= jf %>"><%= jf %></option>
+										<% }) %>
+									</select>
+									<label data-te-select-label-ref>Job location</label>
+								</div>
+							</div>
+
+							<!--Submit button-->
+							<div class="flex justify-end">
+								<button
+									id="update-pd"
+									type="save"
+									class="inline-block w-full sm:w-fit s rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+									data-te-ripple-init
+									data-te-ripple-color="light"
+								>
+									Save details
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
 <%- include('./partials/footer.ejs') %>
+
+<script>
+	const personDetailForm = document.querySelector("#personal-details");
+	const avaterInput = document.querySelector("#file-input-avater");
+	const avaterImg = document.querySelector("#avater");
+	const saveAvatarCont = document.querySelector("#save-avater-container");
+
+	avaterInput.addEventListener("change", (e) => {
+		const file = e.target.files[0];
+		const reader = new FileReader();
+
+		reader.onload = function (e) {
+			console.log(reader.result);
+			avaterImg.setAttribute("src", reader.result);
+			saveAvatarCont.innerHTML = `<button
+						type="button" id="save-avatar-btn"
+						data-te-ripple-init
+						data-te-ripple-color="light"
+						class="flex rounded bg-primary px-4 pb-[5px] pt-[6px] font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="currentColor"
+							class="mr-1 h-4 w-4"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M19.5 21a3 3 0 003-3V9a3 3 0 00-3-3h-5.379a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H4.5a3 3 0 00-3 3v12a3 3 0 003 3h15zm-6.75-10.5a.75.75 0 00-1.5 0v4.19l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V10.5z"
+								clip-rule="evenodd"
+							/>
+						</svg>
+						Save
+					</button>`;
+
+			document
+				.querySelector("#save-avatar-btn")
+				.addEventListener("click", () => {
+					handleAvatarUpload(file);
+				});
+		};
+
+		reader.readAsDataURL(file);
+	});
+
+	personDetailForm.addEventListener("submit", (e) => {
+		e.preventDefault();
+		console.log("submittes");
+	});
+
+	function handleAvatarUpload(file) {
+		console.log("Avatar:", file);
+		console.log("Avatar:", file.url);
+	}
+</script>
+<script>
+	const workDetailsForm = document.querySelector("#work-details");
+
+	// console.log(JSON.parse(`<%- user.applicant_details.qualifications %>`));
+	const qualSelectInstance = te.Select.getInstance(
+		document.querySelector("#qualifications-sel")
+	);
+	qualSelectInstance.setValue(
+		JSON.parse(`<%- user.applicant_details.qualifications %>`)
+	);
+	console.log(JSON.parse(`<%- user.applicant_details.qualifications %>`));
+	const jobFieldSelectInstance = te.Select.getInstance(
+		document.querySelector("#job-field-sel")
+	);
+	jobFieldSelectInstance.setValue("<%= user.applicant_details.job_field %>");
+	// console.log("<%= user.applicant_details.job_field %>");
+
+	const jobTypeSelectInstance = te.Select.getInstance(
+		document.querySelector("#job-type-sel")
+	);
+	jobTypeSelectInstance.setValue(
+		"<%= user.applicant_details.preferred_job_type %>"
+	);
+	// console.log("<%= user.applicant_details.job_field %>");
+
+	const workScheduleSelectInstance = te.Select.getInstance(
+		document.querySelector("#work-schedule-sel")
+	);
+	workScheduleSelectInstance.setValue(
+		"<%= user.applicant_details.work_schedule %>"
+	);
+	// console.log("<%= user.applicant_details.job_field %>");
+
+	const jobLocationSelectInstance = te.Select.getInstance(
+		document.querySelector("#job-location-sel")
+	);
+	jobLocationSelectInstance.setValue(
+		"<%= user.applicant_details.location_type %>"
+	);
+	// console.log("<%= user.applicant_details.job_field %>");
+
+	const chipsInitial = document.querySelector("#skil-set");
+
+	const chipsInitialInstance = new te.ChipsInput(chipsInitial, {
+		initialValues: JSON.parse(
+			`<%- JSON.stringify((user.applicant_details.skill_set.replace(/\|/g,",")).split(",")) %>`
+		).map((it) => ({ tag: it })),
+		labelText: "Skill set",
+	});
+
+	// console.log(
+	// 	JSON.parse(
+	// 		`<%- JSON.stringify((user.applicant_details.skill_set.replace(/\|/g,",")).split(",")) %>`
+	// 	)
+	// );
+
+	workDetailsForm.addEventListener("submit", (e) => {
+		e.preventDefault();
+		console.log("not submit");
+	});
+
+	workDetailsForm
+		.querySelector("button[type='save']")
+		.addEventListener("click", (e) => {
+			const skills = [];
+			document
+				.querySelectorAll("#skil-set span[data-te-chip-text]")
+				.forEach((e) => skills.push(e.textContent));
+			console.log(skills);
+		});
+</script>
