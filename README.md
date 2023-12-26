@@ -33,7 +33,14 @@ nodemon
 
 Then add your contributions to the front end through the `./views` folder
 
+```for automatic live refresh install browser-sync locally THEN
+paste this command in your terminal
+browser-sync start --proxy "localhost:500" --files "views/**/*.ejs" OR
+run npm run start-sync
+```
+
 ## Dependencies
 
 - Nodejs v14^
 - Nodemon
+- browsersync
