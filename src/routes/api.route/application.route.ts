@@ -22,14 +22,14 @@ const jobApplicationRoute = Router();
 
 jobApplicationRoute.post(
 	"/",
-	middlewareWapper(onlyAuthenticated),
+	// middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyApplicants),
 	tryCatchWapper(appliyForJob)
 );
 
 jobApplicationRoute.get(
 	"/:id",
-	middlewareWapper(onlyAuthenticated),
+	// middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyApplicants),
 	tryCatchWapper(getJobApplicationDetails)
 );

@@ -1,10 +1,36 @@
 <%- include('./partials/head.ejs') %>
-<main>
-	<div class="grid gap-10">
-		<div class="bg-slate-400 h-[100px] col-span-1"></div>
-		<div class="bg-slate-400 h-[100px] col-span-3"></div>
-		<div class="bg-slate-400 h-[100px] col-span-3"></div>
-	</div>
+<main class="max-w-7xl mx-auto px-5">
+	<section class="items-end flex-1 mt-10">
+		<!-- <h2 class="text-3xl font-semibold mb-5 mt-10">Personal profile</h2> -->
+		<div class="md:flex md:justify-center md:gap-5 md:items-stretch">
+			<div
+				class="block rounded-lg text-center mb-5 border bg-white p-6 dark:bg-neutral-700 flex-1"
+			>
+				<div class="flex justify-center items-center mb-3 relative">
+					<img
+						id="avater"
+						class="rounded-xl min-w-52 w-52 align-middle"
+						src="<%= user.applicant_details.avatar %>"
+						alt="<%= user.username %>"
+					/>
+				</div>
+				<small class="flex justify-center" id="save-avater-container"> </small>
+
+				<p class="text-lg"><%= user.first_name+" "+user.last_name %></p>
+				<small><%= user.address %></small>
+				<!-- Required font awesome -->
+			</div>
+			<div
+				class="block rounded-lg border bg-white p-6 mb-5 dark:bg-neutral-700 flex-auto pt-10 max-w-2xl"
+			>
+				<div class="flex flex-wrap gap-5 justify-start items-center">
+					<% [1,2,3,4,5,4,5,35,3,4,3,54,5,34].map(el=>{ %>
+					<div>dskjbn</div>
+					<% }) %>
+				</div>
+			</div>
+		</div>
+	</section>
 </main>
 
 <%- include('./partials/footer.ejs') %>

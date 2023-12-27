@@ -34,7 +34,7 @@ export const loginUser = async (req: Request, res: Response) => {
 		{ id: _user.id, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7 },
 		env.HASH_SECRET + ""
 	);
-	res.cookie("@authed", token, {
+	res.cookie(env.AUTH_COOKIE, token, {
 		httpOnly: true,
 		maxAge: 1 * 24 * 60 * 60 * 1000,
 	});
@@ -63,7 +63,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
 export const logOut = async (req: Request, res: Response) => {
 	res
-		.cookie("@authed", "", {
+		.cookie(env.AUTH_COOKIE, "", {
 			httpOnly: true,
 			maxAge: 1,
 		})

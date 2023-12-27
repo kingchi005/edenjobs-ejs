@@ -32,6 +32,7 @@ const getOptionalStringValidation = (key) => zod_1.z
     .string({
     invalid_type_error: `'${key}' must be a string`,
 })
+    .min(3, { message: `'${key}' must be 3 or more characters` })
     .optional();
 exports.getOptionalStringValidation = getOptionalStringValidation;
 const getNumberValidation = (key) => zod_1.z.number({

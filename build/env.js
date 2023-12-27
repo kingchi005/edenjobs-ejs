@@ -9,7 +9,11 @@ dotenv_1.default.config();
 const envSchema = zod_1.z.object({
     DATABASE_URL: zod_1.z.string(),
     HASH_SECRET: zod_1.z.string(),
+    AUTH_COOKIE: zod_1.z.string(),
 });
-const env = envSchema.parse(process.env);
+const runtimeEnv = {
+    AUTH_COOKIE: "@authed",
+};
+const env = envSchema.parse(Object.assign(Object.assign({}, process.env), runtimeEnv));
 exports.default = env;
 //# sourceMappingURL=env.js.map

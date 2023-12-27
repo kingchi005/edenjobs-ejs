@@ -34,10 +34,12 @@ const onlyEmployers = (req, res, next) => __awaiter(void 0, void 0, void 0, func
 });
 exports.onlyEmployers = onlyEmployers;
 const onlyAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const isValid = zod_1.z.object({ "@authed": zod_1.z.string() }).safeParse(req.cookies);
+    const isValid = zod_1.z
+        .object({ [env_1.default.AUTH_COOKIE]: zod_1.z.string() })
+        .safeParse(req.cookies);
     if (!isValid.success)
         throw new response_controller_1.AppError("Not logged in", response_controller_1.resCode.UNAUTHORIZED);
-    const providedToken = isValid.data["@authed"];
+    const providedToken = isValid.data[env_1.default.AUTH_COOKIE];
     if (!providedToken)
         throw new response_controller_1.AppError("Invalid API key", response_controller_1.resCode.UNAUTHORIZED);
     const veriedToken = jsonwebtoken_1.default.verify(providedToken, env_1.default.HASH_SECRET);
@@ -51,10 +53,12 @@ const onlyAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, 
 });
 exports.onlyAuthenticated = onlyAuthenticated;
 const checkAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const isValid = zod_1.z.object({ "@authed": zod_1.z.string() }).safeParse(req.cookies);
+    const isValid = zod_1.z
+        .object({ [env_1.default.AUTH_COOKIE]: zod_1.z.string() })
+        .safeParse(req.cookies);
     res.locals.user = null;
     if (isValid.success) {
-        const providedToken = isValid.data["@authed"];
+        const providedToken = isValid.data[env_1.default.AUTH_COOKIE];
         const veriedToken = jsonwebtoken_1.default.verify(providedToken, env_1.default.HASH_SECRET);
         if ((0, helpers_controller_1.isValidToken)(veriedToken)) {
             const { id, exp } = veriedToken;

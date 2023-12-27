@@ -36,13 +36,15 @@ export const onlyAuthenticated = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const isValid = z.object({ "@authed": z.string() }).safeParse(req.cookies);
+	const isValid = z
+		.object({ [env.AUTH_COOKIE]: z.string() })
+		.safeParse(req.cookies);
 
 	if (!isValid.success)
 		throw new AppError("Not logged in", resCode.UNAUTHORIZED);
 
-	// const providedToken = isValid.data."@authed".split(" ")?.[1]?.trim();
-	const providedToken = isValid.data["@authed"];
+	// const providedToken = isValid.data.env.AUTH_COOKIE.split(" ")?.[1]?.trim();
+	const providedToken = isValid.data[env.AUTH_COOKIE];
 
 	if (!providedToken)
 		throw new AppError("Invalid API key", resCode.UNAUTHORIZED);
@@ -67,11 +69,13 @@ export const checkAuth = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const isValid = z.object({ "@authed": z.string() }).safeParse(req.cookies);
+	const isValid = z
+		.object({ [env.AUTH_COOKIE]: z.string() })
+		.safeParse(req.cookies);
 	res.locals.user = null;
 
 	if (isValid.success) {
-		const providedToken = isValid.data["@authed"];
+		const providedToken = isValid.data[env.AUTH_COOKIE];
 		const veriedToken: unknown = jwt.verify(providedToken, env.HASH_SECRET);
 		if (isValidToken(veriedToken)) {
 			const { id, exp } = veriedToken;

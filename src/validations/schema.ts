@@ -37,6 +37,7 @@ export const getOptionalStringValidation = (key: string) =>
 		.string({
 			invalid_type_error: `'${key}' must be a string`,
 		})
+		.min(3, { message: `'${key}' must be 3 or more characters` })
 		.optional();
 
 export const getNumberValidation = (key: string) =>

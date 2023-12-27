@@ -9,6 +9,7 @@ const envSchema = z.object({
 	// BASE_URL: z.string(),
 	// DEV_ENV: z.string(),
 	HASH_SECRET: z.string(),
+	AUTH_COOKIE: z.string(),
 	// PAYSTACK_SECRET_KEY: z.string(),
 	// CLOUDINARY_API_KEY: z.string(),
 	// CLOUDINARY_CLOUD_NAME: z.string(),
@@ -20,6 +21,10 @@ const envSchema = z.object({
 	// CORS_ORIGIN: z.string(),
 });
 
-const env = envSchema.parse(process.env);
+const runtimeEnv = {
+	AUTH_COOKIE: "@authed",
+};
+
+const env = envSchema.parse({ ...process.env, ...runtimeEnv });
 
 export default env;
