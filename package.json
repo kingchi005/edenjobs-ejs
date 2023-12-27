@@ -8,6 +8,7 @@
 		"start": "node build/src",
 		"build": "tsc",
 		"dev": "tsc && node build/src",
+		"start-sync": "browser-sync start --proxy \"http://localhost:500\" --files \"views/**/*.ejs\"",
 		"css": "tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
 		"db:seed": "ts-node prisma/seed",
 		"db:sync": "prisma db push",
@@ -33,7 +34,6 @@
 		"zod": "^3.22.4"
 	},
 	"devDependencies": {
-		"tw-elements": "^1.1.0",
 		"@faker-js/faker": "^8.3.1",
 		"@types/bcrypt": "^5.0.2",
 		"@types/cookie-parser": "^1.4.6",
@@ -45,10 +45,12 @@
 		"@types/node": "^20.10.4",
 		"@types/nodemailer": "^6.4.14",
 		"autoprefixer": "^10.4.16",
+		"browser-sync": "^2.29.3",
 		"postcss": "^8.4.32",
 		"prisma": "^5.7.0",
 		"tailwindcss": "^3.3.6",
 		"ts-node": "^10.9.2",
+		"tw-elements": "^1.1.0",
 		"typescript": "^5.3.3"
 	}
 }

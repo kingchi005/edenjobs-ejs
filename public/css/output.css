@@ -1860,6 +1860,10 @@ html.dark{
   max-width: fit-content;
 }
 
+.max-w-5xl{
+  max-width: 64rem;
+}
+
 .flex-1{
   flex: 1 1 0%;
 }
@@ -3110,6 +3114,14 @@ html.dark{
 
 .p-\[6\.5rem\]{
   padding: 6.5rem;
+}
+
+.p-10{
+  padding: 2.5rem;
+}
+
+.p-20{
+  padding: 5rem;
 }
 
 .\!py-0{
@@ -6129,6 +6141,11 @@ html.dark{
     padding: 0.5rem;
   }
 
+  .xs\:px-10{
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+
   .xs\:text-center{
     text-align: center;
   }
@@ -6180,6 +6197,11 @@ html.dark{
   .sm\:px-10{
     padding-left: 2.5rem;
     padding-right: 2.5rem;
+  }
+
+  .sm\:px-20{
+    padding-left: 5rem;
+    padding-right: 5rem;
   }
 
   .sm\:text-base{
@@ -6288,6 +6310,15 @@ html.dark{
     gap: 1.25rem;
   }
 
+  .md\:p-\[6\.5rem\]{
+    padding: 6.5rem;
+  }
+
+  .md\:px-10{
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+
   .md\:pr-1{
     padding-right: 0.25rem;
   }
@@ -6387,6 +6418,10 @@ html.dark{
 
   .lg\:gap-2{
     gap: 0.5rem;
+  }
+
+  .lg\:gap-10{
+    gap: 2.5rem;
   }
 
   .lg\:px-10{
