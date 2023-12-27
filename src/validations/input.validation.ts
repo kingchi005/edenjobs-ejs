@@ -2,6 +2,7 @@ import { z } from "zod";
 import {
 	dateSchema,
 	getBooleanValidation,
+	getOptionalStringValidation,
 	getStringValidation,
 } from "./schema";
 
@@ -18,11 +19,34 @@ const ValidationSchema = {
 		last_name: getStringValidation("last_name"),
 		is_applicant: getBooleanValidation("is_applicant"),
 		gender: getStringValidation("gender"),
+		address: getStringValidation("address"),
 		date_of_birth: dateSchema,
 	}),
 	appliyForJob: z.object({
 		job_id: getStringValidation("job_id"),
 		content: getStringValidation("content"),
+	}),
+	updateWorkDetails: z.object({
+		job_field: getOptionalStringValidation("job_field"),
+		qualifications: z
+			.string({ invalid_type_error: `'qualifications' must be a JSON array` })
+			.transform((v) => JSON.parse(v) as string[])
+			.optional(),
+		skill_set: z
+			.string({ invalid_type_error: `'skill_set' must be a JSON array` })
+			.transform((v) => JSON.parse(v) as string[])
+			.optional(),
+		skill_level: getOptionalStringValidation("skill_level"),
+	}),
+	updateJobPreferences: z.object({
+		Job_location: getOptionalStringValidation("Job_location"),
+		work_schedule: getOptionalStringValidation("work_schedule"),
+		job_type: getOptionalStringValidation("job_type"),
+	}),
+	updatePersonalDetails: z.object({
+		first_name: getOptionalStringValidation("first_name"),
+		last_name: getOptionalStringValidation("last_name"),
+		address: getOptionalStringValidation("address"),
 	}),
 	// register:z.object({}),
 	// register:z.object({}),

@@ -20,6 +20,7 @@ model User {
   password          String
   date_of_birth     DateTime
   gender            String
+  address String
   is_applicant      Boolean?   @default(true)
   applicant_details Applicant? @relation(fields: [applicant_id], references: [id])
   applicant_id      String?    @unique

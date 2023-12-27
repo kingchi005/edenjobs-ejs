@@ -31,7 +31,7 @@
 				<small class="flex justify-center" id="save-avater-container"> </small>
 
 				<p class="text-lg"><%= user.first_name+" "+user.last_name %></p>
-				<small><%= user.applicant_details.location %></small>
+				<small><%= user.address %></small>
 				<!-- Required font awesome -->
 			</div>
 			<div
@@ -48,6 +48,7 @@
 								aria-describedby="emailHelp123"
 								placeholder="First name"
 								value="<%= user.first_name  %>"
+								name="first_name"
 							/>
 							<label
 								for="emailHelp123"
@@ -64,6 +65,7 @@
 								id="exampleInput124"
 								aria-describedby="emailHelp124"
 								placeholder="Last name"
+								name="last_name"
 								value="<%= user.last_name  %>"
 							/>
 							<label
@@ -77,6 +79,7 @@
 						<!--Email input-->
 						<div class="relative mb-6 flex-1" data-te-input-wrapper-init>
 							<input
+								disabled
 								type="email"
 								class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
 								id="exampleInput125"
@@ -97,7 +100,8 @@
 								class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
 								id="exampleInput126"
 								placeholder="Address"
-								value="<%= user.applicant_details.location %>"
+								name="address"
+								value="<%= user.address %>"
 							/>
 							<label
 								for="exampleInput126"
@@ -196,7 +200,7 @@
 										<option value="<%= jf %>"><%= jf %></option>
 										<% }) %>
 									</select>
-									<label data-te-select-label-ref>Experoence Level</label>
+									<label data-te-select-label-ref>Experience Level</label>
 								</div>
 							</div>
 
@@ -220,19 +224,14 @@
 					<div>
 						<div id="job-pref">
 							<div class="sm:flex gap-5">
-								<!--preferred_job_type input-->
+								<!--location_type input-->
 								<div class="mb-6 flex-1">
-									<select
-										class=""
-										id="job-type-sel"
-										data-te-select-init
-										data-te-select-filter="true"
-									>
-										<% job_type.map(jf=>{ %>
+									<select class="" id="job-location-sel" data-te-select-init>
+										<% ["remote", "on-site"].map(jf=>{ %>
 										<option value="<%= jf %>"><%= jf %></option>
 										<% }) %>
 									</select>
-									<label data-te-select-label-ref>Job type</label>
+									<label data-te-select-label-ref>Job location</label>
 								</div>
 
 								<!--work_schedule input-->
@@ -247,21 +246,26 @@
 							</div>
 
 							<div class="sm:flex gap-5">
-								<!--location_type input-->
+								<!--preferred_job_type input-->
 								<div class="mb-6 flex-1">
-									<select class="" id="job-location-sel" data-te-select-init>
-										<% ["remote", "on-site"].map(jf=>{ %>
+									<select
+										class=""
+										id="job-type-sel"
+										data-te-select-init
+										data-te-select-filter="true"
+									>
+										<% job_type.map(jf=>{ %>
 										<option value="<%= jf %>"><%= jf %></option>
 										<% }) %>
 									</select>
-									<label data-te-select-label-ref>Job location</label>
+									<label data-te-select-label-ref>Job type</label>
 								</div>
 							</div>
 
 							<!--Submit button-->
 							<div class="flex justify-end">
 								<button
-									id="update-pd"
+									id="save-job-pref"
 									type="save"
 									class="inline-block w-full sm:w-fit s rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
 									data-te-ripple-init
@@ -323,9 +327,28 @@
 		reader.readAsDataURL(file);
 	});
 
-	personDetailForm.addEventListener("submit", (e) => {
+	personDetailForm.addEventListener("submit", async (e) => {
 		e.preventDefault();
-		console.log("submittes");
+		const url = "/api/applicant/personal-details";
+
+		const formData = new FormData(e.target);
+		// for (const key in data) {
+		// 	formData.append(key, data[key]);
+		// }
+
+		const res = await (
+			await fetch(url, {
+				method: "put",
+				headers: {},
+				body: formData,
+			})
+		).json();
+
+		console.log(res);
+		if (!res.ok) {
+			return alert(res.error.message);
+		}
+		alert(res.message);
 	});
 
 	function handleAvatarUpload(file) {
@@ -349,6 +372,14 @@
 	);
 	jobFieldSelectInstance.setValue("<%= user.applicant_details.job_field %>");
 	// console.log("<%= user.applicant_details.job_field %>");
+
+	const skillLevelSelectInstance = te.Select.getInstance(
+		document.querySelector("#skill-level-sel")
+	);
+	skillLevelSelectInstance.setValue(
+		"<%= user.applicant_details.skill_level %>"
+	);
+	// console.log("<%= user.applicant_details.skill_level %>");
 
 	const jobTypeSelectInstance = te.Select.getInstance(
 		document.querySelector("#job-type-sel")
@@ -377,17 +408,13 @@
 	const chipsInitial = document.querySelector("#skil-set");
 
 	const chipsInitialInstance = new te.ChipsInput(chipsInitial, {
-		initialValues: JSON.parse(
-			`<%- JSON.stringify((user.applicant_details.skill_set.replace(/\|/g,",")).split(",")) %>`
-		).map((it) => ({ tag: it })),
+		initialValues: JSON.parse(`<%- user.applicant_details.skill_set %>`).map(
+			(it) => ({ tag: it })
+		),
 		labelText: "Skill set",
 	});
 
-	// console.log(
-	// 	JSON.parse(
-	// 		`<%- JSON.stringify((user.applicant_details.skill_set.replace(/\|/g,",")).split(",")) %>`
-	// 	)
-	// );
+	// console.log(JSON.parse(`<%- user.applicant_details.skill_set %>`));
 
 	workDetailsForm.addEventListener("submit", (e) => {
 		e.preventDefault();
@@ -396,11 +423,69 @@
 
 	workDetailsForm
 		.querySelector("button[type='save']")
-		.addEventListener("click", (e) => {
+		.addEventListener("click", async (e) => {
+			const url = "/api/applicant/work-details";
+
 			const skills = [];
 			document
 				.querySelectorAll("#skil-set span[data-te-chip-text]")
 				.forEach((e) => skills.push(e.textContent));
-			console.log(skills);
+
+			const data = {
+				job_field: jobFieldSelectInstance.value,
+				qualifications: JSON.stringify(qualSelectInstance.value),
+				skill_set: JSON.stringify(skills),
+				skill_level: skillLevelSelectInstance.value,
+			};
+			console.log(data);
+			const formData = new FormData();
+			for (const key in data) {
+				formData.append(key, data[key]);
+			}
+
+			// console.log(formData);
+
+			const res = await (
+				await fetch(url, {
+					method: "put",
+					headers: {},
+					body: formData,
+				})
+			).json();
+
+			console.log(res);
+			if (!res.ok) {
+				return alert(res.error.message);
+			}
+			alert(res.message);
+		});
+
+	document
+		.querySelector("#save-job-pref")
+		.addEventListener("click", async (e) => {
+			const url = "/api/applicant/job-preference";
+			const data = {
+				Job_location: jobLocationSelectInstance.value,
+				work_schedule: workScheduleSelectInstance.value,
+				job_type: jobTypeSelectInstance.value,
+			};
+			const formData = new FormData();
+			for (const key in data) {
+				formData.append(key, data[key]);
+			}
+
+			const res = await (
+				await fetch(url, {
+					method: "put",
+					headers: {},
+					body: formData,
+				})
+			).json();
+
+			console.log(res);
+			if (!res.ok) {
+				return alert(res.error.message);
+			}
+			alert(res.message);
 		});
 </script>

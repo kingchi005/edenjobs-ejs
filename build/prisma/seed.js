@@ -40,7 +40,7 @@ const another_enum = jobs_json_1.default.job_field;
 const company_size_enum = ["startup", "small", "medium", "large", "others"];
 const job_type_enum = ["part-time", "full-time", "contract"];
 const experience_level_enum = ["entry-level", "mid-level", "advance-level"];
-const work_schedule_enum = ["flexibly hours", "night shift", "day time"];
+const work_schedule_enum = jobs_json_1.default.work_schedule;
 const qualification_enum = jobs_json_1.default.qualifications;
 const job_stability_enum = ["long term", "short term"];
 const location_type_enum = ["remote", "on-site"];
@@ -70,6 +70,7 @@ function seedDB() {
                             first_name: faker_1.faker.person.firstName(),
                             last_name: faker_1.faker.person.lastName(),
                             email: faker_1.faker.internet.email({ provider: "gmail" }),
+                            address: faker_1.faker.location.streetAddress(),
                             password: "$2b$10$qTD1CXcTFhVxcozODRqnH.xgoUIiMBPAado2BqGnQ7qTNChfLXm.a",
                             username: faker_1.faker.internet.userName(),
                             gender: Math.random() < 0.49 ? "M" : "F",

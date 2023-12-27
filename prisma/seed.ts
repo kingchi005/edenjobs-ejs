@@ -63,6 +63,7 @@ async function seedDB() {
 					first_name: faker.person.firstName(),
 					last_name: faker.person.lastName(),
 					email: faker.internet.email({ provider: "gmail" }),
+					address: faker.location.streetAddress(),
 					password:
 						"$2b$10$qTD1CXcTFhVxcozODRqnH.xgoUIiMBPAado2BqGnQ7qTNChfLXm.a",
 					username: faker.internet.userName(),

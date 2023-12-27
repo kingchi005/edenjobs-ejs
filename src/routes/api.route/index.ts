@@ -8,6 +8,7 @@ import jobRoute from "./job.route";
 import jobApplicationRoute from "./application.route";
 import formidableMiddleware from "express-formidable";
 import { onlyAuthenticated } from "../../controllers/middleware.controller";
+import applicantRoute from "./applicant.route";
 
 const apiRoute = Router();
 apiRoute.use(formidableMiddleware());
@@ -19,5 +20,7 @@ apiRoute.use(
 	middlewareWapper(onlyAuthenticated),
 	jobApplicationRoute
 );
+
+apiRoute.use("/applicant", applicantRoute);
 
 export default apiRoute;
