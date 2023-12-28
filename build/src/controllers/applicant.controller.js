@@ -30,8 +30,15 @@ const response_controller_1 = require("./response.controller");
 const getApplicantDetails = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const applicantDetails = yield prisma_1.default.applicant.findFirst({
         where: { user: { id: res.locals.user_id } },
-        include: { _count: { select: { applications: true } } },
+        include: {
+            _count: { select: { applications: true } },
+            applications: {
+                take: 1,
+                include: { job: { include: { publisher: true, category: true } } },
+            },
+        },
     });
+    console.log(applicantDetails === null || applicantDetails === void 0 ? void 0 : applicantDetails.applications);
     res.locals.applicantDetails = applicantDetails;
     next();
 });

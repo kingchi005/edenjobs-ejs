@@ -53,6 +53,7 @@ pageRoute.get(
 	"/dashboard",
 	middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyApplicants),
+	middlewareWapper(getRecentJobs),
 	middlewareWapper(getApplicantDetails),
 	(req, res) => {
 		res.render("applicant/index", { title: "Dashboard", page: "dashboard" });

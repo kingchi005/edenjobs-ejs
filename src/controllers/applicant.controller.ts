@@ -17,8 +17,16 @@ export const getApplicantDetails = async (
 
 	const applicantDetails = await db.applicant.findFirst({
 		where: { user: { id: res.locals.user_id } },
-		include: { _count: { select: { applications: true } } },
+		include: {
+			_count: { select: { applications: true } },
+			applications: {
+				take: 1,
+				include: { job: { include: { publisher: true, category: true } } },
+			},
+		},
 	});
+
+	// console.log(applicantDetails?.applications);
 
 	res.locals.applicantDetails = applicantDetails;
 	next();

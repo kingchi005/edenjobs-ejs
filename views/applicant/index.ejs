@@ -1,12 +1,14 @@
 <%- include('./partials/head.ejs') %>
-<main class="max-w-7xl mx-auto px-5">
-	<section class="items-end flex-1 mt-10">
+<main class="max-w-7xl mx-auto px-5 sm:flex flex-row gap-5">
+	<section class="items-end mt-5 md:max-w-sm">
 		<!-- <h2 class="text-3xl font-semibold mb-5 mt-10">Personal profile</h2> -->
-		<div class="md:flex md:justify-center md:gap-5 md:items-stretch">
+		<div class="md:justify-center md:gap-5 md:items-stretch">
 			<div
-				class="block rounded-lg text-center mb-5 border bg-white p-6 dark:bg-neutral-700 flex-1"
+				class="block rounded-lg text-center sm:text-start mb-5 border bg-white p-6 dark:bg-neutral-700 flex-1"
 			>
-				<div class="flex justify-center items-center mb-3 relative">
+				<div
+					class="flex justify-center sm:justify-start items-center mb-3 relative"
+				>
 					<img
 						id="avater"
 						class="rounded-xl min-w-52 w-52 align-middle"
@@ -17,16 +19,265 @@
 				<small class="flex justify-center" id="save-avater-container"> </small>
 
 				<p class="text-lg"><%= user.first_name+" "+user.last_name %></p>
-				<small><%= user.address %></small>
+				<small><%= user.email %></small>
 				<!-- Required font awesome -->
+				<div class="flex flex-wrap justify-start gap-5 mt-5">
+					<% JSON.parse(user.applicant_details.skill_set).map(el=>{ %>
+					<!--  -->
+					<%- include('../components/badge',{text:el}) %>
+					<!--  -->
+					<% }) %>
+				</div>
 			</div>
 			<div
-				class="block rounded-lg border bg-white p-6 mb-5 dark:bg-neutral-700 flex-auto pt-10 max-w-2xl"
+				class="block rounded-lg border bg-white p-6 mb-5 dark:bg-neutral-700 flex-1 pt-5"
 			>
+				<h2 class="text-xl font-semibold mb-5">Recent Job Application</h2>
+
 				<div class="flex flex-wrap gap-5 justify-start items-center">
-					<% [1,2,3,4,5,4,5,35,3,4,3,54,5,34].map(el=>{ %>
-					<div>dskjbn</div>
+					<% if (applicantDetails.applications.length > 0) { %>
+
+					<a class="cursor-pointer">
+						<div class="recent-card shadow-md p-5 rounded-md">
+							<div class="recent-head flex items-center mb-4">
+								<img
+									src="<%= applicantDetails.applications[0].job.publisher.company_logo %>"
+									alt=""
+									class="rounded-full w-10 h-10 object-cover inline-block mr-4"
+								/>
+								<div class="m-0 p-0 box-border outline-none border-none">
+									<b class="name block"
+										><%= applicantDetails.applications[0].job.title %></b
+									>
+									<small class="desc text-gray-700"
+										><%= applicantDetails.applications[0].job.category.name %>
+									</small>
+								</div>
+							</div>
+
+							<div class="tags flex items-center flex-wrap gap-5">
+								<span
+									class="inline-block whitespace-nowrap rounded bg-primary-100 px-2 py-1 text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700 capitalize"
+								>
+									<%= applicantDetails.applications[0].job.employment_type %>
+								</span>
+								<span
+									class="inline-block whitespace-nowrap rounded bg-primary-100 px-2 py-1 text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700 capitalize"
+								>
+									<%= applicantDetails.applications[0].job.is_remote ? "Remote"
+									: "Onsite" %>
+								</span>
+								<span
+									class="inline-block whitespace-nowrap rounded bg-primary-100 px-2 py-1 text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700 capitalize"
+								>
+									<%= applicantDetails.applications[0].job.experience_level %>
+								</span>
+							</div>
+
+							<p class="my-4">
+								<%= applicantDetails.applications[0].job.summary.slice(0,50)
+								%>...
+							</p>
+
+							<div
+								class="botton pt-4 border-t border-gray-200 flex items-center justify-between text-sm text-gray-700"
+							>
+								<div class="salary">
+									Salary: N<%= applicantDetails.applications[0].job.min_salary
+									%>.00 - N<%= applicantDetails.applications[0].job.max_salary
+									%>.00 (<%= applicantDetails.applications[0].job.salary_period
+									%>)
+								</div>
+								<!-- <div class="posted"></div> -->
+							</div>
+
+							<div class="items flex items-center gap-1 text-xs mt-5">
+								<span class="text-xs text-gray-400"
+									>Posted <%=
+									helper.formatDate(applicantDetails.applications[0].job.published_at)
+									%></span
+								>
+								<div class="text-lg text-gray-400">
+									<svg
+										stroke="currentColor"
+										fill="currentColor"
+										stroke-width="0"
+										viewBox="0 0 16 16"
+										height="1em"
+										width="1em"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
+										></path>
+									</svg>
+								</div>
+								<!-- <span class="text-blue-400"
+									><%# applicantDetails.applications[0].job._count.applications
+									%> Applicant</span
+								> -->
+								<div class="text-lg text-gray-400">
+									<svg
+										stroke="currentColor"
+										fill="currentColor"
+										stroke-width="0"
+										viewBox="0 0 16 16"
+										height="1em"
+										width="1em"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
+										></path>
+									</svg>
+								</div>
+								<span class="ml-1 text-red-600">
+									<%=
+									helper.formatDate(applicantDetails.applications[0].job.expires_at,
+									true) === "just now" ? "Closed" : "Closing in " +
+									helper.formatDate(applicantDetails.applications[0].job.expires_at,
+									true) %>
+								</span>
+							</div>
+						</div>
+					</a>
+					<div>
+						<h6 class="my-4 font-semibold text-xl">Cover Letter</h6>
+						<div class="px-5">
+							<%= applicantDetails.applications[0].content.slice(0,200) %>...
+							<span class="text-blue-400"
+								><a href="/dashboard/applications">see more</a></span
+							>
+						</div>
+						<a
+							href="/dashboard/applications"
+							class="mr-3 inline-block rounded px-6 pb-2 pt-2.5 text-base font-medium leading-normal text-primary transition duration-150 ease-in-out hover:bg-neutral-100 hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 motion-reduce:transition-none"
+							>All applications ...</a
+						>
+					</div>
+
+					<% } else { %>
+
+					<p class="text-neutral-400">You have not applied for any job yet</p>
+					<% } %>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="items-end mt-5 w-full">
+		<!-- <h2 class="text-3xl font-semibold mb-5 mt-10">Personal profile</h2> -->
+		<div class="md:justify-center md:gap-5 md:items-stretch">
+			<div
+				class="block rounded-lg border bg-white mb-5 dark:bg-neutral-700 flex-1"
+			>
+				<div
+					class="scrollbar-hide mt-8 flex w-full justify-between gap-8 overflow-x-auto rounded-lg bg-white py-6 px-5 lg:mt-0 lg:px-20"
+				>
+					<div class="flex items-center gap-5">
+						<div class="min-w-[40px]">
+							<img
+								alt="Total Applications"
+								src="/images/score1.jpg"
+								width="40"
+								height="41"
+								decoding="async"
+								data-nimg="1"
+								loading="lazy"
+								style="color: transparent"
+							/>
+						</div>
+						<div class="text-left">
+							<h3 class="text-2xl">0</h3>
+							<p class="text-sm">Total Applications</p>
+						</div>
+					</div>
+					<a
+						class="flex items-center gap-5"
+						href="/job-seeker/dashboard/applied?status=interview"
+						><div class="min-w-[40px]">
+							<img
+								alt="Job Interviews"
+								src="/images/score2.jpg"
+								width="40"
+								height="41"
+								decoding="async"
+								data-nimg="1"
+								loading="lazy"
+								style="color: transparent"
+							/>
+						</div>
+						<div class="text-left">
+							<h3 class="text-2xl">0</h3>
+							<p class="text-sm">Job Interviews</p>
+						</div></a
+					>
+					<div class="flex items-center gap-5">
+						<div class="min-w-[40px]">
+							<img
+								alt="profile Views"
+								src="/images/score3.jpg"
+								width="40"
+								height="41"
+								decoding="async"
+								data-nimg="1"
+								loading="lazy"
+								style="color: transparent"
+							/>
+						</div>
+						<div class="text-left">
+							<h3 class="text-2xl">0</h3>
+							<p class="text-sm">profile Views</p>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="flex flex-wrap gap-5 justify-start items-center">
+				</div> -->
+			</div>
+			<div
+				class="block rounded-lg mb-5 border bg-white p-6 dark:bg-neutral-700 flex-1"
+			>
+				<h2 class="text-xl font-semibold mb-5">Recent Jobs</h2>
+				<div>
+					<% recentJobs.map(job=>{ %>
+					<a href="/job/<%= job.id %>" class="cursor-pointer">
+						<div
+							class="flex flex-row mb-5 border p-5 rounded justify-between items-center gap-5"
+						>
+							<div
+								class="p-3 rounded-3xl flex justify-center items-center max-w-[55px]"
+							>
+								<img
+									src="<%= job.publisher.company_logo %>"
+									class="max-w-[55px] rounded-2xl"
+									alt="Avatar"
+								/>
+							</div>
+							<div class="">
+								<p class="text-neutral-500"><%= job.category.name %></p>
+								<p
+									class="font-semibold text-xl"
+									href="/jobs/user-acquisition-representative"
+								>
+									<%= job.title %>
+								</p>
+								<p class="text-neutral-500"><%= job.summary%></p>
+							</div>
+							<small class="text-neutral-400 whitespace-nowrap">
+								<!--  -->
+								<%= new Date(job.published_at).toDateString().split(" ")
+								.slice(1,3).join(" ") %>
+								<!--  -->
+							</small>
+						</div>
+					</a>
 					<% }) %>
+				</div>
+				<div class="flex justify-end">
+					<a
+						href="/dashboard/applications"
+						class="mr-3 inline-block rounded px-6 pb-2 pt-2.5 text-base font-medium justify-end leading-normal text-primary transition duration-150 ease-in-out hover:bg-neutral-100 hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 motion-reduce:transition-none"
+						>More jobs ...</a
+					>
 				</div>
 			</div>
 		</div>
