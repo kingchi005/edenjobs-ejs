@@ -38,7 +38,6 @@ const getApplicantDetails = (req, res, next) => __awaiter(void 0, void 0, void 0
             },
         },
     });
-    console.log(applicantDetails === null || applicantDetails === void 0 ? void 0 : applicantDetails.applications);
     res.locals.applicantDetails = applicantDetails;
     next();
 });
