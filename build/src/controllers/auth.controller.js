@@ -23,7 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerEmployer = exports.registerApplicant = exports.logOut = exports.registerUser = exports.loginUser = void 0;
+exports.registerEmployer = exports.registerApplicant = exports.logOut = exports.loginUser = void 0;
 const response_controller_1 = require("./response.controller");
 const input_validation_1 = __importDefault(require("../validations/input.validation"));
 const prisma_1 = __importDefault(require("../../prisma"));
@@ -54,19 +54,6 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return new response_controller_1.ApiResponse(res, "login here", { user });
 });
 exports.loginUser = loginUser;
-const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const safe = input_validation_1.default.registerApplicant.safeParse(req.fields);
-    if (!safe.success)
-        throw new response_controller_1.ValidationError(safe.error);
-    const _a = safe.data, { password: rawPass } = _a, data = __rest(_a, ["password"]);
-    const salt = bcrypt_1.default.genSaltSync(10);
-    const password = yield bcrypt_1.default.hashSync(rawPass, salt);
-    const user = yield prisma_1.default.user.create({
-        data: Object.assign(Object.assign({}, data), { password }),
-    });
-    return new response_controller_1.ApiResponse(res, "register user here", {});
-});
-exports.registerUser = registerUser;
 const logOut = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res
         .cookie(env_1.default.AUTH_COOKIE, "", {
