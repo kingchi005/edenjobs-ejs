@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { tryCatchWapper } from "../../controllers/response.controller";
+import { handlerWapper } from "../../controllers/response.controller";
 import {
 	logOut,
 	loginUser,
@@ -8,8 +8,8 @@ import {
 
 const authRoute = Router();
 
-authRoute.post("/login", tryCatchWapper(loginUser));
-authRoute.get("/logout", tryCatchWapper(logOut));
-authRoute.post("/register", tryCatchWapper(registerUser));
+authRoute.post("/login", handlerWapper(loginUser));
+authRoute.get("/logout", handlerWapper(logOut));
+authRoute.post("/register", handlerWapper(registerUser));
 
 export default authRoute;

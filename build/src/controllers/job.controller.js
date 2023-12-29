@@ -66,7 +66,7 @@ const getRecentJobs = (req, res, next) => __awaiter(void 0, void 0, void 0, func
 });
 exports.getRecentJobs = getRecentJobs;
 const getRecomendedJobs = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const recommendedJobs = yield prisma_1.default.job.findMany({
+    const jobs = yield prisma_1.default.job.findMany({
         take: 5,
         include: {
             _count: { select: { applications: true } },
@@ -74,7 +74,7 @@ const getRecomendedJobs = (req, res, next) => __awaiter(void 0, void 0, void 0, 
             category: true,
         },
     });
-    res.locals.recommendedJobs = recommendedJobs;
+    res.locals.recommendedJobs = jobs;
     next();
 });
 exports.getRecomendedJobs = getRecomendedJobs;

@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import {
 	middlewareWapper,
-	tryCatchWapper,
+	handlerWapper,
 } from "../../controllers/response.controller";
 import {
 	logOut,
@@ -9,6 +9,8 @@ import {
 	registerUser,
 } from "../../controllers/auth.controller";
 import {
+	updateAvatar,
+	updateCvResume,
 	updateJobPreferences,
 	updatePersonalDetails,
 	updateWorkDetails,
@@ -24,21 +26,35 @@ applicantRoute.put(
 	"/work-details",
 	middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyApplicants),
-	tryCatchWapper(updateWorkDetails)
+	handlerWapper(updateWorkDetails)
 );
 
 applicantRoute.put(
 	"/job-preference",
 	middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyApplicants),
-	tryCatchWapper(updateJobPreferences)
+	handlerWapper(updateJobPreferences)
 );
 
 applicantRoute.put(
 	"/personal-details",
 	middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyApplicants),
-	tryCatchWapper(updatePersonalDetails)
+	handlerWapper(updatePersonalDetails)
+);
+
+applicantRoute.put(
+	"/avatar",
+	middlewareWapper(onlyAuthenticated),
+	middlewareWapper(onlyApplicants),
+	handlerWapper(updateAvatar)
+);
+
+applicantRoute.put(
+	"/cv-resume",
+	middlewareWapper(onlyAuthenticated),
+	middlewareWapper(onlyApplicants),
+	handlerWapper(updateCvResume)
 );
 
 export default applicantRoute;

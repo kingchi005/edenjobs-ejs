@@ -44,6 +44,9 @@ const ValidationSchema = {
         last_name: (0, schema_1.getOptionalStringValidation)("last_name"),
         address: (0, schema_1.getOptionalStringValidation)("address"),
     }),
+    avatar: zod_1.z.object({
+        avatar: zod_1.z.custom(),
+    }),
 };
 exports.default = ValidationSchema;
 //# sourceMappingURL=input.validation.js.map

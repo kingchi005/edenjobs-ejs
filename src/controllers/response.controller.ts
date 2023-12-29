@@ -158,7 +158,7 @@ export default function errorController(
 	});
 }
 
-export const tryCatchWapper =
+export const handlerWapper =
 	(controller: (req: Request, res: Response) => Promise<any>) =>
 	async (req: Request, res: Response, next: NextFunction) => {
 		try {

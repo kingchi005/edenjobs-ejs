@@ -7,6 +7,8 @@ import {
 	ValidationError,
 	resCode,
 } from "./response.controller";
+import { uploadImage } from "./helpers.controller";
+import { UploadApiResponse } from "cloudinary";
 
 export const getApplicantDetails = async (
 	req: Request,
@@ -91,4 +93,37 @@ export const updatePersonalDetails = async (req: Request, res: Response) => {
 	return new ApiResponse(res, "Personal details updated successfully", {
 		updated,
 	});
+};
+
+export const updateAvatar = async (req: Request, res: Response) => {
+	const id = res.locals.user.id as string;
+
+	const safe = ValidationSchema.avatar.safeParse(req.files);
+	if (!safe.success) throw new ValidationError(safe.error);
+
+	const { avatar: image } = safe.data;
+
+	const uploadImageRes = await uploadImage(image.path);
+	if (uploadImageRes.error)
+		throw new AppError(
+			"An error Occoured",
+			resCode.BAD_GATEWAY,
+			uploadImageRes.error
+		);
+
+	const avatar = (uploadImageRes as UploadApiResponse).url;
+
+	const updated = await db.applicant.updateMany({
+		where: { user: { id } },
+		data: { avatar },
+	});
+
+	if (!updated)
+		throw new AppError("An error occoured try again", resCode.NOT_ACCEPTED);
+
+	return new ApiResponse(res, "Profile photo updated successfully");
+};
+
+export const updateCvResume = async (req: Request, res: Response) => {
+	return new ApiResponse(res, "Resume updated successfully");
 };

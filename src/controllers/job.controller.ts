@@ -76,7 +76,7 @@ export const getRecomendedJobs = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const recommendedJobs = await db.job.findMany({
+	const jobs = await db.job.findMany({
 		take: 5,
 		include: {
 			_count: { select: { applications: true } },
@@ -84,7 +84,7 @@ export const getRecomendedJobs = async (
 			category: true,
 		},
 	});
-	res.locals.recommendedJobs = recommendedJobs;
+	res.locals.recommendedJobs = jobs;
 	next();
 };
 

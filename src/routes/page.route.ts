@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import {
 	middlewareWapper,
-	tryCatchWapper,
+	handlerWapper,
 } from "../controllers/response.controller";
 import {
 	getJobCategory,
@@ -60,10 +60,19 @@ pageRoute.get(
 	}
 );
 pageRoute.get(
+	"/dashboard/job/:id",
+	middlewareWapper(getJobDetail),
+	(req, res) =>
+		res.render("applicant/job", { title: "Edenjobs | job", page: "job" })
+);
+pageRoute.get(
 	"/dashboard/jobs",
 	middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyApplicants),
-	middlewareWapper(getRecomendedJobs),
+	// middlewareWapper(getRecomendedJobs),
+	middlewareWapper(getJobs),
+	middlewareWapper(getJobCategory),
+
 	(req, res) => {
 		res.render("applicant/jobs", { title: "Recomended jobs", page: "jobs" });
 	}

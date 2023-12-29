@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.middlewareWapper = exports.tryCatchWapper = exports.possiblePrismaError = exports.errMsgEnum = exports.resCode = exports.ApiResponse = exports.ValidationError = exports.AppError = void 0;
+exports.middlewareWapper = exports.handlerWapper = exports.possiblePrismaError = exports.errMsgEnum = exports.resCode = exports.ApiResponse = exports.ValidationError = exports.AppError = void 0;
 const jsonwebtoken_1 = require("jsonwebtoken");
 const library_1 = require("@prisma/client/runtime/library");
 class AppError extends Error {
@@ -141,7 +141,7 @@ function errorController(error, req, res, next) {
     });
 }
 exports.default = errorController;
-const tryCatchWapper = (controller) => (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const handlerWapper = (controller) => (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield controller(req, res);
     }
@@ -149,7 +149,7 @@ const tryCatchWapper = (controller) => (req, res, next) => __awaiter(void 0, voi
         return next(error);
     }
 });
-exports.tryCatchWapper = tryCatchWapper;
+exports.handlerWapper = handlerWapper;
 const middlewareWapper = (controller) => (req, res, _next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield controller(req, res, _next);

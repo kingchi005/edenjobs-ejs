@@ -23,10 +23,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePersonalDetails = exports.updateJobPreferences = exports.updateWorkDetails = exports.getApplicantDetails = void 0;
+exports.updateCvResume = exports.updateAvatar = exports.updatePersonalDetails = exports.updateJobPreferences = exports.updateWorkDetails = exports.getApplicantDetails = void 0;
 const prisma_1 = __importDefault(require("../../prisma"));
 const input_validation_1 = __importDefault(require("../validations/input.validation"));
 const response_controller_1 = require("./response.controller");
+const helpers_controller_1 = require("./helpers.controller");
 const getApplicantDetails = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const applicantDetails = yield prisma_1.default.applicant.findFirst({
         where: { user: { id: res.locals.user_id } },
@@ -93,4 +94,27 @@ const updatePersonalDetails = (req, res) => __awaiter(void 0, void 0, void 0, fu
     });
 });
 exports.updatePersonalDetails = updatePersonalDetails;
+const updateAvatar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = res.locals.user.id;
+    const safe = input_validation_1.default.avatar.safeParse(req.files);
+    if (!safe.success)
+        throw new response_controller_1.ValidationError(safe.error);
+    const { avatar: image } = safe.data;
+    const uploadImageRes = yield (0, helpers_controller_1.uploadImage)(image.path);
+    if (uploadImageRes.error)
+        throw new response_controller_1.AppError("An error Occoured", response_controller_1.resCode.BAD_GATEWAY, uploadImageRes.error);
+    const avatar = uploadImageRes.url;
+    const updated = yield prisma_1.default.applicant.updateMany({
+        where: { user: { id } },
+        data: { avatar },
+    });
+    if (!updated)
+        throw new response_controller_1.AppError("An error occoured try again", response_controller_1.resCode.NOT_ACCEPTED);
+    return new response_controller_1.ApiResponse(res, "Profile photo updated successfully");
+});
+exports.updateAvatar = updateAvatar;
+const updateCvResume = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return new response_controller_1.ApiResponse(res, "Resume updated successfully");
+});
+exports.updateCvResume = updateCvResume;
 //# sourceMappingURL=applicant.controller.js.map

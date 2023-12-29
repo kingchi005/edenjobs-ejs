@@ -10,6 +10,9 @@ const envSchema = zod_1.z.object({
     DATABASE_URL: zod_1.z.string(),
     HASH_SECRET: zod_1.z.string(),
     AUTH_COOKIE: zod_1.z.string(),
+    CLOUDINARY_API_KEY: zod_1.z.string(),
+    CLOUDINARY_CLOUD_NAME: zod_1.z.string(),
+    CLOUDINARY_API_SECRET: zod_1.z.string(),
 });
 const runtimeEnv = {
     AUTH_COOKIE: "@authed",

@@ -37,8 +37,15 @@
 								</g>
 							</svg>
 						</label>
-
-						<input id="file-input-avater" class="hidden" type="file" />
+						<form class="" id="avatar-form">
+							<input
+								id="file-input-avater"
+								class="hidden"
+								type="file"
+								accept="image/jpeg,image/png"
+								name="avatar"
+							/>
+						</form>
 					</div>
 					<!-- <input
 						type="file"
@@ -303,16 +310,16 @@
 
 <script>
 	const personDetailForm = document.querySelector("#personal-details");
-	const avaterInput = document.querySelector("#file-input-avater");
+	const avaterInput = document.querySelector("input#file-input-avater");
 	const avaterImg = document.querySelector("#avater");
 	const saveAvatarCont = document.querySelector("#save-avater-container");
 
 	avaterInput.addEventListener("change", (e) => {
-		const file = e.target.files[0];
+		const formData = new FormData(document.querySelector("form#avatar-form"));
+
 		const reader = new FileReader();
 
 		reader.onload = function (e) {
-			console.log(reader.result);
 			avaterImg.setAttribute("src", reader.result);
 			saveAvatarCont.innerHTML = `<button
 						type="button" id="save-avatar-btn"
@@ -338,11 +345,11 @@
 			document
 				.querySelector("#save-avatar-btn")
 				.addEventListener("click", () => {
-					handleAvatarUpload(file);
+					handleAvatarUpload(formData);
 				});
 		};
-
-		reader.readAsDataURL(file);
+		// files[0]
+		reader.readAsDataURL(formData.get("avatar"));
 	});
 
 	personDetailForm.addEventListener("submit", async (e) => {
@@ -370,9 +377,23 @@
 		showToast({ duration: 5000, text: res.message, type: "success" });
 	});
 
-	function handleAvatarUpload(file) {
-		console.log("Avatar:", file);
-		console.log("Avatar:", file.url);
+	async function handleAvatarUpload(formData) {
+		const url = "/api/applicant/avatar";
+		console.log("Avatar:", formData, "File", formData.get("file"));
+		const res = await (
+			await fetch(url, {
+				method: "put",
+				headers: {},
+				body: formData,
+			})
+		).json();
+
+		console.log(res);
+		if (!res.ok) {
+			showToast({ duration: 5000, text: res.error.message, type: "error" });
+			return;
+		}
+		showToast({ duration: 5000, text: res.message, type: "success" });
 	}
 </script>
 <script>

@@ -25,7 +25,8 @@ pageRoute.get("/login", (req, res) => res.render("login", { title: "Edenjobs log
 pageRoute.get("/dashboard", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyApplicants), (0, response_controller_1.middlewareWapper)(job_controller_1.getRecentJobs), (0, response_controller_1.middlewareWapper)(applicant_controller_1.getApplicantDetails), (req, res) => {
     res.render("applicant/index", { title: "Dashboard", page: "dashboard" });
 });
-pageRoute.get("/dashboard/jobs", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyApplicants), (0, response_controller_1.middlewareWapper)(job_controller_1.getRecomendedJobs), (req, res) => {
+pageRoute.get("/dashboard/job/:id", (0, response_controller_1.middlewareWapper)(job_controller_1.getJobDetail), (req, res) => res.render("applicant/job", { title: "Edenjobs | job", page: "job" }));
+pageRoute.get("/dashboard/jobs", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyApplicants), (0, response_controller_1.middlewareWapper)(job_controller_1.getJobs), (0, response_controller_1.middlewareWapper)(job_controller_1.getJobCategory), (req, res) => {
     res.render("applicant/jobs", { title: "Recomended jobs", page: "jobs" });
 });
 pageRoute.get("/dashboard/applications", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyApplicants), (0, response_controller_1.middlewareWapper)(application_controller_1.getUserJobApplications), (req, res) => {

@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import {
 	middlewareWapper,
-	tryCatchWapper,
+	handlerWapper,
 } from "../../controllers/response.controller";
 import {
 	onlyApplicants,
@@ -24,14 +24,14 @@ jobApplicationRoute.post(
 	"/",
 	// middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyApplicants),
-	tryCatchWapper(appliyForJob)
+	handlerWapper(appliyForJob)
 );
 
 jobApplicationRoute.get(
 	"/:id",
 	// middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyApplicants),
-	tryCatchWapper(getJobApplicationDetails)
+	handlerWapper(getJobApplicationDetails)
 );
 
 export default jobApplicationRoute;

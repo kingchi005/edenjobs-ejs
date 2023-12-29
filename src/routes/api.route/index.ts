@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import {
 	middlewareWapper,
-	tryCatchWapper,
+	handlerWapper,
 } from "../../controllers/response.controller";
 import authRoute from "./auth.route";
 import jobRoute from "./job.route";

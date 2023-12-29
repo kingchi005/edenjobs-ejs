@@ -1,6 +1,7 @@
 <%- include('./partials/head.ejs') %>
 <!--  -->
 <%- include('./partials/nav.ejs') %>
+<script type="module" src="./types.d.js"></script>
 
 <section
 	class="flex flex-col max-w-[85rem] m-auto bg-primary-900 px-5 py-10 mt-5"
@@ -347,7 +348,10 @@
 		}
 	}
 </script>
-
+<script type="text/typescript" src="./types.d.ts"></script>
 <script>
-	/**@def type {} */
+	/** @param {TUser} param0  */
+	function doThis({}) {}
+
+	doThis({});
 </script>

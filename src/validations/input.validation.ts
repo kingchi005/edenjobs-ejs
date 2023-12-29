@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { number, string, z } from "zod";
 import {
 	dateSchema,
 	getBooleanValidation,
@@ -48,12 +48,14 @@ const ValidationSchema = {
 		last_name: getOptionalStringValidation("last_name"),
 		address: getOptionalStringValidation("address"),
 	}),
-	// register:z.object({}),
-	// register:z.object({}),
-	// register:z.object({}),
-	// register:z.object({}),
-	// register:z.object({}),
-	// register:z.object({}),
+	avatar: z.object({
+		avatar: z.custom<
+			{
+				path: string;
+				type: `image/${"jpg" | "jpeg"}`;
+			} & Omit<File, "type">
+		>(),
+	}),
 } as const;
 
 export default ValidationSchema;
