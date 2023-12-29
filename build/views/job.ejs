@@ -1,0 +1,462 @@
+<%- include('./partials/head.ejs') %>
+<!--  -->
+<!--  -->
+<% if (job) { %>
+<link href="/quill/dist/quill.snow.css" rel="stylesheet" />
+
+<!-- Create the editor container -->
+
+<!-- Include the Quill library -->
+<main class="m-auto">
+	<div>
+		<div>
+			<button
+				onclick='((function (){
+					console.log(`jdhgcvbb`)
+					console.log(`kjhgcdbcd`)
+					console.log("utsdgh")
+					console.log(te,showToast)
+				})())'
+			>
+				Back
+			</button>
+		</div>
+		<div
+			class="top-0 left-0 mx-auto flex max-w-[1500px] flex-col items-start justify-between gap-10 xl:flex-row"
+		>
+			<div class="lg:flex-1">
+				<div class="border bg-white p-12 max-w-7xl m-auto">
+					<button
+						onclick="history.back()"
+						type="button"
+						data-te-ripple-init
+						data-te-ripple-color="light"
+						class="flex justify-between gap-3 items-center rounded mb-5 border-2 border-info-800 px-3 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-info-800 transition duration-150 ease-in-out hover:border-info-800 hover:bg-info-500 hover:bg-opacity-10 hover:text-info-800 focus:border-info-800 focus:text-info-800 focus:outline-none focus:ring-0 active:border-info-900 active:text-info-900 dark:border-info-900 dark:text-info-900 dark:hover:border-info-900 dark:hover:bg-info-100 dark:hover:bg-opacity-10 dark:hover:text-info-900 dark:focus:border-info-900 dark:focus:text-info-900 dark:active:border-info-900 dark:active:text-info-900"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="currentColor"
+							class="w-6 h-6"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z"
+								clip-rule="evenodd"
+							/>
+						</svg>
+
+						<!-- Back -->
+					</button>
+					<div
+						class="flex flex-col justify-start gap-10 rounded-md transition duration-200 md:flex-row md:justify-between md:gap-0"
+					>
+						<div class="flex h-fit items-center gap-6">
+							<div>
+								<img
+									alt="SalesPlat Recruitment logo"
+									src="<%= job.publisher.company_logo %>"
+									width="60"
+									height="60"
+									decoding="async"
+									data-nimg="1"
+									loading="lazy"
+									style="color: transparent"
+								/>
+							</div>
+							<div>
+								<div class="flex items-start justify-between">
+									<div>
+										<h2 class="text-left text-sm font-bold sm:text-base">
+											<%= job.title %>
+										</h2>
+										<p
+											class="flex items-center text-left text-xs text-gray-400 sm:text-sm"
+										>
+											<button type="button" class="hover:underline">
+												<%= job.publisher.company_name %>
+											</button>
+											<svg
+												stroke="currentColor"
+												fill="currentColor"
+												stroke-width="0"
+												viewBox="0 0 16 16"
+												class="text-left text-lg text-gray-400"
+												height="1em"
+												width="1em"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
+												></path>
+											</svg>
+											<%= job.publisher.company_location_city %>
+											<svg
+												stroke="currentColor"
+												fill="currentColor"
+												stroke-width="0"
+												viewBox="0 0 16 16"
+												class="text-left text-lg text-gray-400"
+												height="1em"
+												width="1em"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
+												></path>
+											</svg>
+											<%= job.publisher.company_location_state %>
+										</p>
+									</div>
+									<div></div>
+								</div>
+								<div
+									class="items mt-2 flex flex-wrap items-center gap-1 whitespace-nowrap text-[10px]"
+								>
+									<span class="text-xs text-gray-400"
+										>Posted <%= helper.formatDate(job.published_at) %>
+									</span>
+									<div class="text-base text-gray-400">
+										<svg
+											stroke="currentColor"
+											fill="currentColor"
+											stroke-width="0"
+											viewBox="0 0 16 16"
+											height="1em"
+											width="1em"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
+											></path>
+										</svg>
+									</div>
+									<span class="text-xs text-[#EB5757]"
+										><p>
+											<% const _time = helper.formatDate(job.expires_at,true) %>
+											<!--  -->
+											<%= _time==="just now"?"Closed": "Closing in "+_time %>
+										</p></span
+									>
+									<div class="text-base text-gray-400">
+										<svg
+											stroke="currentColor"
+											fill="currentColor"
+											stroke-width="0"
+											viewBox="0 0 16 16"
+											height="1em"
+											width="1em"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
+											></path>
+										</svg>
+									</div>
+									<span class="text-xs text-gray-400">1 Opening</span>
+									<div class="text-xs text-gray-400">
+										<svg
+											stroke="currentColor"
+											fill="currentColor"
+											stroke-width="0"
+											viewBox="0 0 16 16"
+											height="1em"
+											width="1em"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
+											></path>
+										</svg>
+									</div>
+									<span class="text-blue-400" id="no-of-applicant">
+										<%= job._count.applications %> Applicant</span
+									>
+								</div>
+							</div>
+						</div>
+						<div class="flex flex-col items-start justify-between">
+							<div class="flex items-center justify-between space-x-2"></div>
+						</div>
+					</div>
+					<div
+						class="mt-10 grid gap-4 rounded-lg border border-[#E6E5E5] py-6 px-4 md:grid-cols-3 md:flex-row"
+					>
+						<div class="border-r border-[#E6E5E5] px-2">
+							<p class="whitespace-nowrap text-xs">Job Location</p>
+							<p
+								class="mt-1 cursor-pointer truncate whitespace-nowrap text-sm font-medium"
+								aria-label="Lagos"
+							>
+								<%= job.city_location %>
+							</p>
+							<hr class="my-2" />
+							<p class="whitespace-nowrap text-xs">Minimum Qualification</p>
+							<p class="mt-1 whitespace-nowrap text-sm font-medium">
+								Bachelor's Degree
+							</p>
+						</div>
+						<div class="border-r border-[#E6E5E5] px-2">
+							<p class="whitespace-nowrap text-xs">Experience Level</p>
+							<p
+								class="mt-1 whitespace-nowrap text-sm font-medium line-clamp-1 capitalize"
+							>
+								<%= job.experience_level %>
+							</p>
+							<hr class="my-2" />
+							<p class="whitespace-nowrap text-xs">Experience Length</p>
+							<p class="mt-1 whitespace-nowrap text-sm font-medium">
+								<%= job.required_experience_years %> years
+							</p>
+						</div>
+						<div class="px-2">
+							<p class="whitespace-nowrap text-xs">Employment Type</p>
+							<p class="mt-1 whitespace-nowrap text-sm font-medium capitalize">
+								<%= job.employment_type %> (<%=
+								job.is_remote?"Remote":"Onsite"%>)
+							</p>
+							<hr class="my-2" />
+							<p class="whitespace-nowrap text-xs">Salary</p>
+							<p
+								class="mt-1 whitespace-nowrap text-sm font-medium line-clamp-1"
+							>
+								₦<%= job.min_salary %>
+								<span> - ₦<%= job.max_salary %> </span>
+								<span> (<%= job.salary_period %>) </span>
+							</p>
+						</div>
+					</div>
+					<div class="mt-5 border-b p-2 text-sm font-light">
+						<h5 class="text-[16px] font-normal">Job Summary</h5>
+						<p class="mb-4 mt-2 leading-6"><%= job.summary %></p>
+					</div>
+					<h5 class="pt-6 text-[18px]">Job Description/Requirements</h5>
+					<div class="job-description text-base">
+						<%- job.description_and_requirement %>
+					</div>
+				</div>
+				<% if (new Date(job.expires_at).getTime()>new Date().getTime()) { %>
+
+				<div class="rounded-lg bg-white shadow-lg">
+					<div
+						class="flex w-full items-center justify-center py-16 text-center text-sm lg:w-[400px] lg:py-0"
+					>
+						<div class="text-center mb-10">
+							<% if (user) { %>
+							<!--  check if applied -->
+							<% if
+							(job.applications.map(apl=>apl.applicant_id).includes(user.applicant_details?.id))
+							{ %>
+
+							<p class="mt-7 mb-2 text-center font-light text-gray-400">
+								You have applied for this job.
+							</p>
+							<% }else{ %>
+							<div class="mx-auto">
+								<button
+									type="button"
+									class="inline-block rounded bg-primary-700 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary-50 transition duration-150 ease-in-out hover:border-primary-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-primary-600 focus:border-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
+									data-te-ripple-init
+									data-te-toggle="modal"
+									data-te-target="#staticBackdrop"
+									data-te-ripple-init
+									data-te-ripple-color="light"
+								>
+									Apply for this Job
+								</button>
+							</div>
+
+							<!--  -->
+							<% } %>
+							<!--  -->
+							<% }else{ %>
+							<p class="mt-7 mb-2 text-center font-light text-gray-700">
+								You have to be logged in to apply for this job.
+							</p>
+							<div class="mx-auto">
+								<button
+									class="inline-block rounded border-1 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary transition duration-150 ease-in-out hover:border-primary-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-primary-600 focus:border-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
+									data-te-ripple-init
+								>
+									<span class="mx-2"
+										><a href="/login">Apply for this Job</a></span
+									>
+								</button>
+							</div>
+							<% } %>
+						</div>
+					</div>
+				</div>
+				<% } %>
+			</div>
+		</div>
+	</div>
+</main>
+
+<!-- Modal -->
+<div
+	data-te-modal-init
+	class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+	id="staticBackdrop"
+	data-te-backdrop="static"
+	data-te-keyboard="false"
+	tabindex="-1"
+	aria-labelledby="staticBackdropLabel"
+	aria-hidden="true"
+>
+	<div
+		data-te-modal-dialog-ref
+		class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]"
+	>
+		<div
+			class="min-[576px]:shadow-[0_0.5rem_1rem_rgba(#000, 0.15)] pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600"
+		>
+			<div
+				class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50"
+			>
+				<!--Modal title-->
+				<h5
+					class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+					id="staticBackdropLabel"
+				>
+					Applying for <strong> <%= job.title %> </strong>
+				</h5>
+				<!--Close button-->
+				<button
+					type="button"
+					class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+					data-te-modal-dismiss
+					aria-label="Close"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="h-6 w-6"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M6 18L18 6M6 6l12 12"
+						/>
+					</svg>
+				</button>
+			</div>
+
+			<!--Modal body-->
+			<div data-te-modal-body-ref class="relative p-4">
+				<div
+					id="alert"
+					class="mb-4 rounded-lg hidden bg-danger-100 px-6 py-5 text-base text-danger-70"
+					role="alert"
+					data-te-alert-init
+					data-te-autohide="true"
+					data-te-delay="4000"
+				>
+					A simple danger alert—check it out!
+				</div>
+				<form>
+					<div id="editor">
+						<h2>Skills</h2>
+						<ul>
+							<li>...</li>
+							<li>...</li>
+						</ul>
+						<h2>Qualification</h2>
+						<ul>
+							<li>...</li>
+							<li>...</li>
+						</ul>
+
+						<p><br /></p>
+					</div>
+				</form>
+			</div>
+
+			<!--Modal footer-->
+			<div
+				class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50"
+			>
+				<button
+					type="button"
+					class="inline-block rounded bg-danger-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-danger-700 transition duration-150 ease-in-out hover:bg-danger-accent-100 focus:bg-danger-accent-100 focus:outline-none focus:ring-0 active:bg-danger-accent-200"
+					data-te-modal-dismiss
+					data-te-ripple-init
+					data-te-ripple-color="light"
+				>
+					Cancel
+				</button>
+				<button
+					id="submit"
+					type="button"
+					class="ml-1 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+					data-te-ripple-init
+					data-te-ripple-color="light"
+				>
+					Apply
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/quill/dist/quill.js"></script>
+<script src="/quill-delta-to-html/dist/browser/QuillDeltaToHtmlConverter.bundle.js"></script>
+<%- include('./partials/footer.ejs',{footer:false}) %>
+
+<!-- Initialize Quill editor -->
+<script>
+	const no_of_applied = document.querySelector("#no-of-applicant");
+	const modal = new te.Modal("#staticBackdrop");
+	const alertEl = document.getElementById("alert");
+	const _alert = te.Alert.getInstance(alertEl);
+	const quill = new Quill("#editor", {
+		theme: "snow",
+		placeholder: "Let us know why you are a good fit",
+	});
+
+	document.querySelector("#submit").addEventListener("click", async () => {
+		let applied = no_of_applied.textContent.split(" ")[0];
+		const body = new FormData();
+
+		const delta = quill.getContents();
+
+		let converter = new QuillDeltaToHtmlConverter(delta.ops, {});
+		const content = converter.convert();
+		console.log(content);
+
+		body.append("content", content);
+		body.append("job_id", "<%= job.id %>");
+		if (quill.getText().split(" ").length < 10) {
+			alertEl.textContent = "Your later must be 10 more more word";
+			_alert.show();
+			return;
+		}
+
+		const res = await (
+			await fetch("/api/job-application", {
+				method: "post",
+				body,
+			})
+		).json();
+
+		// console.log(res);
+		if (!res.ok) {
+			alertEl.textContent = res.error.message;
+			_alert.show();
+			return;
+		}
+		no_of_applied.textContent = `${+applied + 1} Applicant`;
+		alert(res.message);
+		// showToast({ duration: 5000, text: res.message, type: "success" });
+
+		modal.hide();
+	});
+</script>
+
+<% } else{ %>
+<script>
+	location.assign("/");
+</script>
+<% } %>

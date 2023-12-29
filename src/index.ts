@@ -22,7 +22,13 @@ app.use(express.json());
 app.use(express.text());
 
 app.set("view engine", "ejs");
-app.use(express.static(path.join(path.resolve("public"))));
+if (env.CURRENT_ENV === "production") {
+	app.set("views", __dirname + "../views");
+	app.use(express.static(path.resolve(__dirname, "../public")));
+} else {
+	app.set("views", path.join(path.resolve("views")));
+	app.use(express.static(path.join(path.resolve("public"))));
+}
 app.use(express.static(path.join(path.resolve("node_modules"))));
 
 app.use("*", middlewareWapper(checkAuth), (req, res, next) => {

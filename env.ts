@@ -14,6 +14,7 @@ const envSchema = z.object({
 	CLOUDINARY_API_KEY: z.string(),
 	CLOUDINARY_CLOUD_NAME: z.string(),
 	CLOUDINARY_API_SECRET: z.string(),
+	CURRENT_ENV: z.string(),
 	// MAIL_USER: z.string(),
 	// MAIL_PASSWORD: z.string(),
 	// MAIL_HOST: z.string(),

@@ -9,6 +9,8 @@
 		"postinstall": "prisma generate",
 		"build": "tsc",
 		"dev": "tsc && node build/src",
+		"clean": "rm -rf ./dist",
+		"copy-files": "cp ./src/public/ ./dist/",
 		"start-sync": "browser-sync start --proxy \"http://localhost:500\" --files \"views/**/*.ejs\"",
 		"css": "tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
 		"db:seed": "ts-node prisma/seed",
@@ -35,6 +37,7 @@
 		"zod": "^3.22.4"
 	},
 	"devDependencies": {
+		"@babel/plugin-transform-typescript": "^7.23.6",
 		"@faker-js/faker": "^8.3.1",
 		"@types/bcrypt": "^5.0.2",
 		"@types/cookie-parser": "^1.4.6",
@@ -46,12 +49,14 @@
 		"@types/node": "^20.10.4",
 		"@types/nodemailer": "^6.4.14",
 		"autoprefixer": "^10.4.16",
+		"babel-cli": "^6.26.0",
 		"browser-sync": "^2.29.3",
 		"postcss": "^8.4.32",
 		"prisma": "^5.7.0",
 		"tailwindcss": "^3.3.6",
 		"ts-node": "^10.9.2",
 		"tw-elements": "^1.1.0",
-		"typescript": "^5.3.3"
+		"typescript": "^5.3.3",
+		"typescript-cp": "^0.1.9"
 	}
 }

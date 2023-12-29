@@ -13,6 +13,7 @@ const envSchema = zod_1.z.object({
     CLOUDINARY_API_KEY: zod_1.z.string(),
     CLOUDINARY_CLOUD_NAME: zod_1.z.string(),
     CLOUDINARY_API_SECRET: zod_1.z.string(),
+    CURRENT_ENV: zod_1.z.string(),
 });
 const runtimeEnv = {
     AUTH_COOKIE: "@authed",

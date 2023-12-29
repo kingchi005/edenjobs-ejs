@@ -38,6 +38,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const env_1 = __importDefault(require("../env"));
 const response_controller_1 = __importStar(require("./controllers/response.controller"));
 const routes_1 = require("./routes");
 const path_1 = __importDefault(require("path"));
@@ -50,7 +51,14 @@ app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use(express_1.default.text());
 app.set("view engine", "ejs");
-app.use(express_1.default.static(path_1.default.join(path_1.default.resolve("public"))));
+if (env_1.default.CURRENT_ENV === "production") {
+    app.set("views", __dirname + "../views");
+    app.use(express_1.default.static(path_1.default.resolve(__dirname, "../public")));
+}
+else {
+    app.set("views", path_1.default.join(path_1.default.resolve("views")));
+    app.use(express_1.default.static(path_1.default.join(path_1.default.resolve("public"))));
+}
 app.use(express_1.default.static(path_1.default.join(path_1.default.resolve("node_modules"))));
 app.use("*", (0, response_controller_1.middlewareWapper)(middleware_controller_1.checkAuth), (req, res, next) => {
     res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
