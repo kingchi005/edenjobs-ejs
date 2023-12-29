@@ -1,9 +1,13 @@
 import { number, string, z } from "zod";
 import {
 	dateSchema,
+	fileSchema,
 	getBooleanValidation,
+	getJsonArrayValidation,
+	getNumberValidation,
 	getOptionalStringValidation,
 	getStringValidation,
+	imageSchema,
 } from "./schema";
 
 const ValidationSchema = {
@@ -11,16 +15,59 @@ const ValidationSchema = {
 		identifier: getStringValidation("Email or username"),
 		password: getStringValidation("password"),
 	}),
-	register: z.object({
+	registerApplicant: z.object({
+		is_applicant: getBooleanValidation("is_applicant"),
 		username: getStringValidation("username"),
 		email: getStringValidation("email"),
 		password: getStringValidation("password"),
 		first_name: getStringValidation("first_name"),
 		last_name: getStringValidation("last_name"),
-		is_applicant: getBooleanValidation("is_applicant"),
 		gender: getStringValidation("gender"),
 		address: getStringValidation("address"),
 		date_of_birth: dateSchema,
+		applicant_details: z.object({
+			// work details
+			avatar: imageSchema,
+			cv_resume_url: fileSchema,
+			job_field: getStringValidation("job_field"),
+			qualifications: getJsonArrayValidation("qualifications"),
+			skill_set: getJsonArrayValidation("skill_set"),
+			skill_level: getStringValidation("skill_level"),
+			// job preferences
+			years_of_experience: getNumberValidation("years_of_experience"), // ref from skill_level
+			preferred_job_type: getStringValidation("preferred_job_type"),
+			work_schedule: getStringValidation("work_schedule"),
+			job_stability: getStringValidation("job_stability"),
+			location_type: getStringValidation("location_type"),
+			location: getStringValidation("location"), // ref from address
+		}),
+	}),
+	registerEmployer: z.object({
+		is_applicant: getBooleanValidation("is_applicant"),
+		username: getStringValidation("username"),
+		email: getStringValidation("email"),
+		password: getStringValidation("password"),
+		first_name: getStringValidation("first_name"),
+		last_name: getStringValidation("last_name"),
+		gender: getStringValidation("gender"),
+		address: getStringValidation("address"),
+		date_of_birth: dateSchema,
+		applicant_details: z.object({
+			// work details
+			avatar: imageSchema,
+			cv_resume_url: fileSchema,
+			job_field: getStringValidation("job_field"),
+			qualifications: getJsonArrayValidation("qualifications"),
+			skill_set: getJsonArrayValidation("skill_set"),
+			skill_level: getStringValidation("skill_level"),
+			// job preferences
+			years_of_experience: getNumberValidation("years_of_experience"), // ref from skill_level
+			preferred_job_type: getStringValidation("preferred_job_type"),
+			work_schedule: getStringValidation("work_schedule"),
+			job_stability: getStringValidation("job_stability"),
+			location_type: getStringValidation("location_type"),
+			location: getStringValidation("location"), // ref from address
+		}),
 	}),
 	appliyForJob: z.object({
 		job_id: getStringValidation("job_id"),
@@ -28,14 +75,8 @@ const ValidationSchema = {
 	}),
 	updateWorkDetails: z.object({
 		job_field: getOptionalStringValidation("job_field"),
-		qualifications: z
-			.string({ invalid_type_error: `'qualifications' must be a JSON array` })
-			.transform((v) => JSON.parse(v) as string[])
-			.optional(),
-		skill_set: z
-			.string({ invalid_type_error: `'skill_set' must be a JSON array` })
-			.transform((v) => JSON.parse(v) as string[])
-			.optional(),
+		qualifications: getJsonArrayValidation("qualifications").optional(),
+		skill_set: getJsonArrayValidation("skill_set").optional(),
 		skill_level: getOptionalStringValidation("skill_level"),
 	}),
 	updateJobPreferences: z.object({
@@ -48,14 +89,9 @@ const ValidationSchema = {
 		last_name: getOptionalStringValidation("last_name"),
 		address: getOptionalStringValidation("address"),
 	}),
-	avatar: z.object({
-		avatar: z.custom<
-			{
-				path: string;
-				type: `image/${"jpg" | "jpeg"}`;
-			} & Omit<File, "type">
-		>(),
-	}),
+	image: imageSchema,
+
+	cv_resumeSchema: fileSchema,
 } as const;
 
 export default ValidationSchema;

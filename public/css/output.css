@@ -1141,6 +1141,10 @@ html.dark{
   margin-bottom: 10px;
 }
 
+.me-10{
+  margin-inline-end: 2.5rem;
+}
+
 .me-2{
   margin-inline-end: 0.5rem;
 }

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.hasExpired = exports.isValidToken = exports.formatDate = exports.validateDateRange = exports.isValidBase64 = exports.findIndexContainingString = exports.uploadImage = void 0;
+exports.isJsonArray = exports.hasExpired = exports.isValidToken = exports.formatDate = exports.validateDateRange = exports.isValidBase64 = exports.findIndexContainingString = exports.uploadFile = void 0;
 const cloudinary_1 = require("cloudinary");
 const env_1 = __importDefault(require("../../env"));
 cloudinary_1.v2.config({
@@ -20,9 +20,9 @@ cloudinary_1.v2.config({
     api_key: env_1.default.CLOUDINARY_API_KEY,
     api_secret: env_1.default.CLOUDINARY_API_SECRET,
 });
-const uploadImage = (image) => __awaiter(void 0, void 0, void 0, function* () {
+const uploadFile = (filePath) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield cloudinary_1.v2.uploader.upload(image, {
+        const result = yield cloudinary_1.v2.uploader.upload(filePath, {
             use_filename: true,
             unique_filename: true,
             overwrite: true,
@@ -35,7 +35,7 @@ const uploadImage = (image) => __awaiter(void 0, void 0, void 0, function* () {
         return { error };
     }
 });
-exports.uploadImage = uploadImage;
+exports.uploadFile = uploadFile;
 function findIndexContainingString(arr, searchString) {
     return arr.findIndex(function (item) {
         return item.includes(searchString);
@@ -88,4 +88,13 @@ const isValidToken = (obj) => obj !== null && typeof obj == "object" && "id" in 
 exports.isValidToken = isValidToken;
 const hasExpired = (exp) => exp * 1000 < new Date().getTime();
 exports.hasExpired = hasExpired;
+const isJsonArray = (str) => {
+    try {
+        return Array.isArray(JSON.parse(str));
+    }
+    catch (error) {
+        return false;
+    }
+};
+exports.isJsonArray = isJsonArray;
 //# sourceMappingURL=helpers.controller.js.map

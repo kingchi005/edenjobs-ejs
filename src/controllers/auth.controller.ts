@@ -45,21 +45,21 @@ export const loginUser = async (req: Request, res: Response) => {
 	return new ApiResponse(res, "login here", { user });
 };
 
-export const registerUser = async (req: Request, res: Response) => {
-	const safe = ValidationSchema.register.safeParse(req.fields);
-	if (!safe.success) throw new ValidationError(safe.error);
-	const { password: rawPass, ...data } = safe.data;
+// export const registerUser = async (req: Request, res: Response) => {
+// 	const safe = ValidationSchema.registerApplicant.safeParse(req.fields);
+// 	if (!safe.success) throw new ValidationError(safe.error);
+// 	const { password: rawPass, ...data } = safe.data;
 
-	// hash Password
+// 	// hash Password
 
-	const salt = bcrypt.genSaltSync(10);
-	const password = await bcrypt.hashSync(rawPass, salt);
+// 	const salt = bcrypt.genSaltSync(10);
+// 	const password = await bcrypt.hashSync(rawPass, salt);
 
-	const user = await db.user.create({
-		data: { ...data, password },
-	});
-	return new ApiResponse(res, "register user here", {});
-};
+// 	const user = await db.user.create({
+// 		data: { ...data, password },
+// 	});
+// 	return new ApiResponse(res, "register user here", {});
+// };
 
 export const logOut = async (req: Request, res: Response) => {
 	res

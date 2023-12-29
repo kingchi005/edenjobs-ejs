@@ -55,7 +55,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.loginUser = loginUser;
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const safe = input_validation_1.default.register.safeParse(req.fields);
+    const safe = input_validation_1.default.registerApplicant.safeParse(req.fields);
     if (!safe.success)
         throw new response_controller_1.ValidationError(safe.error);
     const _a = safe.data, { password: rawPass } = _a, data = __rest(_a, ["password"]);

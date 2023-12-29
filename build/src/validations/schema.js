@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.emailSchema = exports.phoneNumberSchema = exports.getNumberValidation = exports.getOptionalStringValidation = exports.getStringValidation = exports.getBooleanValidation = exports.dateSchema = void 0;
+exports.emailSchema = exports.phoneNumberSchema = exports.getNumberValidation = exports.getOptionalStringValidation = exports.getStringValidation = exports.getJsonArrayValidation = exports.getBooleanValidation = exports.fileSchema = exports.imageSchema = exports.dateSchema = void 0;
 const zod_1 = require("zod");
+const helpers_controller_1 = require("../controllers/helpers.controller");
 exports.dateSchema = zod_1.z
     .string()
     .refine((value) => !isNaN(Date.parse(value)), {
@@ -9,18 +10,27 @@ exports.dateSchema = zod_1.z
 })
     .refine((value) => {
     const date = new Date(value);
-    const currentDate = new Date();
-    return date > currentDate;
+    const now = new Date();
+    return date > now;
 }, {
     message: "Date must be in the future",
 })
     .transform((v) => new Date(v));
+exports.imageSchema = zod_1.z.custom();
+exports.fileSchema = zod_1.z.custom();
 const getBooleanValidation = (v) => zod_1.z
     .enum(["true", "false"], {
     required_error: `'${v}' is required`,
 })
     .transform((v) => v == "true");
 exports.getBooleanValidation = getBooleanValidation;
+const getJsonArrayValidation = (key) => zod_1.z
+    .string()
+    .refine((value) => (0, helpers_controller_1.isJsonArray)(value), {
+    message: `'${key}' must be a JSON array`,
+})
+    .transform((v) => JSON.parse(v));
+exports.getJsonArrayValidation = getJsonArrayValidation;
 const getStringValidation = (key) => zod_1.z
     .string({
     required_error: `'${key}' is required`,

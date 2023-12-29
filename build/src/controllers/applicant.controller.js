@@ -28,6 +28,7 @@ const prisma_1 = __importDefault(require("../../prisma"));
 const input_validation_1 = __importDefault(require("../validations/input.validation"));
 const response_controller_1 = require("./response.controller");
 const helpers_controller_1 = require("./helpers.controller");
+const zod_1 = require("zod");
 const getApplicantDetails = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const applicantDetails = yield prisma_1.default.applicant.findFirst({
         where: { user: { id: res.locals.user_id } },
@@ -96,11 +97,13 @@ const updatePersonalDetails = (req, res) => __awaiter(void 0, void 0, void 0, fu
 exports.updatePersonalDetails = updatePersonalDetails;
 const updateAvatar = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = res.locals.user.id;
-    const safe = input_validation_1.default.avatar.safeParse(req.files);
+    const safe = zod_1.z
+        .object({ avatar: input_validation_1.default.image })
+        .safeParse(req.files);
     if (!safe.success)
         throw new response_controller_1.ValidationError(safe.error);
     const { avatar: image } = safe.data;
-    const uploadImageRes = yield (0, helpers_controller_1.uploadImage)(image.path);
+    const uploadImageRes = yield (0, helpers_controller_1.uploadFile)(image.path);
     if (uploadImageRes.error)
         throw new response_controller_1.AppError("An error Occoured", response_controller_1.resCode.BAD_GATEWAY, uploadImageRes.error);
     const avatar = uploadImageRes.url;
@@ -114,6 +117,23 @@ const updateAvatar = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.updateAvatar = updateAvatar;
 const updateCvResume = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = res.locals.user.id;
+    const safe = zod_1.z
+        .object({ cv_resume: input_validation_1.default.image })
+        .safeParse(req.files);
+    if (!safe.success)
+        throw new response_controller_1.ValidationError(safe.error);
+    const { cv_resume: pdfFile } = safe.data;
+    const uploadFileRes = yield (0, helpers_controller_1.uploadFile)(pdfFile.path);
+    if (uploadFileRes.error)
+        throw new response_controller_1.AppError("An error Occoured", response_controller_1.resCode.BAD_GATEWAY, uploadFileRes.error);
+    const cv_resume_url = uploadFileRes.url;
+    const updated = yield prisma_1.default.applicant.updateMany({
+        where: { user: { id } },
+        data: { cv_resume_url },
+    });
+    if (!updated)
+        throw new response_controller_1.AppError("An error occoured try again", response_controller_1.resCode.NOT_ACCEPTED);
     return new response_controller_1.ApiResponse(res, "Resume updated successfully");
 });
 exports.updateCvResume = updateCvResume;

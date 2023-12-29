@@ -3,11 +3,7 @@ import {
 	middlewareWapper,
 	handlerWapper,
 } from "../../controllers/response.controller";
-import {
-	logOut,
-	loginUser,
-	registerUser,
-} from "../../controllers/auth.controller";
+import { logOut, loginUser } from "../../controllers/auth.controller";
 import {
 	updateAvatar,
 	updateCvResume,

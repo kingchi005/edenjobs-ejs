@@ -8,10 +8,10 @@ cloudinary.config({
 	api_secret: env.CLOUDINARY_API_SECRET,
 });
 
-export const uploadImage = async (image: string) => {
+export const uploadFile = async (filePath: string) => {
 	try {
 		// Upload the image
-		const result = await cloudinary.uploader.upload(image, {
+		const result = await cloudinary.uploader.upload(filePath, {
 			use_filename: true,
 			unique_filename: true,
 			overwrite: true,
@@ -88,3 +88,11 @@ export const isValidToken = (
 	obj !== null && typeof obj == "object" && "id" in obj;
 
 export const hasExpired = (exp: number) => exp * 1000 < new Date().getTime();
+
+export const isJsonArray = (str: string) => {
+	try {
+		return Array.isArray(JSON.parse(str));
+	} catch (error) {
+		return false;
+	}
+};

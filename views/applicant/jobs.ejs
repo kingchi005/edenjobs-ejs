@@ -121,7 +121,7 @@
 		<% jobs.map(job => { %>
 		<a href="/job/<%= job.id %>" class="cursor-pointer">
 			<div
-				class="recent-card shadow-md hover:shadow-xl p-5 rounded-md bg-warning-50"
+				class="recent-card mb-5 shadow-md hover:shadow-xl p-5 rounded-md bg-warning-50"
 			>
 				<div class="recent-head flex items-center mb-4">
 					<img
@@ -135,7 +135,7 @@
 					</div>
 				</div>
 
-				<div class="tags flex items-center gap-5">
+				<div class="tags flex flex-wrap items-center gap-5">
 					<%- include('../components/badge.ejs',{text:job.employment_type||
 					"Full-time"}) %>
 					<!--  -->
@@ -260,7 +260,7 @@
 				.map(
 					(job) => `
 					<a href="/job/${job.id}" class="cursor-pointer">
-						<div class="recent-card shadow-md hover:shadow-xl p-5 rounded-md">
+						<div class="recent-card mb-5 shadow-md hover:shadow-xl p-5 rounded-md">
 							<div class="recent-head flex items-center mb-4">
 								<img
 									src="${job.publisher.company_logo}"
@@ -273,7 +273,7 @@
 								</div>
 							</div>
 
-							<div class="tags flex items-center gap-5">
+							<div class="tags flex flex-wrap items-center gap-5">
 								<span class="inline-block whitespace-nowrap rounded bg-primary-100 px-2 py-1 text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700 capitalize" >
 									${job.employment_type}
 								</span>

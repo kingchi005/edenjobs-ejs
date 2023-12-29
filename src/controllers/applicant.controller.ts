@@ -7,8 +7,9 @@ import {
 	ValidationError,
 	resCode,
 } from "./response.controller";
-import { uploadImage } from "./helpers.controller";
+import { uploadFile } from "./helpers.controller";
 import { UploadApiResponse } from "cloudinary";
+import { z } from "zod";
 
 export const getApplicantDetails = async (
 	req: Request,
@@ -98,12 +99,14 @@ export const updatePersonalDetails = async (req: Request, res: Response) => {
 export const updateAvatar = async (req: Request, res: Response) => {
 	const id = res.locals.user.id as string;
 
-	const safe = ValidationSchema.avatar.safeParse(req.files);
+	const safe = z
+		.object({ avatar: ValidationSchema.image })
+		.safeParse(req.files);
 	if (!safe.success) throw new ValidationError(safe.error);
 
 	const { avatar: image } = safe.data;
 
-	const uploadImageRes = await uploadImage(image.path);
+	const uploadImageRes = await uploadFile(image.path);
 	if (uploadImageRes.error)
 		throw new AppError(
 			"An error Occoured",
@@ -125,5 +128,31 @@ export const updateAvatar = async (req: Request, res: Response) => {
 };
 
 export const updateCvResume = async (req: Request, res: Response) => {
+	const id = res.locals.user.id as string;
+
+	const safe = z
+		.object({ cv_resume: ValidationSchema.image })
+		.safeParse(req.files);
+	if (!safe.success) throw new ValidationError(safe.error);
+
+	const { cv_resume: pdfFile } = safe.data;
+	const uploadFileRes = await uploadFile(pdfFile.path);
+	if (uploadFileRes.error)
+		throw new AppError(
+			"An error Occoured",
+			resCode.BAD_GATEWAY,
+			uploadFileRes.error
+		);
+
+	const cv_resume_url = (uploadFileRes as UploadApiResponse).url;
+
+	const updated = await db.applicant.updateMany({
+		where: { user: { id } },
+		data: { cv_resume_url },
+	});
+
+	if (!updated)
+		throw new AppError("An error occoured try again", resCode.NOT_ACCEPTED);
+
 	return new ApiResponse(res, "Resume updated successfully");
 };

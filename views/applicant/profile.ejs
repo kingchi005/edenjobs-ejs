@@ -42,7 +42,7 @@
 								id="file-input-avater"
 								class="hidden"
 								type="file"
-								accept="image/jpeg,image/png"
+								accept=".jpeg,.jpg"
 								name="avatar"
 							/>
 						</form>
@@ -155,15 +155,72 @@
 		<h2 class="text-3xl font-semibold mb-5 mt-10">Work information</h2>
 		<div class="md:flex md:justify-center md:gap-5">
 			<div
-				class="block border rounded-lg text-center bg-white p-6 mb-5 dark:bg-neutral-700 flex-1"
+				class="block relative border rounded-lg text-center bg-white p-6 mb-5 dark:bg-neutral-700 flex-1"
 			>
 				<h2 class="text-xl font-semibold mb-5">CV / Resume</h2>
 				<iframe
+					id="view-cv"
+					class=""
 					src="<%= user.applicant_details.cv_resume_url %>"
 					width="100%"
 					height="500px"
 				>
 				</iframe>
+				<div class="image-upload flex items-center justify-between me-10 mt-5">
+					<label for="file-input-cv" class="cursor-pointer">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="50"
+							height="50"
+							viewBox="0 0 48 48"
+						>
+							<g fill="none" stroke-linejoin="round" stroke-width="4">
+								<path
+									fill="#2F88FF"
+									stroke="#2F88FF"
+									d="M39 6H9C7.34315 6 6 7.34315 6 9V39C6 40.6569 7.34315 42 9 42H39C40.6569 42 42 40.6569 42 39V9C42 7.34315 40.6569 6 39 6Z"
+								/>
+								<path
+									stroke="#fff"
+									stroke-linecap="round"
+									d="M32 28L24 20L16 28"
+								/>
+								<path stroke="#fff" stroke-linecap="round" d="M24 36V20.5" />
+								<path stroke="#fff" stroke-linecap="round" d="M16 14H32" />
+							</g>
+						</svg>
+					</label>
+					<form class="" id="cv-form">
+						<input
+							id="file-input-cv"
+							class="hidden"
+							type="file"
+							accept=".pdf"
+							name="cv_resume"
+						/>
+					</form>
+					<button
+						type="button"
+						id="save-cv-btn"
+						data-te-ripple-init
+						data-te-ripple-color="light"
+						class="hidden rounded bg-primary px-4 pb-[5px] pt-[6px] font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="currentColor"
+							class="mr-1 h-4 w-4"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M19.5 21a3 3 0 003-3V9a3 3 0 00-3-3h-5.379a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H4.5a3 3 0 00-3 3v12a3 3 0 003 3h15zm-6.75-10.5a.75.75 0 00-1.5 0v4.19l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V10.5z"
+								clip-rule="evenodd"
+							/>
+						</svg>
+						Save
+					</button>
+				</div>
 			</div>
 			<div class="block dark:bg-neutral-700 flex-1">
 				<div class="block rounded-lg border p-6 mb-5 bg-white">
@@ -313,6 +370,11 @@
 	const avaterInput = document.querySelector("input#file-input-avater");
 	const avaterImg = document.querySelector("#avater");
 	const saveAvatarCont = document.querySelector("#save-avater-container");
+	const cvInput = document.querySelector("input#file-input-cv");
+	/**@type {HTMLIFrameElement} */
+	const cvResumeView = document.querySelector("#view-cv");
+	/**@type {HTMLButtonElement} */
+	const saveCvBtn = document.querySelector("#save-cv-btn");
 
 	avaterInput.addEventListener("change", (e) => {
 		const formData = new FormData(document.querySelector("form#avatar-form"));
@@ -352,6 +414,24 @@
 		reader.readAsDataURL(formData.get("avatar"));
 	});
 
+	cvInput.addEventListener("change", (e) => {
+		const formData = new FormData(document.querySelector("form#cv-form"));
+
+		const reader = new FileReader();
+
+		reader.onload = function (e) {
+			cvResumeView.setAttribute("src", reader.result);
+			saveCvBtn.classList.remove("hidden");
+			saveCvBtn.classList.add("flex");
+
+			saveCvBtn.addEventListener("click", () => {
+				handleCvUpload(formData);
+			});
+		};
+		// files[0]
+		reader.readAsDataURL(formData.get("cv_resume"));
+	});
+
 	personDetailForm.addEventListener("submit", async (e) => {
 		e.preventDefault();
 		const url = "/api/applicant/personal-details";
@@ -377,6 +457,24 @@
 		showToast({ duration: 5000, text: res.message, type: "success" });
 	});
 
+	async function handleCvUpload(formData) {
+		const url = "/api/applicant/cv-resume";
+		console.log("Avatar:", formData, "File", formData.get("cv_resume"));
+		const res = await (
+			await fetch(url, {
+				method: "put",
+				headers: {},
+				body: formData,
+			})
+		).json();
+
+		console.log(res);
+		if (!res.ok) {
+			showToast({ duration: 5000, text: res.error.message, type: "error" });
+			return;
+		}
+		showToast({ duration: 5000, text: res.message, type: "success" });
+	}
 	async function handleAvatarUpload(formData) {
 		const url = "/api/applicant/avatar";
 		console.log("Avatar:", formData, "File", formData.get("file"));
