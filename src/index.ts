@@ -22,8 +22,9 @@ app.use(express.json());
 app.use(express.text());
 
 app.set("view engine", "ejs");
+
 if (env.CURRENT_ENV === "production") {
-	app.set("views", __dirname + "../views");
+	app.set("views", path.resolve(__dirname, "../views"));
 	app.use(express.static(path.resolve(__dirname, "../public")));
 } else {
 	app.set("views", path.join(path.resolve("views")));

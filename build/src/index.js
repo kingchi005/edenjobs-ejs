@@ -52,7 +52,7 @@ app.use(express_1.default.json());
 app.use(express_1.default.text());
 app.set("view engine", "ejs");
 if (env_1.default.CURRENT_ENV === "production") {
-    app.set("views", __dirname + "../views");
+    app.set("views", path_1.default.resolve(__dirname, "../views"));
     app.use(express_1.default.static(path_1.default.resolve(__dirname, "../public")));
 }
 else {
