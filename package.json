@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "ts-node src/test",
 		"start": "node build/src",
-		"build": "tsc",
+		"build": "prisma generate && tsc",
 		"dev": "tsc && node build/src",
 		"start-sync": "browser-sync start --proxy \"http://localhost:500\" --files \"views/**/*.ejs\"",
 		"css": "tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
