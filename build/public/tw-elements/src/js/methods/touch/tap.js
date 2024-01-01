@@ -1,71 +1,100 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const touchUtil_1 = __importDefault(require("./touchUtil"));
-const event_handler_1 = __importDefault(require("../../dom/event-handler"));
-const util_1 = require("../../util");
-const manipulator_1 = __importDefault(require("../../dom/manipulator"));
+/*
+--------------------------------------------------------------------------
+TW Elements is an open-source UI kit of advanced components for TailwindCSS.
+Copyright © 2023 MDBootstrap.com
+
+Unless a custom, individually assigned license has been granted, this program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+In addition, a custom license may be available upon request, subject to the terms and conditions of that license. Please contact tailwind@mdbootstrap.com for more information on obtaining a custom license.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+
+If you would like to purchase a COMMERCIAL, non-AGPL license for TWE, please check out our pricing: https://tw-elements.com/pro/
+--------------------------------------------------------------------------
+*/
+
+import TouchUtil from "./touchUtil";
+import EventHandler from "../../dom/event-handler";
+import { typeCheckConfig } from "../../util";
+import Manipulator from "../../dom/manipulator";
+
 const NAME = "tap";
+
 const DefaultType = {
-    interval: "number",
-    time: "number",
-    taps: "number",
-    pointers: "number",
+  interval: "number",
+  time: "number",
+  taps: "number",
+  pointers: "number",
 };
+
 const Default = {
-    interval: 500,
-    time: 250,
-    taps: 1,
-    pointers: 1,
+  interval: 500,
+  time: 250,
+  taps: 1,
+  pointers: 1,
 };
-class Tap extends touchUtil_1.default {
-    constructor(element, options) {
-        super();
-        this._element = element;
-        this._options = this._getConfig(options);
-        this._timer = null;
+
+class Tap extends TouchUtil {
+  constructor(element, options) {
+    super();
+    this._element = element;
+    this._options = this._getConfig(options);
+    this._timer = null;
+    this._tapCount = 0;
+  }
+
+  // Getters
+
+  static get NAME() {
+    return NAME;
+  }
+
+  handleTouchStart(e) {
+    const { x, y } = this._getCoordinates(e);
+    const { interval, taps, pointers } = this._options;
+
+    if (e.touches.length === pointers) {
+      this._tapCount += 1;
+
+      if (this._tapCount === 1) {
+        this._timer = setTimeout(() => {
+          this._tapCount = 0;
+        }, interval);
+      }
+
+      if (this._tapCount === taps) {
+        clearTimeout(this._timer);
         this._tapCount = 0;
+        EventHandler.trigger(this._element, NAME, {
+          touch: e,
+          origin: {
+            x,
+            y,
+          },
+        });
+      }
     }
-    static get NAME() {
-        return NAME;
-    }
-    handleTouchStart(e) {
-        const { x, y } = this._getCoordinates(e);
-        const { interval, taps, pointers } = this._options;
-        if (e.touches.length === pointers) {
-            this._tapCount += 1;
-            if (this._tapCount === 1) {
-                this._timer = setTimeout(() => {
-                    this._tapCount = 0;
-                }, interval);
-            }
-            if (this._tapCount === taps) {
-                clearTimeout(this._timer);
-                this._tapCount = 0;
-                event_handler_1.default.trigger(this._element, NAME, {
-                    touch: e,
-                    origin: {
-                        x,
-                        y,
-                    },
-                });
-            }
-        }
-        return e;
-    }
-    handleTouchEnd() {
-        return;
-    }
-    handleTouchMove() {
-        return;
-    }
-    _getConfig(options) {
-        const config = Object.assign(Object.assign(Object.assign({}, Default), manipulator_1.default.getDataAttributes(this._element)), options);
-        (0, util_1.typeCheckConfig)(NAME, config, DefaultType);
-        return config;
-    }
+
+    return e;
+  }
+
+  handleTouchEnd() {
+    return;
+  }
+
+  handleTouchMove() {
+    return;
+  }
+
+  _getConfig(options) {
+    const config = {
+      ...Default,
+      ...Manipulator.getDataAttributes(this._element),
+      ...options,
+    };
+
+    typeCheckConfig(NAME, config, DefaultType);
+
+    return config;
+  }
 }
-exports.default = Tap;
-//# sourceMappingURL=tap.js.map
+
+export default Tap;

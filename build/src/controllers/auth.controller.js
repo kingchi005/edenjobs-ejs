@@ -30,6 +30,7 @@ const prisma_1 = __importDefault(require("../../prisma"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const env_1 = __importDefault(require("../../env"));
+const helpers_controller_1 = require("./helpers.controller");
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const safe = input_validation_1.default.login.safeParse(req.fields);
     if (!safe.success)
@@ -64,7 +65,39 @@ const logOut = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.logOut = logOut;
 const registerApplicant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    return new response_controller_1.ApiResponse(res, "register here", {});
+    const safe = input_validation_1.default.registerApplicant.safeParse(req.fields);
+    if (!safe.success)
+        throw new response_controller_1.ValidationError(safe.error);
+    const safeFiles = input_validation_1.default.registerApplicantFile.safeParse(req.files);
+    if (!safeFiles.success)
+        throw new response_controller_1.ValidationError(safeFiles.error);
+    const { cv_resume: cv_file, avatar: avatar_file } = safeFiles.data;
+    const _a = safe.data, { password: rawPass, address, date_of_birth, email, first_name, gender, username, last_name } = _a, applicant_details = __rest(_a, ["password", "address", "date_of_birth", "email", "first_name", "gender", "username", "last_name"]);
+    const uploadAvFileRes = yield (0, helpers_controller_1.uploadFile)(avatar_file.path);
+    if (uploadAvFileRes.error)
+        throw new response_controller_1.AppError("An error Occoured", response_controller_1.resCode.BAD_GATEWAY, uploadAvFileRes.error);
+    const avatar = uploadAvFileRes.url;
+    const uploadCvFileRes = yield (0, helpers_controller_1.uploadFile)(cv_file.path);
+    if (uploadAvFileRes.error)
+        throw new response_controller_1.AppError("An error Occoured", response_controller_1.resCode.BAD_GATEWAY, uploadAvFileRes.error);
+    const cv_resume_url = uploadAvFileRes.url;
+    const password = bcrypt_1.default.hashSync(rawPass, bcrypt_1.default.genSaltSync(10));
+    const user = yield prisma_1.default.user.create({
+        data: {
+            address,
+            date_of_birth,
+            email,
+            first_name,
+            gender,
+            last_name,
+            password,
+            username,
+            applicant_details: {
+                create: Object.assign({ avatar, cv_resume_url }, applicant_details),
+            },
+        },
+    });
+    return new response_controller_1.ApiResponse(res, "Registration successful", {});
 });
 exports.registerApplicant = registerApplicant;
 const registerEmployer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

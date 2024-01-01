@@ -47,6 +47,18 @@ pageRoute.get("/job/:id", middlewareWapper(getJobDetail), (req, res) =>
 pageRoute.get("/login", (req, res) =>
 	res.render("login", { title: "Edenjobs login" })
 );
+pageRoute.get("/register", (req, res) =>
+	res.render("applicant/register", {
+		title: "Edenjobs Sign up",
+		initSelOptions: {
+			qualifications: jobsMetaData.qualifications,
+			job_field: jobsMetaData.job_field,
+			job_level: jobsMetaData.job_level,
+			job_type: jobsMetaData.job_type,
+			work_schedule: jobsMetaData.work_schedule,
+		},
+	})
+);
 
 // Applicant pages
 pageRoute.get(
@@ -98,11 +110,13 @@ pageRoute.get(
 		res.render("applicant/profile", {
 			title: "Profile",
 			page: "profile",
-			qualifications: jobsMetaData.qualifications,
-			job_field: jobsMetaData.job_field,
-			job_level: jobsMetaData.job_level,
-			job_type: jobsMetaData.job_type,
-			work_schedule: jobsMetaData.work_schedule,
+			initSelOptions: {
+				qualifications: jobsMetaData.qualifications,
+				job_field: jobsMetaData.job_field,
+				job_level: jobsMetaData.job_level,
+				job_type: jobsMetaData.job_type,
+				work_schedule: jobsMetaData.work_schedule,
+			},
 		});
 	}
 );

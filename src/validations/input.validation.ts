@@ -15,32 +15,43 @@ const ValidationSchema = {
 		identifier: getStringValidation("Email or username"),
 		password: getStringValidation("password"),
 	}),
+	registerApplicantFile: z.object({
+		avatar: imageSchema,
+		cv_resume: fileSchema,
+	}),
 	registerApplicant: z.object({
-		is_applicant: getBooleanValidation("is_applicant"),
 		username: getStringValidation("username"),
 		email: getStringValidation("email"),
 		password: getStringValidation("password"),
 		first_name: getStringValidation("first_name"),
 		last_name: getStringValidation("last_name"),
-		gender: getStringValidation("gender"),
+		gender: z
+			.string({
+				required_error: `'gender' is required`,
+				invalid_type_error: `'gender' must be a string`,
+			})
+			.min(1, { message: `'gender' is required` }),
 		address: getStringValidation("address"),
 		date_of_birth: dateSchema,
-		applicant_details: z.object({
-			// work details
-			avatar: imageSchema,
-			cv_resume_url: fileSchema,
-			job_field: getStringValidation("job_field"),
-			qualifications: getJsonArrayValidation("qualifications"),
-			skill_set: getJsonArrayValidation("skill_set"),
-			skill_level: getStringValidation("skill_level"),
-			// job preferences
-			years_of_experience: getNumberValidation("years_of_experience"), // ref from skill_level
-			preferred_job_type: getStringValidation("preferred_job_type"),
-			work_schedule: getStringValidation("work_schedule"),
-			job_stability: getStringValidation("job_stability"),
-			location_type: getStringValidation("location_type"),
-			location: getStringValidation("location"), // ref from address
-		}),
+		// work details
+		job_field: getStringValidation("job_field"),
+		qualifications: getJsonArrayValidation("qualifications"),
+		skill_set: getJsonArrayValidation("skill_set"),
+		skill_level: getStringValidation("skill_level"),
+		// job preferences
+		years_of_experience: z
+			.string({
+				required_error: `'years_of_experience' is required`,
+			})
+			.refine((v) => !isNaN(+v), {
+				message: "'years_of_experience' must be a number",
+			})
+			.transform((v) => +v), // ref from skill_level
+		preferred_job_type: getStringValidation("preferred_job_type"),
+		work_schedule: getStringValidation("work_schedule"),
+		job_stability: getStringValidation("job_stability"),
+		location_type: getStringValidation("location_type"),
+		location: getStringValidation("location"), // ref from address
 	}),
 	registerEmployer: z.object({
 		is_applicant: getBooleanValidation("is_applicant"),

@@ -10,10 +10,10 @@ export const dateSchema = z
 		(value) => {
 			const date = new Date(value);
 			const now = new Date();
-			return date > now;
+			return date < now;
 		},
 		{
-			message: "Date must be in the future",
+			message: "Date must be in the past",
 		}
 	)
 	.transform((v) => new Date(v));
@@ -28,7 +28,7 @@ export const imageSchema = z.custom<
 export const fileSchema = z.custom<
 	{
 		path: string;
-		type: `image/pdf`;
+		type: `application/pdf`;
 	} & Omit<File, "type">
 >();
 
@@ -41,11 +41,11 @@ export const getBooleanValidation = (v: string) =>
 
 export const getJsonArrayValidation = (key: string) =>
 	z
-		.string()
+		.string({ required_error: `'${key}' is required` })
 		.refine((value) => isJsonArray(value), {
 			message: `'${key}' must be a JSON array`,
-		})
-		.transform((v) => JSON.parse(v) as string[]);
+		});
+// .transform((v) => JSON.parse(v) as string[]);
 
 export const getStringValidation = (key: string) =>
 	z

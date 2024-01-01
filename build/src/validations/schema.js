@@ -11,9 +11,9 @@ exports.dateSchema = zod_1.z
     .refine((value) => {
     const date = new Date(value);
     const now = new Date();
-    return date > now;
+    return date < now;
 }, {
-    message: "Date must be in the future",
+    message: "Date must be in the past",
 })
     .transform((v) => new Date(v));
 exports.imageSchema = zod_1.z.custom();
@@ -25,11 +25,10 @@ const getBooleanValidation = (v) => zod_1.z
     .transform((v) => v == "true");
 exports.getBooleanValidation = getBooleanValidation;
 const getJsonArrayValidation = (key) => zod_1.z
-    .string()
+    .string({ required_error: `'${key}' is required` })
     .refine((value) => (0, helpers_controller_1.isJsonArray)(value), {
     message: `'${key}' must be a JSON array`,
-})
-    .transform((v) => JSON.parse(v));
+});
 exports.getJsonArrayValidation = getJsonArrayValidation;
 const getStringValidation = (key) => zod_1.z
     .string({

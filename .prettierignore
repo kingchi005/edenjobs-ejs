@@ -1,3 +1,4 @@
 views/partials/head.ejs
 views/partials/footer.ejs
 views/applicant/partials/head.ejs
+public/

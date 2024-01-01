@@ -1,5 +1,4 @@
 (function () {
-	console.log("yeah");
 	const ul = document.createElement("ul");
 	ul.classList.add("notifications");
 	ul.style.zIndex = "1";

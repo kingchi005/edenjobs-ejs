@@ -10,6 +10,8 @@ import db from "../../prisma";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import env from "../../env";
+import { UploadApiResponse } from "cloudinary";
+import { uploadFile } from "./helpers.controller";
 
 export const loginUser = async (req: Request, res: Response) => {
 	const safe = ValidationSchema.login.safeParse(req.fields);
@@ -45,22 +47,6 @@ export const loginUser = async (req: Request, res: Response) => {
 	return new ApiResponse(res, "login here", { user });
 };
 
-// export const registerUser = async (req: Request, res: Response) => {
-// 	const safe = ValidationSchema.registerApplicant.safeParse(req.fields);
-// 	if (!safe.success) throw new ValidationError(safe.error);
-// 	const { password: rawPass, ...data } = safe.data;
-
-// 	// hash Password
-
-// 	const salt = bcrypt.genSaltSync(10);
-// 	const password = await bcrypt.hashSync(rawPass, salt);
-
-// 	const user = await db.user.create({
-// 		data: { ...data, password },
-// 	});
-// 	return new ApiResponse(res, "register user here", {});
-// };
-
 export const logOut = async (req: Request, res: Response) => {
 	res
 		.cookie(env.AUTH_COOKIE, "", {
@@ -71,7 +57,68 @@ export const logOut = async (req: Request, res: Response) => {
 };
 
 export const registerApplicant = async (req: Request, res: Response) => {
-	return new ApiResponse(res, "register here", {});
+	const safe = ValidationSchema.registerApplicant.safeParse(req.fields);
+	if (!safe.success) throw new ValidationError(safe.error);
+
+	const safeFiles = ValidationSchema.registerApplicantFile.safeParse(req.files);
+	if (!safeFiles.success) throw new ValidationError(safeFiles.error);
+
+	const { cv_resume: cv_file, avatar: avatar_file } = safeFiles.data;
+
+	const {
+		password: rawPass,
+		address,
+		date_of_birth,
+		email,
+		first_name,
+		gender,
+		username,
+		last_name,
+		...applicant_details
+	} = safe.data;
+
+	// upload avatr
+	const uploadAvFileRes = await uploadFile(avatar_file.path);
+	if (uploadAvFileRes.error)
+		throw new AppError(
+			"An error Occoured",
+			resCode.BAD_GATEWAY,
+			uploadAvFileRes.error
+		);
+
+	const avatar = (uploadAvFileRes as UploadApiResponse).url;
+
+	// upload cv resume
+	const uploadCvFileRes = await uploadFile(cv_file.path);
+	if (uploadAvFileRes.error)
+		throw new AppError(
+			"An error Occoured",
+			resCode.BAD_GATEWAY,
+			uploadAvFileRes.error
+		);
+
+	const cv_resume_url = (uploadAvFileRes as UploadApiResponse).url;
+
+	// has password
+	const password = bcrypt.hashSync(rawPass, bcrypt.genSaltSync(10));
+
+	//
+	const user = await db.user.create({
+		data: {
+			address,
+			date_of_birth,
+			email,
+			first_name,
+			gender,
+			last_name,
+			password,
+			username,
+			applicant_details: {
+				create: { avatar, cv_resume_url, ...applicant_details },
+			},
+		},
+	});
+	return new ApiResponse(res, "Registration successful", {});
 };
 
 export const registerEmployer = async (req: Request, res: Response) => {

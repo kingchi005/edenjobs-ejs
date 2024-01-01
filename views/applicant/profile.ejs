@@ -236,7 +236,7 @@
 										data-te-select-init
 										data-te-select-filter="true"
 									>
-										<% job_field.map(jf=>{ %>
+										<% initSelOptions.job_field.map(jf=>{ %>
 										<option value="<%= jf %>"><%= jf %></option>
 										<% }) %>
 									</select>
@@ -252,7 +252,7 @@
 										data-te-select-init
 										multiple
 									>
-										<% qualifications.map(qu=>{ %>
+										<% initSelOptions.qualifications.map(qu=>{ %>
 
 										<option value="<%= qu %>"><%= qu %></option>
 										<% }) %>
@@ -269,8 +269,9 @@
 									class="mb-0 min-h-[45px] border-none pb-0 shadow-none outline-none transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:cursor-text flex-1"
 								></div>
 							</div>
+
+							<!--skill level input-->
 							<div class="sm:flex gap-5">
-								<!--skill level input-->
 								<div class="mb-6 flex-1">
 									<select
 										class=""
@@ -278,7 +279,7 @@
 										data-te-select-init
 										data-te-select-filter="true"
 									>
-										<% job_level.map(jf=>{ %>
+										<% initSelOptions.job_level.map(jf=>{ %>
 										<option value="<%= jf %>"><%= jf %></option>
 										<% }) %>
 									</select>
@@ -319,7 +320,7 @@
 								<!--work_schedule input-->
 								<div class="mb-6 flex-1">
 									<select class="" id="work-schedule-sel" data-te-select-init>
-										<% work_schedule.map(jf=>{ %>
+										<% initSelOptions.work_schedule.map(jf=>{ %>
 										<option value="<%= jf %>"><%= jf %></option>
 										<% }) %>
 									</select>
@@ -336,7 +337,7 @@
 										data-te-select-init
 										data-te-select-filter="true"
 									>
-										<% job_type.map(jf=>{ %>
+										<% initSelOptions.job_type.map(jf=>{ %>
 										<option value="<%= jf %>"><%= jf %></option>
 										<% }) %>
 									</select>
