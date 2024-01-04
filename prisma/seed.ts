@@ -56,6 +56,10 @@ async function seedDB() {
 
 	async function seedUser() {
 		const users = [];
+		const randState =
+			jobsMetaData.states[
+				faker.number.int({ max: jobsMetaData.states.length })
+			];
 		for (let i = 0; i < NO_OF.USER; i++) {
 			const isApplicant = Math.random() < 0.5;
 			const user = await db.user.create({
@@ -111,8 +115,11 @@ async function seedDB() {
 									company_website: faker.internet.url(),
 									company_size: randomFromArray(company_size_enum),
 									culture: "good values|nothing else",
-									company_location_city: faker.location.city(),
-									company_location_state: faker.location.state(),
+									company_location_city:
+										randState.cities[
+											faker.number.int({ max: randState.cities.length })
+										],
+									company_location_state: randState.name,
 									company_location_street: faker.location.streetAddress(),
 									industry: randomFromArray(another_enum),
 								},

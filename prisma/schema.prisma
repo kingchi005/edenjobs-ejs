@@ -63,7 +63,7 @@ model Employer {
   company_website         String
   company_size            String
   industry                String
-  culture                 String
+  culture                 String 
   jobs                    Job[]
   created_at              DateTime @default(now())
   updated_at              DateTime @updatedAt

@@ -8,17 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -49,12 +38,10 @@ const updateWorkDetails = (req, res) => __awaiter(void 0, void 0, void 0, functi
     if (!safe.success)
         throw new response_controller_1.ValidationError(safe.error);
     const id = res.locals.user.id;
-    const _a = safe.data, { qualifications: qualArr, skill_set: skillArr } = _a, data = __rest(_a, ["qualifications", "skill_set"]);
-    const qualifications = JSON.stringify(qualArr);
-    const skill_set = JSON.stringify(skillArr);
+    const data = safe.data;
     const updated = yield prisma_1.default.applicant.updateMany({
         where: { user: { id } },
-        data: Object.assign(Object.assign({}, data), { qualifications, skill_set }),
+        data,
     });
     if (!updated)
         throw new response_controller_1.AppError("An error occoured", response_controller_1.resCode.NOT_ACCEPTED);
@@ -127,7 +114,7 @@ const updateCvResume = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const uploadFileRes = yield (0, helpers_controller_1.uploadFile)(pdfFile.path);
     if (uploadFileRes.error)
         throw new response_controller_1.AppError("An error Occoured", response_controller_1.resCode.BAD_GATEWAY, uploadFileRes.error);
-    const cv_resume_url = uploadFileRes.url;
+    const cv_resume_url = uploadFileRes.secure_url;
     const updated = yield prisma_1.default.applicant.updateMany({
         where: { user: { id } },
         data: { cv_resume_url },

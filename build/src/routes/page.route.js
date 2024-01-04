@@ -11,6 +11,7 @@ const middleware_controller_1 = require("../controllers/middleware.controller");
 const application_controller_1 = require("../controllers/application.controller");
 const applicant_controller_1 = require("../controllers/applicant.controller");
 const jobs_json_1 = __importDefault(require("../models/jobs.json"));
+const employer_controller_1 = require("../controllers/employer.controller");
 const pageRoute = (0, express_1.Router)();
 pageRoute.get("*", (req, res, next) => {
     res.locals.helper = { formatDate: helpers_controller_1.formatDate };
@@ -58,6 +59,30 @@ pageRoute.get("/dashboard/profile", (0, response_controller_1.middlewareWapper)(
         },
     });
 });
-pageRoute.get("/modal", (req, res) => res.render("modal"));
+pageRoute.get("/recruiter/register", (req, res) => {
+    res.render("employer/register", { title: "Sign up as Recruiter" });
+});
+pageRoute.get("/recruiter/dashboard", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyEmployers), (0, response_controller_1.middlewareWapper)(employer_controller_1.getEmployerDetails), (req, res) => {
+    res.render("employer/index", {
+        title: "Dashboard",
+        page: "dashboard",
+    });
+});
+pageRoute.get("/recruiter/jobs", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyEmployers), (req, res) => {
+    res.render("employer/jobs", { title: "Created Jobs", page: "jobs" });
+});
+pageRoute.get("/recruiter/applications", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyEmployers), (req, res) => {
+    res.render("employer/applications", {
+        title: "Applications",
+        page: "applications",
+    });
+});
+pageRoute.get("/recruiter/profile", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyEmployers), (0, response_controller_1.middlewareWapper)(employer_controller_1.getEmployerDetails), (req, res) => {
+    res.render("employer/profile", {
+        title: "My Profile",
+        page: "profile",
+        STATES: jobs_json_1.default.states,
+    });
+});
 exports.default = pageRoute;
 //# sourceMappingURL=page.route.js.map

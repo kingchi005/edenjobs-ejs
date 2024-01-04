@@ -40,12 +40,11 @@ export const updateWorkDetails = async (req: Request, res: Response) => {
 	if (!safe.success) throw new ValidationError(safe.error);
 
 	const id = res.locals.user.id as string;
-	const { qualifications: qualArr, skill_set: skillArr, ...data } = safe.data;
-	const qualifications = JSON.stringify(qualArr);
-	const skill_set = JSON.stringify(skillArr);
+	const data = safe.data;
+
 	const updated = await db.applicant.updateMany({
 		where: { user: { id } },
-		data: { ...data, qualifications, skill_set },
+		data,
 	});
 
 	if (!updated) throw new AppError("An error occoured", resCode.NOT_ACCEPTED);
@@ -144,7 +143,7 @@ export const updateCvResume = async (req: Request, res: Response) => {
 			uploadFileRes.error
 		);
 
-	const cv_resume_url = (uploadFileRes as UploadApiResponse).url;
+	const cv_resume_url = (uploadFileRes as UploadApiResponse).secure_url;
 
 	const updated = await db.applicant.updateMany({
 		where: { user: { id } },

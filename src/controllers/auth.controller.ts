@@ -97,7 +97,7 @@ export const registerApplicant = async (req: Request, res: Response) => {
 			uploadAvFileRes.error
 		);
 
-	const cv_resume_url = (uploadAvFileRes as UploadApiResponse).url;
+	const cv_resume_url = (uploadAvFileRes as UploadApiResponse).secure_url;
 
 	// has password
 	const password = bcrypt.hashSync(rawPass, bcrypt.genSaltSync(10));

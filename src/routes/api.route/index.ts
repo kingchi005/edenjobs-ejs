@@ -9,6 +9,7 @@ import jobApplicationRoute from "./application.route";
 import formidableMiddleware from "express-formidable";
 import { onlyAuthenticated } from "../../controllers/middleware.controller";
 import applicantRoute from "./applicant.route";
+import employerRoute from "./employer.route";
 
 const apiRoute = Router();
 apiRoute.use(formidableMiddleware());
@@ -22,5 +23,6 @@ apiRoute.use(
 );
 
 apiRoute.use("/applicant", applicantRoute);
+apiRoute.use("/employer", employerRoute);
 
 export default apiRoute;

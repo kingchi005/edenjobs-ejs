@@ -990,6 +990,10 @@ html.dark{
   margin: auto;
 }
 
+.m-3{
+  margin: 0.75rem;
+}
+
 .\!my-0{
   margin-top: 0px !important;
   margin-bottom: 0px !important;
@@ -1089,10 +1093,6 @@ html.dark{
   margin-top: -0.75rem;
 }
 
-.-mt-4{
-  margin-top: -1rem;
-}
-
 .mb-0{
   margin-bottom: 0px;
 }
@@ -1155,10 +1155,6 @@ html.dark{
 
 .ml-2{
   margin-left: 0.5rem;
-}
-
-.ml-2\.5{
-  margin-left: 0.625rem;
 }
 
 .ml-3{
@@ -2858,11 +2854,6 @@ html.dark{
   background-color: currentColor;
 }
 
-.bg-danger{
-  --tw-bg-opacity: 1;
-  background-color: rgb(220 76 100 / var(--tw-bg-opacity));
-}
-
 .bg-danger-100{
   --tw-bg-opacity: 1;
   background-color: rgb(250 229 233 / var(--tw-bg-opacity));
@@ -3156,11 +3147,6 @@ html.dark{
   padding-right: 2rem;
 }
 
-.px-\[0\.35em\]{
-  padding-left: 0.35em;
-  padding-right: 0.35em;
-}
-
 .px-\[0\.4rem\]{
   padding-left: 0.4rem;
   padding-right: 0.4rem;
@@ -3264,11 +3250,6 @@ html.dark{
 .py-8{
   padding-top: 2rem;
   padding-bottom: 2rem;
-}
-
-.py-\[0\.15em\]{
-  padding-top: 0.15em;
-  padding-bottom: 0.15em;
 }
 
 .py-\[0\.25rem\]{
@@ -3481,10 +3462,6 @@ html.dark{
 .text-5xl{
   font-size: 3rem;
   line-height: 1;
-}
-
-.text-\[0\.6rem\]{
-  font-size: 0.6rem;
 }
 
 .text-\[0\.75em\]{
@@ -6404,10 +6381,6 @@ html.dark{
 
   .sm\:flex-col{
     flex-direction: column;
-  }
-
-  .sm\:flex-wrap{
-    flex-wrap: wrap;
   }
 
   .sm\:px-10{
