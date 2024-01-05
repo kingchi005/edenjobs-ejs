@@ -27,7 +27,7 @@ const NO_OF = {
 } as const;
 
 const another_enum = jobsMetaData.job_field;
-const company_size_enum = ["startup", "small", "medium", "large", "others"];
+const company_size_enum = jobsMetaData.company_size;
 const job_type_enum = ["part-time", "full-time", "contract"];
 const experience_level_enum = ["entry-level", "mid-level", "advance-level"];
 const work_schedule_enum = jobsMetaData.work_schedule;
@@ -114,7 +114,7 @@ async function seedDB() {
 									company_logo: faker.image.avatarLegacy(),
 									company_website: faker.internet.url(),
 									company_size: randomFromArray(company_size_enum),
-									culture: "good values|nothing else",
+									culture: JSON.stringify(["good values", "nothing else"]),
 									company_location_city:
 										randState.cities[
 											faker.number.int({ max: randState.cities.length })

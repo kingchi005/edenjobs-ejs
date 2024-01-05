@@ -257,7 +257,7 @@
 								<label
 									for="date_of_birth"
 									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-									>Select a date</label
+									>Date of birth</label
 								>
 							</div>
 
@@ -389,25 +389,25 @@
 								class="flex justify-start gap-5 items-center mb-5 relative flex-auto"
 							>
 								<div class="flex justify-center">
-									<img
-										id="avater"
-										class="rounded-lg w-20 h-16 align-middle"
-										:src="avatarUrl"
-										alt=""
-									/>
-									<div
-										class="image-upload absolute bottom-0 cursor-pointer w-5"
-										data-te-validate="file"
-										data-te-validation-ruleset="isRequired"
-										data-te-input-wrapper-init
-										data-te-invalid-feedback="Avatar is required"
-										data-te-valid-feedback=" "
-									>
-										<label for="file-input-avater" class="cursor-pointer">
-											<svg
+									<label for="file-input-avater" class="cursor-pointer">
+										<img
+											id="avater"
+											class="rounded-lg w-20 h-16 align-middle"
+											:src="avatarUrl"
+											alt=""
+										/>
+										<div
+											class="image-upload absolute bottom-0 cursor-pointer w-5"
+											data-te-validate="file"
+											data-te-validation-ruleset="isRequired"
+											data-te-input-wrapper-init
+											data-te-invalid-feedback="Avatar is required"
+											data-te-valid-feedback=" "
+										>
+											<!-- <svg
 												xmlns="http://www.w3.org/2000/svg"
-												width="20"
-												height="20"
+												width="40"
+												height="40"
 												viewBox="0 0 48 48"
 											>
 												<g fill="none" stroke-linejoin="round" stroke-width="4">
@@ -432,19 +432,19 @@
 														d="M16 14H32"
 													/>
 												</g>
-											</svg>
-										</label>
-										<div>
-											<input
-												id="file-input-avater"
-												class="hidden"
-												type="file"
-												accept=".jpeg,.jpg"
-												name="avatar"
-												@change="handleAvatarLoad"
-											/>
+											</svg> -->
+											<div>
+												<input
+													id="file-input-avater"
+													class="hidden"
+													type="file"
+													accept=".jpeg,.jpg"
+													name="avatar"
+													@change="handleAvatarLoad"
+												/>
+											</div>
 										</div>
-									</div>
+									</label>
 								</div>
 								<label for="file-input-avater">profile photo</label>
 							</div>
@@ -560,6 +560,7 @@
 							<div class="mb-6 flex-auto">
 								<div
 									id="skil-set"
+									title="press enter after each input"
 									data-te-chips-initial
 									class="mb-0 min-h-[45px] border-none pb-0 shadow-none outline-none transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:cursor-text flex-1"
 								></div>
@@ -915,7 +916,7 @@
 			// { tag: "example fast in typing" },
 			// { tag: "example coding" },
 		],
-		labelText: "Your list of skills (press enter after each input)",
+		labelText: "List of skills",
 	});
 
 	/**@type {HTMLInputElement} */

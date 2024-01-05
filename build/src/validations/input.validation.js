@@ -90,6 +90,19 @@ const ValidationSchema = {
     }),
     image: schema_1.imageSchema,
     cv_resumeSchema: schema_1.fileSchema,
+    updateCompanyDetails: zod_1.z.object({
+        company_name: (0, schema_1.getOptionalStringValidation)("company_name"),
+        company_email: (0, schema_1.getOptionalStringValidation)("company_email"),
+        company_description: (0, schema_1.getOptionalStringValidation)("company_description"),
+        company_location_state: (0, schema_1.getOptionalStringValidation)("company_location_state"),
+        company_location_city: (0, schema_1.getOptionalStringValidation)("company_location_city"),
+        company_location_street: (0, schema_1.getOptionalStringValidation)("company_location_street"),
+        company_logo: (0, schema_1.getOptionalStringValidation)("company_logo"),
+        company_website: (0, schema_1.getOptionalStringValidation)("company_website"),
+        company_size: (0, schema_1.getOptionalStringValidation)("company_size"),
+        industry: (0, schema_1.getOptionalStringValidation)("industry"),
+        culture: (0, schema_1.getJsonArrayValidation)("culture"),
+    }),
 };
 exports.default = ValidationSchema;
 //# sourceMappingURL=input.validation.js.map

@@ -82,6 +82,8 @@ pageRoute.get("/recruiter/profile", (0, response_controller_1.middlewareWapper)(
         title: "My Profile",
         page: "profile",
         STATES: jobs_json_1.default.states,
+        COMPANY_SIZE: jobs_json_1.default.company_size,
+        JOB_FIELD: jobs_json_1.default.job_field,
     });
 });
 exports.default = pageRoute;

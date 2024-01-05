@@ -37,7 +37,7 @@ const NO_OF = {
     APPLICATION: 10,
 };
 const another_enum = jobs_json_1.default.job_field;
-const company_size_enum = ["startup", "small", "medium", "large", "others"];
+const company_size_enum = jobs_json_1.default.company_size;
 const job_type_enum = ["part-time", "full-time", "contract"];
 const experience_level_enum = ["entry-level", "mid-level", "advance-level"];
 const work_schedule_enum = jobs_json_1.default.work_schedule;
@@ -63,6 +63,7 @@ function seedDB() {
         function seedUser() {
             return __awaiter(this, void 0, void 0, function* () {
                 const users = [];
+                const randState = jobs_json_1.default.states[faker_1.faker.number.int({ max: jobs_json_1.default.states.length })];
                 for (let i = 0; i < NO_OF.USER; i++) {
                     const isApplicant = Math.random() < 0.5;
                     const user = yield index_1.default.user.create({
@@ -112,9 +113,9 @@ function seedDB() {
                                         company_logo: faker_1.faker.image.avatarLegacy(),
                                         company_website: faker_1.faker.internet.url(),
                                         company_size: randomFromArray(company_size_enum),
-                                        culture: "good values|nothing else",
-                                        company_location_city: faker_1.faker.location.city(),
-                                        company_location_state: faker_1.faker.location.state(),
+                                        culture: JSON.stringify(["good values", "nothing else"]),
+                                        company_location_city: randState.cities[faker_1.faker.number.int({ max: randState.cities.length })],
+                                        company_location_state: randState.name,
                                         company_location_street: faker_1.faker.location.streetAddress(),
                                         industry: randomFromArray(another_enum),
                                     },

@@ -103,6 +103,28 @@ const ValidationSchema = {
 	image: imageSchema,
 
 	cv_resumeSchema: fileSchema,
+	/* 
+
+
+	*/
+
+	updateCompanyDetails: z.object({
+		company_name: getOptionalStringValidation("company_name"),
+		company_email: getOptionalStringValidation("company_email"),
+		company_description: getOptionalStringValidation("company_description"),
+		company_location_state: getOptionalStringValidation(
+			"company_location_state"
+		),
+		company_location_city: getOptionalStringValidation("company_location_city"),
+		company_location_street: getOptionalStringValidation(
+			"company_location_street"
+		),
+		company_logo: getOptionalStringValidation("company_logo"),
+		company_website: getOptionalStringValidation("company_website"),
+		company_size: getOptionalStringValidation("company_size"),
+		industry: getOptionalStringValidation("industry"),
+		culture: getJsonArrayValidation("culture"),
+	}),
 } as const;
 
 export default ValidationSchema;

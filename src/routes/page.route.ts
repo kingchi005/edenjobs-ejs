@@ -168,6 +168,8 @@ pageRoute.get(
 			title: "My Profile",
 			page: "profile",
 			STATES: jobsMetaData.states,
+			COMPANY_SIZE: jobsMetaData.company_size,
+			JOB_FIELD: jobsMetaData.job_field,
 		});
 	}
 );

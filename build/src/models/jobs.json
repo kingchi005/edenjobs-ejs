@@ -11,6 +11,7 @@
         "Remote Working",
         "Volunteer"
     ],
+    "company_size": ["startup", "small", "medium", "large", "others"],
     "work_schedule": ["flexibly hours", "night shift", "day time"],
     "job_categories": [
         "Data Analysis",
@@ -54,6 +55,7 @@
         "Quality Control & Assurance ",
         "Research, Teaching & Training",
         "Sales",
+        "Computing & Information Technology",
         "Software & Data",
         "Supply Chain & Procurement",
         "Trades & Services"
@@ -66,19 +68,19 @@
         "MPhil / PhD",
         "N.C.E",
         "OND",
+        "BSC",
         "Vocational",
         "Others"
     ],
     "skill_set": "fetch('https://scout.softstructures.co/api/common/skills',{method:'post',body:{name:'food'}})",
     "job_level": [
-        "Director Level (15 - 20+ years)",
         "Entry Level (0 - 2 years)",
-        "Executive Level (15 - 20+ years)",
         "Junior/Associate Level (2 - 5 years)",
-        "Management Level (10 - 15 years)",
         "Mid Level (5 - 10 years)",
-        "No Experience",
-        "Senior Level (10+ years)"
+        "Senior Level (10+ years)",
+        "Management Level (10 - 15 years)",
+        "Director Level (15 - 20+ years)",
+        "No Experience"
     ],
     "states": [
         {
