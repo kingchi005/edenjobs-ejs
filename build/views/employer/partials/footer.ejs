@@ -1,0 +1,15 @@
+<script
+	src="/tw-elements/js/tw-elements.umd.min.js"
+	type="text/javascript"
+></script>
+<script
+	src="/toast-notification/script.js"
+	type="text/javascript"
+></script>
+<% if (process.env.CURRENT_ENV ==="production") { %>
+<script src="/vue/vue.global.prod.js"></script>
+<% } else { %>
+<script src="/vue/vue.global.js"></script>
+<% } %>
+</body>
+</html>

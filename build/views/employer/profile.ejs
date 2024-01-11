@@ -1,0 +1,616 @@
+<%- include('./partials/head.ejs') %>
+<script>
+	const cultureArr = new Set();
+</script>
+<script>
+	// console.log(`<%#- JSON.stringify(user.employer_details,null,2) %>`);
+</script>
+<main class="max-w-7xl mx-auto px-5" id="App">
+	<section class="items-end flex-1">
+		<h2 class="text-3xl font-semibold mb-4 mt-7">Personal profile</h2>
+		<div class="md:flex md:justify-center md:gap-5 md:items-stretch">
+			<div
+				class="block rounded-lg text-center border bg-white p-6 dark:bg-neutral-700 flex-1"
+			>
+				<div class="flex justify-center items-center mb-3 relative">
+					<img
+						id="company-logo-img"
+						class="rounded-full min-w-52 w-52 align-middle"
+						src="<%= user.employer_details.company_logo %>"
+						alt="<%= user.username %>"
+					/>
+					<div class="image-upload absolute bottom-0 cursor-pointer w-10">
+						<label for="file-input-comp-logo" class="cursor-pointer">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="50"
+								height="50"
+								viewBox="0 0 48 48"
+							>
+								<g fill="none" stroke-linejoin="round" stroke-width="4">
+									<path
+										fill="#2F88FF"
+										stroke="#2F88FF"
+										d="M39 6H9C7.34315 6 6 7.34315 6 9V39C6 40.6569 7.34315 42 9 42H39C40.6569 42 42 40.6569 42 39V9C42 7.34315 40.6569 6 39 6Z"
+									/>
+									<path
+										stroke="#fff"
+										stroke-linecap="round"
+										d="M32 28L24 20L16 28"
+									/>
+									<path stroke="#fff" stroke-linecap="round" d="M24 36V20.5" />
+									<path stroke="#fff" stroke-linecap="round" d="M16 14H32" />
+								</g>
+							</svg>
+						</label>
+						<form id="company-logo">
+							<input
+								id="file-input-comp-logo"
+								class="hidden"
+								type="file"
+								accept=".jpeg,.jpg"
+								name="logo"
+							/>
+						</form>
+					</div>
+					<!-- <input
+						type="file"
+						placeholder="change"
+						class="w-7 absolute bottom-0 cursor-pointer bg-neutral-500 "
+					/> -->
+				</div>
+				<small
+					class="flex justify-center"
+					id="save-comp-logo-container"
+				></small>
+
+				<p class="text-lg"><%= user.first_name+" "+user.last_name %></p>
+				<small><%= user.address %></small>
+				<!-- Required font awesome -->
+			</div>
+			<div
+				class="block rounded-lg border bg-white p-6 dark:bg-neutral-700 flex-auto pt-10"
+			>
+				<form id="personal-details">
+					<div class="sm:flex gap-5">
+						<!--First name input-->
+						<div class="relative mb-6 flex-1" data-te-input-wrapper-init>
+							<input
+								type="text"
+								class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+								id="exampleInput123"
+								aria-describedby="emailHelp123"
+								placeholder="First name"
+								value="<%= user.first_name  %>"
+								name="first_name"
+							/>
+							<label
+								for="emailHelp123"
+								class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+								>First name
+							</label>
+						</div>
+
+						<!--Last name input-->
+						<div class="relative mb-6 flex-1" data-te-input-wrapper-init>
+							<input
+								type="text"
+								class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+								id="exampleInput124"
+								aria-describedby="emailHelp124"
+								placeholder="Last name"
+								name="last_name"
+								value="<%= user.last_name  %>"
+							/>
+							<label
+								for="exampleInput124"
+								class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+								>Last name
+							</label>
+						</div>
+					</div>
+					<div class="sm:flex gap-5">
+						<!--Email input-->
+						<div class="relative mb-6 flex-1" data-te-input-wrapper-init>
+							<input
+								disabled
+								type="email"
+								class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+								id="exampleInput125"
+								placeholder="Email address"
+								value="<%= user.email   %>"
+							/>
+							<label
+								for="exampleInput125"
+								class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
+								>Email address
+							</label>
+						</div>
+
+						<!--Address input-->
+						<div class="relative mb-6 flex-1" data-te-input-wrapper-init>
+							<input
+								type="text"
+								class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+								id="exampleInput126"
+								placeholder="Address"
+								name="address"
+								value="<%= user.address %>"
+							/>
+							<label
+								for="exampleInput126"
+								class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
+								>Address
+							</label>
+						</div>
+					</div>
+					<!--Submit button-->
+					<div class="flex justify-end">
+						<button
+							id="update-pd"
+							type="submit"
+							class="inline-block w-full sm:w-fit s rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+							data-te-ripple-init
+							data-te-ripple-color="light"
+						>
+							Save details
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+
+	<section class="items-end flex-1">
+		<h2 class="text-3xl font-semibold mb-4 mt-7">Company information</h2>
+		<!-- 
+
+     -->
+		<div class="md:flex md:justify-center md:gap-5">
+			<div class="block dark:bg-neutral-700 flex-1">
+				<div class="block rounded-lg border p-6 mb-5 bg-white pt-10">
+					<!-- <h2 class="text-xl font-semibold mb-5">Work details</h2> -->
+					<form id="company-details">
+						<div class="sm:flex gap-5 flex-wrap items-center">
+							<!-- company_logo -->
+							<!-- 
+								<div
+								class="flex justify-start gap-5 items-center mb-5 relative flex-auto"
+							>
+								<div class="flex justify-center">
+									<label for="file-input-comp-logo" class="cursor-pointer">
+										<img
+											id="company-logo"
+											class="rounded-lg w-20 h-16 align-middle"
+											alt=""
+											src="<%= user.employer_details.company_logo %>"
+										/>
+										<div
+											class="image-upload absolute bottom-0 cursor-pointer w-5"
+											data-te-validate="file"
+											data-te-validation-ruleset="isRequired"
+											data-te-input-wrapper-init
+											data-te-invalid-feedback="COmpany Logo is required"
+											data-te-valid-feedback=" "
+										>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="40"
+												height="40"
+												viewBox="0 0 48 48"
+											>
+												<g fill="none" stroke-linejoin="round" stroke-width="4">
+													<path
+														fill="#2F88FF"
+														stroke="#2F88FF"
+														d="M39 6H9C7.34315 6 6 7.34315 6 9V39C6 40.6569 7.34315 42 9 42H39C40.6569 42 42 40.6569 42 39V9C42 7.34315 40.6569 6 39 6Z"
+													/>
+													<path
+														stroke="#fff"
+														stroke-linecap="round"
+														d="M32 28L24 20L16 28"
+													/>
+													<path
+														stroke="#fff"
+														stroke-linecap="round"
+														d="M24 36V20.5"
+													/>
+													<path
+														stroke="#fff"
+														stroke-linecap="round"
+														d="M16 14H32"
+													/>
+												</g>
+											</svg>
+											<div>
+												<input
+													id="file-input-comp-logo"
+													class="hidden"
+													type="file"
+													accept=".jpeg,.jpg"
+													name="company_logo"
+												/>
+											</div>
+										</div>
+									</label>
+								</div>
+								<label for="file-input-comp-logo">Company Logo</label>
+							</div>
+							 -->
+
+							<!-- company_name -->
+							<div class="relative flex-auto mb-6" data-te-input-wrapper-init>
+								<input
+									type="text"
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="company-name"
+									aria-describedby="emailHelp123"
+									placeholder="First name"
+									value="<%= user.employer_details.company_name  %>"
+									name="company_name"
+								/>
+								<label
+									for="company-name"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>Company Name
+								</label>
+							</div>
+							<!-- company_email -->
+							<div class="relative flex-auto mb-6" data-te-input-wrapper-init>
+								<input
+									type="email"
+									name="company_email"
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="company-email"
+									placeholder="recruit@edenjobs.com"
+									value="<%= user.employer_details.company_email %>"
+								/>
+								<label
+									for="company-email"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
+									>Company Email
+								</label>
+							</div>
+						</div>
+						<div class="sm:flex gap-5 flex-wrap items-center">
+							<!-- company_description -->
+							<div class="relative mb-6 flex-1" data-te-input-wrapper-init>
+								<textarea
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="company-description"
+									name="company_description"
+									rows="3"
+									placeholder="Tell about your company"
+								></textarea>
+								<label
+									for="company-description"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>Company Description</label
+								>
+							</div>
+
+							<!-- culture  -->
+							<div class="mb-6 flex-1">
+								<div
+									id="culture"
+									data-te-chips-initial
+									data-te-toggle="tooltip"
+									title="press enter after typing each sentence"
+									class="mb-0 min-h-[45px] border-none pb-0 shadow-none outline-none transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:cursor-text flex-1"
+								></div>
+							</div>
+						</div>
+						<div
+							class="sm:flex gap-5 flex-wrap items-center"
+							id="company-address"
+						>
+							<!-- company_location_street -->
+							<div
+								class="relative mb-4 flex-auto"
+								data-te-input-wrapper-init
+								data-te-validate="input"
+								data-te-validation-ruleset="isRequired"
+								data-te-invalid-feedback="Address is required"
+								data-te-valid-feedback=" "
+							>
+								<input
+									name="company_location_street"
+									type=""
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="company-location-street"
+									aria-describedby="emailHelp"
+									placeholder="Enter address"
+									value="<%= user.employer_details.company_location_street%>"
+								/>
+								<label
+									for="address"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>Street Address</label
+								>
+							</div>
+							<!-- company_location_state -->
+							<div class="mb-6 flex-auto">
+								<select
+									class=""
+									id="company-location-state"
+									data-te-select-init
+									name="company_location_state"
+								>
+									<% STATES.map((state,i)=>{ %>
+									<option id="<%= i %>" value="<%= state.name %>">
+										<%= state.name %>
+									</option>
+									<% }) %>
+								</select>
+								<label data-te-select-label-ref>Company Address State</label>
+							</div>
+
+							<!-- company_location_city -->
+							<div class="mb-6 flex-auto">
+								<select
+									class=""
+									id="company-location-city"
+									data-te-select-init
+									name="company_location_city"
+								></select>
+								<label data-te-select-label-ref>Company Address City</label>
+							</div>
+
+							<!-- company_website -->
+							<div
+								class="relative mb-6 flex-auto"
+								data-te-input-wrapper-init
+								data-te-validate="input"
+								data-te-validation-ruleset="isRequired"
+								data-te-invalid-feedback="Address is required"
+								data-te-valid-feedback=" "
+							>
+								<input
+									name="company_website"
+									type="url"
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="company-website"
+									aria-describedby="email"
+									value="<%= user.employer_details.company_website %>"
+								/>
+								<label
+									for="company-website"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>Company Website</label
+								>
+							</div>
+
+							<!-- company_size -->
+							<div class="mb-6 flex-auto">
+								<select
+									class=""
+									id="company-size"
+									data-te-select-init
+									name="company_size"
+								>
+									<% COMPANY_SIZE.map((size,i)=>{ %>
+									<option id="<%= i %>" value="<%= size %>"><%= size %></option>
+									<% }) %>
+								</select>
+								<label data-te-select-label-ref>Company Size</label>
+							</div>
+
+							<!-- industry -->
+							<div class="mb-6 flex-auto">
+								<select
+									class=""
+									id="industry"
+									data-te-select-init
+									name="industry"
+								>
+									<% JOB_FIELD.map((size,i)=>{ %>
+									<option id="<%= i %>" value="<%= size %>"><%= size %></option>
+									<% }) %>
+								</select>
+								<label data-te-select-label-ref>Industry</label>
+							</div>
+						</div>
+
+						<!--Submit button-->
+						<div class="flex justify-end my-3">
+							<button
+								id="update-pd"
+								type="save"
+								class="inline-block w-full sm:w-fit s rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+								data-te-ripple-init
+								data-te-ripple-color="light"
+							>
+								Save details
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+<%- include('./partials/footer.ejs') %>
+<script src="/js/global.js"></script>
+
+<script>
+	window.onload = () => {
+		document.querySelector("textarea#company-description").value =
+			"<%= user.employer_details.company_description %>";
+	};
+</script>
+
+<script>
+	const STATES = JSON.parse(`<%- JSON.stringify(STATES) %>`);
+	const compLogoFileInput = document.querySelector("#file-input-comp-logo");
+	const compLogoImg = document.querySelector("#company-logo-img");
+	const pdForm = document.querySelector("form#personal-details");
+	const cdForm = document.querySelector("form#company-details");
+	const saveCompLogoCnt = document.querySelector("#save-comp-logo-container");
+	cdForm.addEventListener("submit", handleSaveCompanyDetails);
+	pdForm.addEventListener("submit", handleSavePersonalDetails);
+	// saveCompLogo.addEventListener("click", handleSaveCompanyLogo);
+
+	compLogoFileInput.addEventListener("change", (e) => {
+		// avatarFile.value = ev.target.files[0];
+		const reader = new FileReader();
+
+		reader.onload = function (e) {
+			compLogoImg.setAttribute("src", reader.result);
+			saveCompLogoCnt.innerHTML = `<button
+						type="button" id="save-logo-btn"
+						data-te-ripple-init
+						data-te-ripple-color="light"
+						class="flex rounded bg-primary px-4 pb-[5px] pt-[6px] font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="currentColor"
+							class="mr-1 h-4 w-4"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M19.5 21a3 3 0 003-3V9a3 3 0 00-3-3h-5.379a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H4.5a3 3 0 00-3 3v12a3 3 0 003 3h15zm-6.75-10.5a.75.75 0 00-1.5 0v4.19l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V10.5z"
+								clip-rule="evenodd"
+							/>
+						</svg>
+						Save
+					</button>`;
+			document
+				.querySelector("#save-logo-btn")
+				.addEventListener("click", handleSaveCompanyLogo);
+		};
+		// files[0]
+		reader.readAsDataURL(e.target.files[0]);
+	});
+
+	const compSizeSelectInstance = te.Select.getInstance(
+		document.querySelector("#company-size")
+	);
+	compSizeSelectInstance.setValue("<%= user.employer_details.company_size %>");
+
+	const industrySelectInstance = te.Select.getInstance(
+		document.querySelector("#industry")
+	);
+
+	const chipsInitial = document.querySelector("#culture");
+
+	const chipsInitialInstance = new te.ChipsInput(chipsInitial, {
+		initialValues: JSON.parse(`<%- user.employer_details.culture  %>`).map(
+			(it) => ({
+				tag: it,
+			})
+		),
+		labelText: "Your Company's culture & Values",
+	});
+	chipsInitialInstance._element
+		.querySelector("input")
+		.addEventListener("keypress", (e) => {
+			if (e.key === "Enter") {
+				e.preventDefault();
+				// cultureArr.add(e.target.value);
+			}
+		});
+
+	industrySelectInstance.setValue("<%= user.employer_details.industry %>");
+	const stateSelectInstance = te.Select.getInstance(
+		document.querySelector("#company-location-state")
+	);
+	stateSelectInstance.setValue(
+		"<%= user.employer_details.company_location_state %>"
+	);
+	const citySelectInstance = te.Select.getInstance(
+		document.querySelector("#company-location-city")
+	);
+	citySelectInstance.setValue(
+		"<%= user.employer_details.company_location_city %>"
+	);
+
+	stateSelectInstance._element.addEventListener("change", (e) => {
+		console.log(e.target.value);
+		citySelectInstance._element.innerHTML = STATES[
+			e.target.selectedIndex
+		].cities.map((city) => `<option value="${city}">${city}</option>`);
+	});
+
+	async function handleSavePersonalDetails(e) {
+		const url = "/api/employer/personal-details";
+		const formData = new FormData(e.target);
+
+		const res = await (
+			await fetch(url, {
+				method: "put",
+				headers: {},
+				body: formData,
+			})
+		).json();
+
+		console.log(res);
+		if (!res.ok) {
+			showToast({ duration: 5000, text: res.error.message, type: "error" });
+			return;
+		}
+		showToast({ duration: 5000, text: res.message, type: "success" });
+	}
+	async function handleSaveCompanyDetails(e) {
+		document
+			.querySelectorAll("#culture span[data-te-chip-text]")
+			.forEach((e) => cultureArr.add(e.textContent));
+		const url = "/api/employer/company-details";
+		const formData = new FormData(e.target);
+		formData.set("culture", JSON.stringify([...cultureArr]));
+
+		const res = await (
+			await fetch(url, {
+				method: "put",
+				headers: {},
+				body: formData,
+			})
+		).json();
+
+		console.log(res);
+		if (!res.ok) {
+			showToast({ duration: 5000, text: res.error.message, type: "error" });
+			return;
+		}
+		showToast({ duration: 5000, text: res.message, type: "success" });
+	}
+	async function handleSaveCompanyLogo(e) {
+		const url = "/api/employer/company-logo";
+		const formData = new FormData(document.querySelector("form#company-logo"));
+
+		const res = await (
+			await fetch(url, {
+				method: "put",
+				headers: {},
+				body: formData,
+			})
+		).json();
+
+		console.log(res);
+		if (!res.ok) {
+			showToast({ duration: 5000, text: res.error.message, type: "error" });
+			return;
+		}
+		showToast({ duration: 5000, text: res.message, type: "success" });
+	}
+</script>
+<script>
+	window.onload = () => {
+		document.querySelector(
+			"textarea#company-description"
+		).value = `<%- user.employer_details.company_description %>`;
+
+		citySelectInstance._element.innerHTML = STATES[
+			stateSelectInstance._element.selectedIndex
+		].cities.map((city) => `<option value="${city}">${city}</option>`);
+		document
+			.querySelectorAll("#culture span[data-te-chip-text]")
+			.forEach((e) => cultureArr.add(e.textContent));
+	};
+	document
+		.querySelectorAll("form")
+		.forEach((form) =>
+			form.addEventListener("submit", (ev) => ev.preventDefault())
+		);
+</script>
