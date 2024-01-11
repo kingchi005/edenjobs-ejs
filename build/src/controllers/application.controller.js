@@ -102,6 +102,7 @@ const getApplicationDetails = (req, res, next) => __awaiter(void 0, void 0, void
     });
     if (!applicationDetails)
         throw new response_controller_1.AppError("Not found", response_controller_1.resCode.NOT_FOUND);
+    applicationDetails.applicant.qualifications;
     res.locals.applicationDetails = applicationDetails;
     next();
 });
