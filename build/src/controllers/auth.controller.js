@@ -37,7 +37,12 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         throw new response_controller_1.ValidationError(safe.error);
     const { identifier, password: rawPass } = safe.data;
     const _user = yield prisma_1.default.user.findFirst({
-        where: { OR: [{ username: identifier }, { email: identifier }] },
+        where: {
+            OR: [
+                { username: { equals: identifier } },
+                { email: { equals: identifier } },
+            ],
+        },
         include: { applicant_details: true, employer_details: true },
     });
     if (!_user)

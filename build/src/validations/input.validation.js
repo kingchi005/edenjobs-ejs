@@ -13,7 +13,7 @@ const ValidationSchema = {
     }),
     registerApplicant: zod_1.z.object({
         username: (0, schema_1.getStringValidation)("username"),
-        email: (0, schema_1.getStringValidation)("email"),
+        email: (0, schema_1.getStringValidation)("email").transform((v) => v.toLocaleLowerCase()),
         password: (0, schema_1.getStringValidation)("password"),
         first_name: (0, schema_1.getStringValidation)("first_name"),
         last_name: (0, schema_1.getStringValidation)("last_name"),
@@ -46,7 +46,7 @@ const ValidationSchema = {
     registerEmployer: zod_1.z.object({
         is_applicant: (0, schema_1.getBooleanValidation)("is_applicant"),
         username: (0, schema_1.getStringValidation)("username"),
-        email: (0, schema_1.getStringValidation)("email"),
+        email: (0, schema_1.getStringValidation)("email").transform((v) => v.toLocaleLowerCase()),
         password: (0, schema_1.getStringValidation)("password"),
         first_name: (0, schema_1.getStringValidation)("first_name"),
         last_name: (0, schema_1.getStringValidation)("last_name"),

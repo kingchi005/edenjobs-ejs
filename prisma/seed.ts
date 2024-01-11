@@ -56,12 +56,13 @@ async function seedDB() {
 
 	async function seedUser() {
 		const users = [];
-		const randState =
-			jobsMetaData.states[
-				faker.number.int({ max: jobsMetaData.states.length })
-			];
+
 		for (let i = 0; i < NO_OF.USER; i++) {
 			const isApplicant = Math.random() < 0.5;
+			const randState =
+				jobsMetaData.states[
+					faker.number.int({ max: jobsMetaData.states.length - 1 })
+				];
 			const user = await db.user.create({
 				data: {
 					first_name: faker.person.firstName(),
@@ -81,7 +82,7 @@ async function seedDB() {
 								create: {
 									avatar: faker.internet.avatar(),
 									cv_resume_url: faker.internet.url(),
-									job_field: JSON.stringify(randomFromArray(another_enum)),
+									job_field: randomFromArray(another_enum),
 									qualifications: JSON.stringify(
 										[...Array(faker.number.int({ max: 6 }))].map((el) =>
 											randomFromArray(qualification_enum)
@@ -117,7 +118,7 @@ async function seedDB() {
 									culture: JSON.stringify(["good values", "nothing else"]),
 									company_location_city:
 										randState.cities[
-											faker.number.int({ max: randState.cities.length })
+											faker.number.int({ max: randState.cities.length - 1 })
 										],
 									company_location_state: randState.name,
 									company_location_street: faker.location.streetAddress(),
@@ -155,8 +156,8 @@ async function seedDB() {
 					min_salary: faker.number.int({ max: 100 }),
 					required_experience_years: randomFromArray([1, 2, 3, 4, 5, 6]),
 					state_location: faker.location.state(),
-					required_skills: "cooking|fighting|giveing life to christ|and so on",
-					responsibilities: "come|go|check|do your job|chop",
+					required_skills: "cooking|fighting|giveing life to christ|and so on", /// optional
+					responsibilities: "come|go|check|do your job|chop", /// optional
 					salary_period: randomFromArray([
 						"monthly",
 						"weekly",

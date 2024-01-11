@@ -1,6 +1,9 @@
 import { Router, Request, Response } from "express";
 import { handlerWapper } from "../../controllers/response.controller";
-import { searchJobs } from "../../controllers/job.controller";
+import {
+	getLatestJobApplications,
+	searchJobs,
+} from "../../controllers/job.controller";
 
 const jobRoute = Router();
 
@@ -12,6 +15,7 @@ const jobRoute = Router();
 */
 
 jobRoute.get("/s", handlerWapper(searchJobs));
+jobRoute.get("/applications/:id", handlerWapper(getLatestJobApplications));
 
 // you can pretect from here
 //  middlewareWapper(onlyAuthenticated),

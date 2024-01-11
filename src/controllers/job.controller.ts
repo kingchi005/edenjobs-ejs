@@ -1,11 +1,17 @@
 import { NextFunction, Request, Response } from "express";
-import { ApiResponse, AppError, ValidationError } from "./response.controller";
+import {
+	ApiResponse,
+	AppError,
+	ValidationError,
+	resCode,
+} from "./response.controller";
 import db from "../../prisma";
 import { z } from "zod";
 import {
 	getBooleanValidation,
 	getNumberValidation,
 	getOptionalStringValidation,
+	getStringValidation,
 } from "../validations/schema";
 
 const NO_PER_PAGE = 8;
@@ -142,6 +148,41 @@ export const getJobCategory = async (
 	const jobCategories = await db.jobCategory.findMany();
 	res.locals.jobCategories = jobCategories;
 	next();
+};
+
+export const getLatestJobApplications = async (req: Request, res: Response) => {
+	const safe = z
+		.object({ id: getStringValidation("id") })
+		.safeParse(req.params);
+
+	if (!safe.success) throw new ValidationError(safe.error);
+
+	const id = safe.data.id;
+
+	const latestJobApplications = await db.job.findFirst({
+		where: { id },
+		select: {
+			applications: {
+				include: {
+					applicant: {
+						select: {
+							avatar: true,
+							user: {
+								select: { first_name: true, last_name: true, email: true },
+							},
+						},
+					},
+				},
+			},
+		},
+	});
+
+	if (!latestJobApplications)
+		throw new AppError("Not found", resCode.NOT_FOUND);
+
+	return new ApiResponse(res, "Fetch successful", {
+		applications: latestJobApplications.applications,
+	});
 };
 
 // export const searchJobsByTitle = async (req: Request, res: Response) => {

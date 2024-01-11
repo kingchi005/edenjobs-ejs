@@ -2,6 +2,9 @@
 <script>
 	const cultureArr = new Set();
 </script>
+<script>
+	// console.log(`<%#- JSON.stringify(user.employer_details,null,2) %>`);
+</script>
 <main class="max-w-7xl mx-auto px-5" id="App">
 	<section class="items-end flex-1">
 		<h2 class="text-3xl font-semibold mb-4 mt-7">Personal profile</h2>
@@ -269,20 +272,33 @@
 								</label>
 							</div>
 						</div>
-						<!-- company_description -->
-						<div class="relative mb-6 flex-1" data-te-input-wrapper-init>
-							<textarea
-								class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-								id="company-description"
-								name="company_description"
-								rows="3"
-								placeholder="Tell about your company"
-							></textarea>
-							<label
-								for="company-description"
-								class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-								>Company Description</label
-							>
+						<div class="sm:flex gap-5 flex-wrap items-center">
+							<!-- company_description -->
+							<div class="relative mb-6 flex-1" data-te-input-wrapper-init>
+								<textarea
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="company-description"
+									name="company_description"
+									rows="3"
+									placeholder="Tell about your company"
+								></textarea>
+								<label
+									for="company-description"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>Company Description</label
+								>
+							</div>
+
+							<!-- culture  -->
+							<div class="mb-6 flex-1">
+								<div
+									id="culture"
+									data-te-chips-initial
+									data-te-toggle="tooltip"
+									title="press enter after typing each sentence"
+									class="mb-0 min-h-[45px] border-none pb-0 shadow-none outline-none transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:cursor-text flex-1"
+								></div>
+							</div>
 						</div>
 						<div
 							class="sm:flex gap-5 flex-wrap items-center"
@@ -393,17 +409,6 @@
 								</select>
 								<label data-te-select-label-ref>Industry</label>
 							</div>
-
-							<!-- culture  -->
-							<div class="mb-6 flex-auto">
-								<div
-									id="culture"
-									data-te-chips-initial
-									data-te-toggle="tooltip"
-									title="press enter after typing each sentence"
-									class="mb-0 min-h-[45px] border-none pb-0 shadow-none outline-none transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:cursor-text flex-1"
-								></div>
-							</div>
 						</div>
 
 						<!--Submit button-->
@@ -491,12 +496,11 @@
 	const chipsInitial = document.querySelector("#culture");
 
 	const chipsInitialInstance = new te.ChipsInput(chipsInitial, {
-		initialValues: JSON.parse(
-			`["ckjhsb","sduhgbnds","eating"]`
-			// <%#- user.employer_details.culture  %>
-		).map((it) => ({
-			tag: it,
-		})),
+		initialValues: JSON.parse(`<%- user.employer_details.culture  %>`).map(
+			(it) => ({
+				tag: it,
+			})
+		),
 		labelText: "Your Company's culture & Values",
 	});
 	chipsInitialInstance._element
@@ -528,8 +532,6 @@
 			e.target.selectedIndex
 		].cities.map((city) => `<option value="${city}">${city}</option>`);
 	});
-
-	console.log(JSON.parse(`<%- JSON.stringify(user.employer_details) %>`));
 
 	async function handleSavePersonalDetails(e) {
 		const url = "/api/employer/personal-details";
@@ -577,8 +579,6 @@
 		const url = "/api/employer/company-logo";
 		const formData = new FormData(document.querySelector("form#company-logo"));
 
-		return;
-
 		const res = await (
 			await fetch(url, {
 				method: "put",
@@ -597,8 +597,9 @@
 </script>
 <script>
 	window.onload = () => {
-		document.querySelector("textarea#company-description").value =
-			"<%= user.employer_details.company_description %>";
+		document.querySelector(
+			"textarea#company-description"
+		).value = `<%- user.employer_details.company_description %>`;
 
 		citySelectInstance._element.innerHTML = STATES[
 			stateSelectInstance._element.selectedIndex

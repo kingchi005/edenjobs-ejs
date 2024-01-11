@@ -16,7 +16,10 @@ import {
 	onlyAuthenticated,
 	onlyEmployers,
 } from "../controllers/middleware.controller";
-import { getUserJobApplications } from "../controllers/application.controller";
+import {
+	getApplicationDetails,
+	getUserJobApplications,
+} from "../controllers/application.controller";
 import { getApplicantDetails } from "../controllers/applicant.controller";
 import jobsMetaData from "../models/jobs.json";
 import { getEmployerDetails } from "../controllers/employer.controller";
@@ -40,6 +43,9 @@ pageRoute.get(
 	middlewareWapper(getJobs),
 	middlewareWapper(getJobCategory),
 	(req, res) => res.render("jobs", { title: "Edenjobs | jobs" })
+);
+pageRoute.get("/about-us", (req, res) =>
+	res.render("aboutus", { title: "About Edenjobs" })
 );
 pageRoute.get("/job/:id", middlewareWapper(getJobDetail), (req, res) =>
 	res.render("job", { title: "Edenjobs | job" })
@@ -140,6 +146,12 @@ pageRoute.get(
 	}
 );
 pageRoute.get(
+	"/recruiter/job/:id",
+	middlewareWapper(getJobDetail),
+	(req, res) =>
+		res.render("applicant/job", { title: "Edenjobs | job", page: "job" })
+);
+pageRoute.get(
 	"/recruiter/jobs",
 	middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyEmployers),
@@ -153,6 +165,18 @@ pageRoute.get(
 	middlewareWapper(onlyEmployers),
 	(req, res) => {
 		res.render("employer/applications", {
+			title: "Applications",
+			page: "applications",
+		});
+	}
+);
+pageRoute.get(
+	"/recruiter/application/:id",
+	middlewareWapper(onlyAuthenticated),
+	middlewareWapper(onlyEmployers),
+	middlewareWapper(getApplicationDetails),
+	(req, res) => {
+		res.render("employer/application", {
 			title: "Applications",
 			page: "applications",
 		});

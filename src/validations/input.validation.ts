@@ -21,7 +21,7 @@ const ValidationSchema = {
 	}),
 	registerApplicant: z.object({
 		username: getStringValidation("username"),
-		email: getStringValidation("email"),
+		email: getStringValidation("email").transform((v) => v.toLocaleLowerCase()),
 		password: getStringValidation("password"),
 		first_name: getStringValidation("first_name"),
 		last_name: getStringValidation("last_name"),
@@ -56,7 +56,7 @@ const ValidationSchema = {
 	registerEmployer: z.object({
 		is_applicant: getBooleanValidation("is_applicant"),
 		username: getStringValidation("username"),
-		email: getStringValidation("email"),
+		email: getStringValidation("email").transform((v) => v.toLocaleLowerCase()),
 		password: getStringValidation("password"),
 		first_name: getStringValidation("first_name"),
 		last_name: getStringValidation("last_name"),

@@ -12,7 +12,7 @@
 
 .notifications {
 	position: fixed;
-	top: 30px;
+	top: 100px;
 	right: 20px;
 }
 .notifications :where(.toast, .column) {

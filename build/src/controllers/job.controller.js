@@ -12,9 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getJobCategory = exports.searchJobs = exports.getRecomendedJobs = exports.getRecentJobs = exports.getJobDetail = exports.getJobs = exports.edithJob = exports.creatJob = void 0;
+exports.getLatestJobApplications = exports.getJobCategory = exports.searchJobs = exports.getRecomendedJobs = exports.getRecentJobs = exports.getJobDetail = exports.getJobs = exports.edithJob = exports.creatJob = void 0;
 const response_controller_1 = require("./response.controller");
 const prisma_1 = __importDefault(require("../../prisma"));
+const zod_1 = require("zod");
+const schema_1 = require("../validations/schema");
 const NO_PER_PAGE = 8;
 const creatJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return new response_controller_1.ApiResponse(res, "create jobs here", {});
@@ -119,4 +121,35 @@ const getJobCategory = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     next();
 });
 exports.getJobCategory = getJobCategory;
+const getLatestJobApplications = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const safe = zod_1.z
+        .object({ id: (0, schema_1.getStringValidation)("id") })
+        .safeParse(req.params);
+    if (!safe.success)
+        throw new response_controller_1.ValidationError(safe.error);
+    const id = safe.data.id;
+    const latestJobApplications = yield prisma_1.default.job.findFirst({
+        where: { id },
+        select: {
+            applications: {
+                include: {
+                    applicant: {
+                        select: {
+                            avatar: true,
+                            user: {
+                                select: { first_name: true, last_name: true, email: true },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    });
+    if (!latestJobApplications)
+        throw new response_controller_1.AppError("Not found", response_controller_1.resCode.NOT_FOUND);
+    return new response_controller_1.ApiResponse(res, "Fetch successful", {
+        applications: latestJobApplications.applications,
+    });
+});
+exports.getLatestJobApplications = getLatestJobApplications;
 //# sourceMappingURL=job.controller.js.map

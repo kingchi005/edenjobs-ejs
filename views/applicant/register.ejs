@@ -21,7 +21,7 @@
 
 	<!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com -->
 	<ul
-		class="relative m-0 w-full list-none overflow-hidden p-0 transition-[height] duration-200 ease-in-out"
+		class="relative m-0 max-w-4xl w-full list-none overflow-hidden p-0 transition-[height] duration-200 ease-in-out"
 		data-te-stepper-init
 		data-te-stepper-type="vertical"
 	>
@@ -50,7 +50,7 @@
 				style="height: 100%"
 			>
 				<div
-					class="max-w-4xl mx-auto rounded-lg p-6 border dark:bg-neutral-700 h-full relative"
+					class="w-full mx-auto rounded-lg p-6 border dark:bg-neutral-700 h-full relative"
 				>
 					<h3 v-if="false" class="text-xl mb-5 font-semibold">
 						Personal information
@@ -367,7 +367,7 @@
 				style="height: 100%"
 			>
 				<div
-					class="block max-w-4xl mx-auto rounded-lg p-6 border dark:bg-neutral-700 h-full relative"
+					class="block w-full mx-auto rounded-lg p-6 border dark:bg-neutral-700 h-full relative"
 				>
 					<div
 						v-if="current_step < 2"
@@ -557,10 +557,14 @@
 						<div class="sm:flex flex-wrap items-center justify-between gap-5">
 							<!--skills input-->
 
-							<div class="mb-6 flex-auto">
+							<div
+								class="relative mb-6 flex-auto"
+								id="skil-set-wrap"
+								data-te-toggle="tooltip"
+								title="press enter after each input"
+							>
 								<div
 									id="skil-set"
-									title="press enter after each input"
 									data-te-chips-initial
 									class="mb-0 min-h-[45px] border-none pb-0 shadow-none outline-none transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:cursor-text flex-1"
 								></div>
@@ -612,7 +616,7 @@
 				style="height: 100%"
 			>
 				<div
-					class="block max-w-4xl mx-auto rounded-lg p-6 border dark:bg-neutral-700 w-full h-full relative"
+					class="block w-full mx-auto rounded-lg p-6 border dark:bg-neutral-700 w-full h-full relative"
 				>
 					<div
 						v-if="current_step < 3"
@@ -922,6 +926,8 @@
 	/**@type {HTMLInputElement} */
 	const chipsInitialInstance_input =
 		chipsInitialInstance._element.querySelector("input");
+	chipsInitialInstance_input.classList.add("flex-1");
+	chipsInitialInstance_input.removeEventListener("blur", null);
 	chipsInitialInstance_input.addEventListener("keypress", (e) => {
 		if (e.key === "Enter") {
 			e.preventDefault();
@@ -1031,4 +1037,27 @@
 	function nextStep(num) {
 		stepper._toggleStep(num);
 	}
+</script>
+<script>
+	const asyncAutocomplete = document.querySelector("#skil-set-wrap");
+	const asyncFilter = async (query) => {
+		const response = await fetch(
+			"https://scout.softstructures.co/api/common/skills",
+			{
+				method: "post",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					name: query,
+				}),
+			}
+		);
+
+		const result = await response.json();
+		return result.data;
+	};
+
+	new te.Autocomplete(asyncAutocomplete, {
+		filter: asyncFilter,
+		displayValue: (value) => value.name,
+	});
 </script>

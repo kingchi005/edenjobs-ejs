@@ -21,6 +21,7 @@ pageRoute.get("/", (0, response_controller_1.middlewareWapper)(job_controller_1.
     title: "Find any kind of jobs in edenjobs",
 }));
 pageRoute.get("/jobs", (0, response_controller_1.middlewareWapper)(job_controller_1.getJobs), (0, response_controller_1.middlewareWapper)(job_controller_1.getJobCategory), (req, res) => res.render("jobs", { title: "Edenjobs | jobs" }));
+pageRoute.get("/about-us", (req, res) => res.render("aboutus", { title: "About Edenjobs" }));
 pageRoute.get("/job/:id", (0, response_controller_1.middlewareWapper)(job_controller_1.getJobDetail), (req, res) => res.render("job", { title: "Edenjobs | job" }));
 pageRoute.get("/login", (req, res) => res.render("login", { title: "Edenjobs login" }));
 pageRoute.get("/register", (req, res) => res.render("applicant/register", {
@@ -68,11 +69,18 @@ pageRoute.get("/recruiter/dashboard", (0, response_controller_1.middlewareWapper
         page: "dashboard",
     });
 });
+pageRoute.get("/recruiter/job/:id", (0, response_controller_1.middlewareWapper)(job_controller_1.getJobDetail), (req, res) => res.render("applicant/job", { title: "Edenjobs | job", page: "job" }));
 pageRoute.get("/recruiter/jobs", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyEmployers), (req, res) => {
     res.render("employer/jobs", { title: "Created Jobs", page: "jobs" });
 });
 pageRoute.get("/recruiter/applications", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyEmployers), (req, res) => {
     res.render("employer/applications", {
+        title: "Applications",
+        page: "applications",
+    });
+});
+pageRoute.get("/recruiter/application/:id", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyEmployers), (0, response_controller_1.middlewareWapper)(application_controller_1.getApplicationDetails), (req, res) => {
+    res.render("employer/application", {
         title: "Applications",
         page: "applications",
     });

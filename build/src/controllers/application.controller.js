@@ -12,10 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getApplications = exports.getJobApplicationDetails = exports.getUserJobApplications = exports.appliyForJob = void 0;
+exports.getApplications = exports.getApplicationDetails = exports.getJobApplicationDetails = exports.getUserJobApplications = exports.appliyForJob = void 0;
 const prisma_1 = __importDefault(require("../../prisma"));
 const input_validation_1 = __importDefault(require("../validations/input.validation"));
 const response_controller_1 = require("./response.controller");
+const schema_1 = require("../validations/schema");
 const appliyForJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = res.locals.user;
     const safe = input_validation_1.default.appliyForJob.safeParse(req.fields);
@@ -75,6 +76,36 @@ const getJobApplicationDetails = (req, res) => __awaiter(void 0, void 0, void 0,
     return new response_controller_1.ApiResponse(res, "Success", { application });
 });
 exports.getJobApplicationDetails = getJobApplicationDetails;
+const getApplicationDetails = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const safe = (0, schema_1.getNumberValidation)("id").safeParse(+((_a = req.params) === null || _a === void 0 ? void 0 : _a.id));
+    if (!safe.success)
+        throw new response_controller_1.ValidationError(safe.error);
+    const id = safe.data;
+    const applicationDetails = yield prisma_1.default.application.findFirst({
+        where: { id },
+        include: {
+            applicant: {
+                include: {
+                    user: {
+                        select: {
+                            last_name: true,
+                            first_name: true,
+                            address: true,
+                            email: true,
+                        },
+                    },
+                },
+            },
+            job: {},
+        },
+    });
+    if (!applicationDetails)
+        throw new response_controller_1.AppError("Not found", response_controller_1.resCode.NOT_FOUND);
+    res.locals.applicationDetails = applicationDetails;
+    next();
+});
+exports.getApplicationDetails = getApplicationDetails;
 const getApplications = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getApplications = getApplications;

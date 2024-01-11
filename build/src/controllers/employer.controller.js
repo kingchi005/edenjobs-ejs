@@ -23,10 +23,21 @@ const getEmployerDetails = (req, res, next) => __awaiter(void 0, void 0, void 0,
         where: { user: { id: res.locals.user_id } },
         include: {
             _count: { select: { jobs: true } },
-            jobs: { select: { applications: {} } },
+            jobs: {
+                include: {
+                    _count: { select: { applications: true } },
+                    category: true,
+                },
+                take: 1,
+            },
         },
     });
     res.locals.employerDetails = employerDetails;
+    let apl_count = 0;
+    for (let i = 0; i < employerDetails.jobs.length; i++) {
+        apl_count += employerDetails.jobs[i]._count.applications;
+    }
+    res.locals.employerDetails.apl_count = apl_count;
     next();
 });
 exports.getEmployerDetails = getEmployerDetails;

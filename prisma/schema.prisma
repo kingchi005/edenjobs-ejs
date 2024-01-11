@@ -83,11 +83,11 @@ model Job {
   expires_at                  DateTime
   required_experience_years   Int
   experience_level            String
-  required_skills             String
+  required_skills             String?
   min_salary                  Int
   max_salary                  Int
   salary_period               String
-  responsibilities            String
+  responsibilities            String?
   category                    JobCategory   @relation(fields: [category_id], references: [id])
   category_id                 Int
   publisher                   Employer      @relation(fields: [publisher_id], references: [id])

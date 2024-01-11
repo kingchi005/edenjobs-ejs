@@ -8,8 +8,7 @@ import {
 	resCode,
 } from "./response.controller";
 import { TUser } from "../types";
-import { z } from "zod";
-import { getStringValidation } from "../validations/schema";
+import { getNumberValidation } from "../validations/schema";
 
 export const appliyForJob = async (req: Request, res: Response) => {
 	const user = res.locals.user as TUser;
@@ -98,6 +97,42 @@ export const getJobApplicationDetails = async (req: Request, res: Response) => {
 	if (!application) throw new AppError("Not found", resCode.NOT_FOUND);
 
 	return new ApiResponse(res, "Success", { application });
+};
+
+export const getApplicationDetails = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const safe = getNumberValidation("id").safeParse(+req.params?.id);
+	if (!safe.success) throw new ValidationError(safe.error);
+
+	const id = safe.data;
+
+	const applicationDetails = await db.application.findFirst({
+		where: { id },
+		include: {
+			applicant: {
+				include: {
+					user: {
+						select: {
+							last_name: true,
+							first_name: true,
+							address: true,
+							email: true,
+						},
+					},
+				},
+			},
+			job: {},
+		},
+	});
+
+	if (!applicationDetails) throw new AppError("Not found", resCode.NOT_FOUND);
+	applicationDetails.applicant.qualifications;
+	res.locals.applicationDetails = applicationDetails;
+
+	next();
 };
 
 export const getApplications = async (

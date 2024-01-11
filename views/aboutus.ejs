@@ -1,0 +1,252 @@
+<%- include('./partials/head.ejs') %>
+<!--  -->
+<button
+	type="button"
+	data-te-ripple-init
+	data-te-ripple-color="light"
+	class="!fixed bottom-5 right-5 hidden rounded-full bg-red-600 p-3 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg"
+	id="btn-back-to-top"
+>
+	<svg
+		aria-hidden="true"
+		focusable="false"
+		data-prefix="fas"
+		class="h-4 w-4"
+		role="img"
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 448 512"
+	>
+		<path
+			fill="currentColor"
+			d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"
+		></path>
+	</svg>
+</button>
+<%- include('./partials/nav.ejs') %>
+<main style="padding: 20px" class="">
+	<h1
+		class="text-5xl font-bold text-center pt-24 mb-12 block tracking-tight text-blue-950"
+	>
+		About Us
+	</h1>
+	<section
+		class="mx-auto w-[90%] grid grid-cols-12 place-items-center md:gap-4 lg:gap-10"
+	>
+		<div class="lg:col-start-2 lg:col-span-5 xs:col-span-12">
+			<img
+				src="/images/Group 1.png"
+				alt=""
+				class="w-full mb-5 md:max-w-[600px]"
+			/>
+		</div>
+
+		<div class="lg:col-start-7 lg:col-span-5 xs:col-span-12">
+			<h2
+				class="font-bold mb-4 xs:text-center xs:text-2xl lg:text-left md:text-4xl text-blue-950 tracking-tight"
+			>
+				We are a leading worldwide online recruitment marketplace
+			</h2>
+			<p class="mb-4 xs:text-center lg:text-left">
+				Our vision is to help businesses get the right fit for the roles they
+				want to fill and help individuals worldwide connect to the right job
+				that fits their life goals. We bring benefits to competent job seekers,
+				start-ups, and establishments.
+			</p>
+			<div class="xs:text-center lg:text-left">
+				<a
+					href="/register"
+					id="get-started"
+					class="inline-block px-8 py-4 text-white bg-gradient-to-r from-blue-600 to-blue-900 rounded-lg shadow-md w-auto mx-auto items-start"
+					>Get Started</a
+				>
+			</div>
+		</div>
+	</section>
+
+	<section
+		class="md:flex justify-center text-center md:text-right items-center lg:gap-20 md:gap-5 mt-10"
+	>
+		<div class="max-w-xl mb-5 flex-1 mx-5">
+			<h1
+				class="xs:text-3xl md:text-4xl mb-10 font-bold text-blue-950 tracking-tight"
+			>
+				Eden Jobs - Cultivating Careers, Harvesting Futures
+			</h1>
+			<p class="text-sm">
+				Cultivating careers, harvesting futures. At Eden Jobs, we sow the seeds
+				of possibility, nurturing talents to bloom and aspirations to flourish.
+				Join us in reaping the rewards of passion, growth, and endless
+				opportunity. Your journey to a fulfilling career starts here!
+			</p>
+		</div>
+		<div class="hidden md:block flex-1 max-w-lg">
+			<img class="" src="/images/20231222_091657.jpg" alt="" />
+		</div>
+	</section>
+
+	<!-- max-w-7xl -->
+	<section class="mt-32">
+		<div class="text-primary-700" style="border: 1px; border-color: blue"></div>
+		<h2 class="text-5xl text-center font-bold text-blue-950 tracking-tight p-6">
+			We provide services such as
+		</h2>
+		<div
+			class="max-w-6xl mx-auto py-10 px-5 xs:px-10 sm:px-20 md:px-10 bg-blue-600 shadow-lg drop-shadow-2xl rounded-3xl"
+			style="
+				background-image: url('/images/15151445_5559852.jpg');
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-position: center;
+				background-attachment: scroll;
+			"
+		>
+			<div class="md:flex gap-5 max-w-4xl mx-auto">
+				<div
+					class="bg-white p-5 flex-1 mb-5 rounded-md shadow-lg drop-shadow-2xl"
+				>
+					<h4
+						class="text-2xl text-white font-bold bg-blue-600 w-full p-4 rounded-lg"
+					>
+						Career Branding
+					</h4>
+					<ul class="list-disc ms-5 my-5 text-blue-950">
+						<li>Professional CV writing and Review</li>
+						<li>Linkedin Profile Optimization</li>
+						<li>Interview Coaching</li>
+					</ul>
+					<p class="text-blue-950">
+						Our goal is to assist job seekers in showcasing their
+						professionalism and distinguishing themselves in today's fiercely
+						competitive job market
+					</p>
+				</div>
+				<div
+					class="bg-white p-5 flex-1 mb-5 rounded-md shadow-lg drop-shadow-2xl"
+				>
+					<h4
+						class="text-2xl text-white font-bold bg-purple-800 w-full p-4 rounded-lg"
+					>
+						Recruitment
+					</h4>
+					<ul class="list-disc ms-5 my-5 text-blue-950">
+						<li>Interview Coordination</li>
+						<li>Screening Tests</li>
+						<li>Talent Sourcing</li>
+						<li>Candidate Screening</li>
+					</ul>
+					<p class="text-blue-950">
+						At Eden Jobs, we priotize finding the perfect match for both
+						candidate and organizations
+					</p>
+				</div>
+				<div
+					class="bg-white p-5 flex-1 mb-5 rounded-md shadow-lg drop-shadow-2xl"
+				>
+					<h4
+						class="text-2xl text-blue-950 font-bold bg-yellow-400 w-full p-4 rounded-lg"
+					>
+						Career Advancement
+					</h4>
+					<ul class="list-disc ms-5 my-5 text-blue-950">
+						<li>Networking Opportunities</li>
+						<li>Discussion Forum</li>
+						<li>Mentorship Programs</li>
+					</ul>
+					<p class="text-blue-950">
+						We are committed to building a community of individuals euthusiastic
+						about collaborating and sharing ideas
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="my-32">
+		<div class="mb- p-5 text-center">
+			<h2 class="text-5xl font-bold tracking-tight text-blue-950 mb-6">
+				Why consult us?
+			</h2>
+		</div>
+
+		<div
+			class="py-7 text-center sm:px-10 w-[35%] mx-auto"
+			style="border-top: 2px solid black"
+		></div>
+		<div class="max-w-5xl mx-auto">
+			<p class="font-medium text-2xl text-center">
+				Fostering connections between talent and opportunities, empowering
+				organizations to forge top-tier teams and individual to discover
+				fulfilling and enriching career path
+			</p>
+		</div>
+
+		<div class="mt-10 gap-5 place-items-stretch p-2 md:flex max-w-6xl mx-auto">
+			<div
+				class="bg-neutral-200 px-5 py-24 flex-1 rounded-3xl mb-5"
+				style="
+					background-image: linear-gradient(#53047879, #0a66deb8),
+						url('/images/34c6a336b7.jpg');
+					background-attachment: scroll;
+					background-position: center;
+					background-repeat: no-repeat;
+					background-position: center;
+					color: #fff;
+				"
+			>
+				<h4 class="text-3xl mb-5 font-semibold text-center">
+					Modern and Forward Thinking Approach
+				</h4>
+				<p class="text-center">
+					We remain at the forefront of industry shifts and evolving
+					regulations, offering you expert guidance to navigate through any
+					obstacle
+				</p>
+			</div>
+			<div
+				class="bg-blue-950 text-neutral-100 px-5 py-24 flex-1 rounded-3xl mb-5"
+				style="
+					background-image: linear-gradient(#100db264, #098a88b8),
+						url('/images/5dc4da6439.jpg');
+					background-attachment: scroll;
+					background-position: center;
+					background-repeat: no-repeat;
+					background-position: center;
+					color: #fff;
+				"
+			>
+				<h4 class="text-3xl mb-5 font-semibold text-center">
+					Integrity and Trust
+				</h4>
+				<p class="text-center">
+					Essential to our operations are loyalty, trust, and integrity. Our
+					approach to interactions and engagements is characterized by utmost
+					professionalism
+				</p>
+			</div>
+			<div
+				class="bg-neutral-200 px-5 py-24 flex-1 rounded-3xl mb-5"
+				style="
+					background-image: linear-gradient(#034657b8, #647906b8),
+						url('/images/com.jpg');
+					background-attachment: scroll;
+					background-position: 27% center;
+					background-repeat: no-repeat;
+					color: #fff;
+				"
+			>
+				<h4 class="text-3xl mb-5 font-semibold text-center">
+					Exceptional Communication
+				</h4>
+				<p class="text-center">
+					At our core, we take on the duty of honing superior communication and
+					attentive listening abilities.
+				</p>
+				<p class="text-center">
+					Exceptional communication is a cornerstone of effective career
+					consulting
+				</p>
+			</div>
+		</div>
+	</section>
+</main>
+<%- include('./partials/footer.ejs',{footer:true}) %>

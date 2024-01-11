@@ -10,6 +10,7 @@ import ValidationSchema from "../validations/input.validation";
 import { z } from "zod";
 import { uploadFile } from "./helpers.controller";
 import { UploadApiResponse } from "cloudinary";
+import { getStringValidation } from "../validations/schema";
 
 export const getEmployerDetails = async (
 	req: Request,
@@ -20,7 +21,13 @@ export const getEmployerDetails = async (
 		where: { user: { id: res.locals.user_id } },
 		include: {
 			_count: { select: { jobs: true } },
-			jobs: { select: { applications: {} } },
+			jobs: {
+				include: {
+					_count: { select: { applications: true } },
+					category: true,
+				},
+				take: 1,
+			},
 			// applications: {
 			// 	take: 1,
 			// 	include: { job: { include: { publisher: true, category: true } } },
@@ -28,9 +35,12 @@ export const getEmployerDetails = async (
 		},
 	});
 
-	// console.log(employerDetails?.applications);
-
 	res.locals.employerDetails = employerDetails;
+	let apl_count = 0;
+	for (let i = 0; i < employerDetails!.jobs.length; i++) {
+		apl_count += employerDetails!.jobs[i]._count.applications;
+	}
+	res.locals.employerDetails.apl_count = apl_count;
 	next();
 };
 

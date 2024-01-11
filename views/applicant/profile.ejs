@@ -1,4 +1,7 @@
 <%- include('./partials/head.ejs') %>
+<script>
+	// console.log(`<%#- JSON.stringify(user.applicant_details,null,2) %>`);
+</script>
 <main class="max-w-7xl mx-auto px-5">
 	<section class="items-end flex-1">
 		<h2 class="text-3xl font-semibold mb-5 mt-10">Personal profile</h2>
@@ -155,17 +158,18 @@
 		<h2 class="text-3xl font-semibold mb-5 mt-10">Work information</h2>
 		<div class="md:flex md:justify-center md:gap-5">
 			<div
-				class="block relative border rounded-lg text-center bg-white p-6 mb-5 dark:bg-neutral-700 flex-1"
+				class="flex flex-col relative border rounded-lg text-center bg-white p-6 mb-5 dark:bg-neutral-700 flex-1"
 			>
 				<h2 class="text-xl font-semibold mb-5">CV / Resume</h2>
-				<iframe
-					id="view-cv"
-					class=""
-					src="<%= user.applicant_details.cv_resume_url %>"
-					width="100%"
-					height="500px"
-				>
-				</iframe>
+				<div class="w-full flex-1">
+					<iframe
+						id="view-cv"
+						src="<%= user.applicant_details.cv_resume_url %>"
+						width="100%"
+						height="100%"
+						style="border: none"
+					></iframe>
+				</div>
 				<div class="image-upload flex items-center justify-between me-10 mt-5">
 					<label for="file-input-cv" class="cursor-pointer">
 						<svg

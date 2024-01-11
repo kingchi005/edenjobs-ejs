@@ -19,7 +19,12 @@ export const loginUser = async (req: Request, res: Response) => {
 	const { identifier, password: rawPass } = safe.data;
 
 	const _user = await db.user.findFirst({
-		where: { OR: [{ username: identifier }, { email: identifier }] },
+		where: {
+			OR: [
+				{ username: { equals: identifier } },
+				{ email: { equals: identifier } },
+			],
+		},
 		include: { applicant_details: true, employer_details: true },
 	});
 	if (!_user)

@@ -1245,10 +1245,6 @@ html.dark{
   margin-top: 0.625rem;
 }
 
-.mt-28{
-  margin-top: 7rem;
-}
-
 .mt-3{
   margin-top: 0.75rem;
 }
@@ -1609,6 +1605,10 @@ html.dark{
   width: 2.25rem;
 }
 
+.w-96{
+  width: 24rem;
+}
+
 .w-\[0\.9375rem\]{
   width: 0.9375rem;
 }
@@ -1719,6 +1719,11 @@ html.dark{
 
 .w-auto{
   width: auto;
+}
+
+.w-fit{
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .w-full{
@@ -2239,10 +2244,6 @@ html.dark{
           appearance: none;
 }
 
-.grid-cols-1{
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-}
-
 .grid-cols-12{
   grid-template-columns: repeat(12, minmax(0, 1fr));
 }
@@ -2411,6 +2412,10 @@ html.dark{
 
 .whitespace-nowrap{
   white-space: nowrap;
+}
+
+.whitespace-pre-wrap{
+  white-space: pre-wrap;
 }
 
 .break-normal{
@@ -2982,12 +2987,6 @@ html.dark{
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
-.from-purple-800{
-  --tw-gradient-from: #6b21a8 var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(107 33 168 / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
 .to-blue-800{
   --tw-gradient-to: #1e40af var(--tw-gradient-to-position);
 }
@@ -3243,11 +3242,6 @@ html.dark{
   padding-bottom: 1.75rem;
 }
 
-.py-8{
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
 .py-\[0\.25rem\]{
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
@@ -3316,6 +3310,10 @@ html.dark{
   padding-bottom: 6px;
 }
 
+.pe-10{
+  padding-inline-end: 2.5rem;
+}
+
 .pl-0{
   padding-left: 0px;
 }
@@ -3370,10 +3368,6 @@ html.dark{
 
 .pt-10{
   padding-top: 2.5rem;
-}
-
-.pt-11{
-  padding-top: 2.75rem;
 }
 
 .pt-2{
@@ -6306,18 +6300,6 @@ html.dark{
     grid-column: span 12 / span 12;
   }
 
-  .xs\:w-\[90\%\]{
-    width: 90%;
-  }
-
-  .xs\:justify-center{
-    justify-content: center;
-  }
-
-  .xs\:p-2{
-    padding: 0.5rem;
-  }
-
   .xs\:px-10{
     padding-left: 2.5rem;
     padding-right: 2.5rem;
@@ -6362,17 +6344,9 @@ html.dark{
     display: flex;
   }
 
-  .sm\:w-2\/4{
-    width: 50%;
-  }
-
   .sm\:w-fit{
     width: -moz-fit-content;
     width: fit-content;
-  }
-
-  .sm\:grid-cols-2{
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .sm\:flex-col{
@@ -6457,10 +6431,6 @@ html.dark{
 
   .md\:grid-cols-3{
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .md\:grid-cols-4{
-    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .md\:flex-row{
@@ -6569,10 +6539,6 @@ html.dark{
 
   .lg\:hidden{
     display: none;
-  }
-
-  .lg\:w-1\/4{
-    width: 25%;
   }
 
   .lg\:w-\[400px\]{
