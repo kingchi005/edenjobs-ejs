@@ -135,10 +135,35 @@ export const getApplicationDetails = async (
 	next();
 };
 
-export const getApplications = async (
-	req: Request,
-	res: Response,
-	next: NextFunction
-) => {
-	// res.locals.user_id;
+export const getApplications = async (req: Request, res: Response) => {
+	const id = res.locals.user_id;
+	const applications = await db.application.findMany({
+		where: { job: { publisher: { user: { id } } } },
+		include: {
+			job: {},
+			applicant: {
+				include: {
+					user: { select: { email: true, first_name: true, last_name: true } },
+				},
+			},
+		},
+	});
+
+	return new ApiResponse(res, "Fetch successful", { applications });
+};
+
+export const sendJobInvite = async (req: Request, res: Response) => {
+	const safe = getNumberValidation("id").safeParse(+req.params?.id);
+	if (!safe.success) throw new ValidationError(safe.error);
+
+	const application_id = safe.data;
+
+	const invited = await db.application.update({
+		where: { id: application_id },
+		data: { invited: true },
+	});
+
+	return new ApiResponse(res, "Successfully invited for interview", {
+		invited,
+	});
 };

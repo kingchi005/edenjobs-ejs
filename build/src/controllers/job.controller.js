@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLatestJobApplications = exports.getJobCategory = exports.searchJobs = exports.getRecomendedJobs = exports.getRecentJobs = exports.getJobDetail = exports.getJobs = exports.edithJob = exports.creatJob = void 0;
+exports.getPublisherJobs = exports.getLatestJobApplications = exports.getJobCategory = exports.searchJobs = exports.getRecomendedJobs = exports.getRecentJobs = exports.getJobDetail = exports.getJobs = exports.deleteJob = exports.editJob = exports.creatJob = void 0;
 const response_controller_1 = require("./response.controller");
 const prisma_1 = __importDefault(require("../../prisma"));
 const zod_1 = require("zod");
@@ -22,10 +22,23 @@ const creatJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return new response_controller_1.ApiResponse(res, "create jobs here", {});
 });
 exports.creatJob = creatJob;
-const edithJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const editJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return new response_controller_1.ApiResponse(res, "edith jobs here", {});
 });
-exports.edithJob = edithJob;
+exports.editJob = editJob;
+const deleteJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const safe = zod_1.z
+        .object({ id: (0, schema_1.getStringValidation)("id") })
+        .safeParse(req.params);
+    if (!safe.success)
+        throw new response_controller_1.ValidationError(safe.error);
+    const { id } = safe.data;
+    const deletedJob = yield prisma_1.default.job.delete({ where: { id } });
+    if (!exports.deleteJob)
+        throw new response_controller_1.AppError("Not found", response_controller_1.resCode.NOT_FOUND, exports.deleteJob);
+    return new response_controller_1.ApiResponse(res, `Job deleted `, { deletedJob });
+});
+exports.deleteJob = deleteJob;
 const getJobs = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const jobs = yield prisma_1.default.job.findMany({
         take: NO_PER_PAGE,
@@ -152,4 +165,15 @@ const getLatestJobApplications = (req, res) => __awaiter(void 0, void 0, void 0,
     });
 });
 exports.getLatestJobApplications = getLatestJobApplications;
+const getPublisherJobs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const publisher_id = res.locals.user.employer_details.id;
+    const publisherJobs = yield prisma_1.default.job.findMany({
+        where: { publisher_id },
+        include: { category: {}, _count: { select: { applications: true } } },
+    });
+    return new response_controller_1.ApiResponse(res, "Fetch successful", {
+        publisherJobs,
+    });
+});
+exports.getPublisherJobs = getPublisherJobs;
 //# sourceMappingURL=job.controller.js.map

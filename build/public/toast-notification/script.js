@@ -48,7 +48,7 @@ function showToast({ type, text, duration }) {
                       </div>
                       <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
     notifications.appendChild(toast);
-    toast.timeoutId = setTimeout(() => removeToast(toast), duration);
+    toast.timeoutId = setTimeout(() => removeToast(toast), duration || 5000);
 }
 buttons.forEach((btn) => {
     btn.addEventListener("click", () => showToast({ duration: 5000, text: "texting here", type: btn.id }));

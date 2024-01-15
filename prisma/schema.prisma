@@ -7,7 +7,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -88,11 +88,12 @@ model Job {
   max_salary                  Int
   salary_period               String
   responsibilities            String?
+  // is_deleted                  Boolean @default(false)
   category                    JobCategory   @relation(fields: [category_id], references: [id])
   category_id                 Int
   publisher                   Employer      @relation(fields: [publisher_id], references: [id])
   publisher_id                String
-  applications                Application[]
+  applications                Application[] 
   published_at                DateTime      @default(now())
   created_at                  DateTime      @default(now())
   updated_at                  DateTime      @updatedAt
@@ -109,9 +110,10 @@ model Application {
   id           Int       @id @default(autoincrement())
   content      String
   // cv_resume String?
-  job          Job       @relation(fields: [job_id], references: [id])
+  job          Job       @relation(fields: [job_id], references: [id],onDelete: Cascade)
   job_id       String
   applicant    Applicant @relation(fields: [applicant_id], references: [id])
+  invited      Boolean @default(false)
   applicant_id String
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt

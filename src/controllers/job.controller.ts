@@ -19,8 +19,22 @@ export const creatJob = async (req: Request, res: Response) => {
 	return new ApiResponse(res, "create jobs here", {});
 };
 
-export const edithJob = async (req: Request, res: Response) => {
+export const editJob = async (req: Request, res: Response) => {
 	return new ApiResponse(res, "edith jobs here", {});
+};
+
+export const deleteJob = async (req: Request, res: Response) => {
+	const safe = z
+		.object({ id: getStringValidation("id") })
+		.safeParse(req.params);
+	if (!safe.success) throw new ValidationError(safe.error);
+
+	const { id } = safe.data;
+	const deletedJob = await db.job.delete({ where: { id } });
+
+	if (!deleteJob) throw new AppError("Not found", resCode.NOT_FOUND, deleteJob);
+
+	return new ApiResponse(res, `Job deleted `, { deletedJob });
 };
 
 export const getJobs = async (
@@ -182,6 +196,19 @@ export const getLatestJobApplications = async (req: Request, res: Response) => {
 
 	return new ApiResponse(res, "Fetch successful", {
 		applications: latestJobApplications.applications,
+	});
+};
+
+export const getPublisherJobs = async (req: Request, res: Response) => {
+	const publisher_id = res.locals.user.employer_details.id as string;
+
+	const publisherJobs = await db.job.findMany({
+		where: { publisher_id },
+		include: { category: {}, _count: { select: { applications: true } } },
+	});
+
+	return new ApiResponse(res, "Fetch successful", {
+		publisherJobs,
 	});
 };
 

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getApplications = exports.getApplicationDetails = exports.getJobApplicationDetails = exports.getUserJobApplications = exports.appliyForJob = void 0;
+exports.sendJobInvite = exports.getApplications = exports.getApplicationDetails = exports.getJobApplicationDetails = exports.getUserJobApplications = exports.appliyForJob = void 0;
 const prisma_1 = __importDefault(require("../../prisma"));
 const input_validation_1 = __importDefault(require("../validations/input.validation"));
 const response_controller_1 = require("./response.controller");
@@ -107,7 +107,35 @@ const getApplicationDetails = (req, res, next) => __awaiter(void 0, void 0, void
     next();
 });
 exports.getApplicationDetails = getApplicationDetails;
-const getApplications = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const getApplications = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = res.locals.user_id;
+    const applications = yield prisma_1.default.application.findMany({
+        where: { job: { publisher: { user: { id } } } },
+        include: {
+            job: {},
+            applicant: {
+                include: {
+                    user: { select: { email: true, first_name: true, last_name: true } },
+                },
+            },
+        },
+    });
+    return new response_controller_1.ApiResponse(res, "Fetch successful", { applications });
 });
 exports.getApplications = getApplications;
+const sendJobInvite = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _b;
+    const safe = (0, schema_1.getNumberValidation)("id").safeParse(+((_b = req.params) === null || _b === void 0 ? void 0 : _b.id));
+    if (!safe.success)
+        throw new response_controller_1.ValidationError(safe.error);
+    const application_id = safe.data;
+    const invited = yield prisma_1.default.application.update({
+        where: { id: application_id },
+        data: { invited: true },
+    });
+    return new response_controller_1.ApiResponse(res, "Successfully invited for interview", {
+        invited,
+    });
+});
+exports.sendJobInvite = sendJobInvite;
 //# sourceMappingURL=application.controller.js.map

@@ -1762,6 +1762,10 @@ html.dark{
   min-width: 64px;
 }
 
+.min-w-full{
+  min-width: 100%;
+}
+
 .min-w-max{
   min-width: -moz-max-content;
   min-width: max-content;
@@ -2412,10 +2416,6 @@ html.dark{
 
 .whitespace-nowrap{
   white-space: nowrap;
-}
-
-.whitespace-pre-wrap{
-  white-space: pre-wrap;
 }
 
 .break-normal{
@@ -3821,6 +3821,11 @@ html.dark{
 .text-gray-700{
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+
+.text-gray-800{
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity));
 }
 
 .text-green-600{
@@ -6376,6 +6381,11 @@ html.dark{
   .sm\:text-sm{
     font-size: 0.875rem;
     line-height: 1.25rem;
+  }
+
+  .sm\:text-xl{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
 }
 

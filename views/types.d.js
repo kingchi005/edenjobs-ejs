@@ -1,3 +1,5 @@
+///</ reference >
+
 // declare interface TUser {
 // 	id: string;
 // 	username: string;

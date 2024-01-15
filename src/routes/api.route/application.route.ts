@@ -6,32 +6,44 @@ import {
 import {
 	onlyApplicants,
 	onlyAuthenticated,
+	onlyEmployers,
 } from "../../controllers/middleware.controller";
 import {
 	appliyForJob,
+	getApplications,
 	getJobApplicationDetails,
+	sendJobInvite,
 } from "../../controllers/application.controller";
 
 const jobApplicationRoute = Router();
 
-/* 
-- create Application => applicant
-- get application /:id => user
-- edith application /:id => applicant
-*/
+/**
+ * route :- '/api/job-application'
+ *
+ */
 
 jobApplicationRoute.post(
 	"/",
-	// middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyApplicants),
 	handlerWapper(appliyForJob)
 );
 
 jobApplicationRoute.get(
+	"/",
+	middlewareWapper(onlyEmployers),
+	handlerWapper(getApplications)
+);
+
+jobApplicationRoute.get(
 	"/:id",
-	// middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyApplicants),
 	handlerWapper(getJobApplicationDetails)
+);
+
+jobApplicationRoute.put(
+	"/invite/:id",
+	middlewareWapper(onlyEmployers),
+	handlerWapper(sendJobInvite)
 );
 
 export default jobApplicationRoute;

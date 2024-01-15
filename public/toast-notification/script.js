@@ -43,7 +43,7 @@ const removeToast = (toast) => {
 
 /**
  *
- * @param {{ type:"success"|"error"|"warning"|"info", text:string, duration:number }} param
+ * @param {{ type:"success"|"error"|"warning"|"info", text:string, duration?:number }} param
  */
 function showToast({ type, text, duration }) {
 	// Getting the icon and text for the toast based on the id passed
@@ -60,7 +60,7 @@ function showToast({ type, text, duration }) {
                       <i class="fa-solid fa-xmark" onclick="removeToast(this.parentElement)"></i>`;
 	notifications.appendChild(toast); // Append the toast to the notification ul
 	// Setting a timeout to remove the toast after the specified duration
-	toast.timeoutId = setTimeout(() => removeToast(toast), duration);
+	toast.timeoutId = setTimeout(() => removeToast(toast), duration || 5000);
 }
 
 // Adding a click event listener to each button to create a toast when clicked
