@@ -29,7 +29,7 @@ jobRoute.post(
 	handlerWapper(creatJob)
 );
 jobRoute.put(
-	"/",
+	"/:id",
 	middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyEmployers),
 	handlerWapper(editJob)

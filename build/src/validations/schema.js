@@ -1,19 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.emailSchema = exports.phoneNumberSchema = exports.getNumberValidation = exports.getOptionalStringValidation = exports.getStringValidation = exports.getJsonArrayValidation = exports.getBooleanValidation = exports.fileSchema = exports.imageSchema = exports.dateSchema = void 0;
+exports.emailSchema = exports.phoneNumberSchema = exports.getNumberValidation = exports.getOptionalStringValidation = exports.getStrNumValidation = exports.getStringValidation = exports.getJsonArrayValidation = exports.getBooleanValidation = exports.fileSchema = exports.imageSchema = exports.dateSchema = void 0;
 const zod_1 = require("zod");
 const helpers_controller_1 = require("../controllers/helpers.controller");
 exports.dateSchema = zod_1.z
     .string()
     .refine((value) => !isNaN(Date.parse(value)), {
     message: "Invalid date format",
-})
-    .refine((value) => {
-    const date = new Date(value);
-    const now = new Date();
-    return date < now;
-}, {
-    message: "Date must be in the past",
 })
     .transform((v) => new Date(v));
 exports.imageSchema = zod_1.z.custom();
@@ -37,6 +30,15 @@ const getStringValidation = (key) => zod_1.z
 })
     .min(3, { message: `'${key}' must be 3 or more characters` });
 exports.getStringValidation = getStringValidation;
+const getStrNumValidation = (key) => zod_1.z
+    .string({
+    required_error: `'${key}' is required`,
+})
+    .refine((v) => !isNaN(+v), {
+    message: `'${key}' must be a number`,
+})
+    .transform((v) => +v);
+exports.getStrNumValidation = getStrNumValidation;
 const getOptionalStringValidation = (key) => zod_1.z
     .string({
     invalid_type_error: `'${key}' must be a string`,

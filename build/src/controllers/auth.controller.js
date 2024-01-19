@@ -85,7 +85,7 @@ const registerApplicant = (req, res) => __awaiter(void 0, void 0, void 0, functi
     const uploadCvFileRes = yield (0, helpers_controller_1.uploadFile)(cv_file.path);
     if (uploadAvFileRes.error)
         throw new response_controller_1.AppError("An error Occoured", response_controller_1.resCode.BAD_GATEWAY, uploadAvFileRes.error);
-    const cv_resume_url = uploadAvFileRes.secure_url;
+    const cv_resume_url = uploadCvFileRes.secure_url;
     const password = bcrypt_1.default.hashSync(rawPass, bcrypt_1.default.genSaltSync(10));
     const user = yield prisma_1.default.user.create({
         data: {

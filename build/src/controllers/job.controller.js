@@ -8,22 +8,67 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPublisherJobs = exports.getLatestJobApplications = exports.getJobCategory = exports.searchJobs = exports.getRecomendedJobs = exports.getRecentJobs = exports.getJobDetail = exports.getJobs = exports.deleteJob = exports.editJob = exports.creatJob = void 0;
+exports.getJobToBeEdited = exports.getPublisherJobs = exports.getLatestJobApplications = exports.getJobCategory = exports.searchJobs = exports.getRecomendedJobs = exports.getRecentJobs = exports.getJobDetail = exports.getJobs = exports.deleteJob = exports.editJob = exports.creatJob = void 0;
 const response_controller_1 = require("./response.controller");
 const prisma_1 = __importDefault(require("../../prisma"));
 const zod_1 = require("zod");
 const schema_1 = require("../validations/schema");
+const input_validation_1 = __importDefault(require("../validations/input.validation"));
 const NO_PER_PAGE = 8;
 const creatJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    return new response_controller_1.ApiResponse(res, "create jobs here", {});
+    const publisher_id = res.locals.user.employer_details.id;
+    const safe = input_validation_1.default.createJob.safeParse(req.fields);
+    if (!safe.success)
+        throw new response_controller_1.ValidationError(safe.error);
+    const _a = safe.data, { job_location } = _a, data = __rest(_a, ["job_location"]);
+    const is_remote = job_location === "Remote";
+    const createdJob = yield prisma_1.default.job.create({
+        data: Object.assign(Object.assign({}, data), { publisher_id,
+            is_remote }),
+    });
+    if (!createdJob)
+        throw new response_controller_1.AppError("An Error occoured", response_controller_1.resCode.NOT_ACCEPTED, {
+            createdJob,
+        });
+    return new response_controller_1.ApiResponse(res, "Job Created successfully", { createdJob });
 });
 exports.creatJob = creatJob;
 const editJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    return new response_controller_1.ApiResponse(res, "edith jobs here", {});
+    const safeParam = zod_1.z
+        .object({ id: (0, schema_1.getStringValidation)("id") })
+        .safeParse(req.params);
+    if (!safeParam.success)
+        throw new response_controller_1.ValidationError(safeParam.error);
+    const { id: job_id } = safeParam.data;
+    const safe = input_validation_1.default.editJob.safeParse(req.fields);
+    if (!safe.success)
+        throw new response_controller_1.ValidationError(safe.error);
+    const _b = safe.data, { job_location } = _b, data = __rest(_b, ["job_location"]);
+    const is_remote = job_location === "Remote";
+    const editedJob = yield prisma_1.default.job.update({
+        where: { id: job_id },
+        data: Object.assign(Object.assign({}, data), { is_remote }),
+    });
+    if (!editedJob)
+        throw new response_controller_1.AppError("An Error occoured", response_controller_1.resCode.NOT_ACCEPTED, {
+            editedJob,
+        });
+    return new response_controller_1.ApiResponse(res, "Job Updated successfully", { editedJob });
 });
 exports.editJob = editJob;
 const deleteJob = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -176,4 +221,26 @@ const getPublisherJobs = (req, res) => __awaiter(void 0, void 0, void 0, functio
     });
 });
 exports.getPublisherJobs = getPublisherJobs;
+const getJobToBeEdited = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const safeParam = zod_1.z
+        .object({ id: (0, schema_1.getStringValidation)("id") })
+        .safeParse(req.params);
+    if (!safeParam.success)
+        return res.redirect("back");
+    const { id } = safeParam.data;
+    const JOB = yield prisma_1.default.job.findFirst({
+        where: { id },
+        include: { category: {} },
+    });
+    if (!JOB) {
+        res.locals.error = { message: "Job not found", details: { JOB } };
+        return res.redirect("back");
+    }
+    res.locals.JOB = JOB;
+    res.locals.title = "Edit " + JOB.title;
+    const categories = yield prisma_1.default.jobCategory.findMany();
+    res.locals.jobCategories = categories;
+    next();
+});
+exports.getJobToBeEdited = getJobToBeEdited;
 //# sourceMappingURL=job.controller.js.map

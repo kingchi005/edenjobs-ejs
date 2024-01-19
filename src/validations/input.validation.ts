@@ -6,10 +6,21 @@ import {
 	getJsonArrayValidation,
 	getNumberValidation,
 	getOptionalStringValidation,
+	getStrNumValidation,
 	getStringValidation,
 	imageSchema,
 } from "./schema";
 
+const date_of_birth = dateSchema.refine(
+	(value) => {
+		const date = new Date(value);
+		const now = new Date();
+		return date < now;
+	},
+	{
+		message: "Date must be in the past",
+	}
+);
 const ValidationSchema = {
 	login: z.object({
 		identifier: getStringValidation("Email or username"),
@@ -18,6 +29,62 @@ const ValidationSchema = {
 	registerApplicantFile: z.object({
 		avatar: imageSchema,
 		cv_resume: fileSchema,
+	}),
+	createJob: z.object({
+		title: getStringValidation("title"),
+		category_id: getStrNumValidation("category_id"),
+		employment_type: getStringValidation("employment_type"),
+		job_location: getStringValidation("job_location"),
+		min_quaification: getStringValidation("min_quaification"),
+		experience_level: getStringValidation("experience_level"),
+		expires_at: dateSchema.refine(
+			(value) => {
+				const date = new Date(value);
+				const now = new Date();
+				return date > now;
+			},
+			{
+				message: "Date must be in the future",
+			}
+		),
+		state_location: getStringValidation("state_location"),
+		city_location: getStringValidation("city_location"),
+		min_salary: getStrNumValidation("min_salary"),
+		max_salary: getStrNumValidation("max_salary"),
+		salary_period: getStringValidation("salary_period"),
+		summary: getStringValidation("summary"),
+		description_and_requirement: getStringValidation(
+			"description_and_requirement"
+		),
+	}),
+	editJob: z.object({
+		title: getOptionalStringValidation("title"),
+		category_id: getStrNumValidation("category_id"),
+		employment_type: getOptionalStringValidation("employment_type"),
+		job_location: getOptionalStringValidation("job_location"),
+		min_quaification: getOptionalStringValidation("min_quaification"),
+		experience_level: getOptionalStringValidation("experience_level"),
+		expires_at: dateSchema
+			.refine(
+				(value) => {
+					const date = new Date(value);
+					const now = new Date();
+					return date > now;
+				},
+				{
+					message: "Date must be in the future",
+				}
+			)
+			.optional(),
+		state_location: getOptionalStringValidation("state_location"),
+		city_location: getOptionalStringValidation("city_location"),
+		min_salary: getStrNumValidation("min_salary"),
+		max_salary: getStrNumValidation("max_salary"),
+		salary_period: getOptionalStringValidation("salary_period"),
+		summary: getOptionalStringValidation("summary"),
+		description_and_requirement: getOptionalStringValidation(
+			"description_and_requirement"
+		),
 	}),
 	registerApplicant: z.object({
 		username: getStringValidation("username"),
@@ -32,21 +99,14 @@ const ValidationSchema = {
 			})
 			.min(1, { message: `'gender' is required` }),
 		address: getStringValidation("address"),
-		date_of_birth: dateSchema,
+		date_of_birth,
 		// work details
 		job_field: getStringValidation("job_field"),
 		qualifications: getJsonArrayValidation("qualifications"),
 		skill_set: getJsonArrayValidation("skill_set"),
 		skill_level: getStringValidation("skill_level"),
 		// job preferences
-		years_of_experience: z
-			.string({
-				required_error: `'years_of_experience' is required`,
-			})
-			.refine((v) => !isNaN(+v), {
-				message: "'years_of_experience' must be a number",
-			})
-			.transform((v) => +v), // ref from skill_level
+		years_of_experience: getStrNumValidation("years_of_experience-"),
 		preferred_job_type: getStringValidation("preferred_job_type"),
 		work_schedule: getStringValidation("work_schedule"),
 		job_stability: getStringValidation("job_stability"),
@@ -62,7 +122,7 @@ const ValidationSchema = {
 		last_name: getStringValidation("last_name"),
 		gender: getStringValidation("gender"),
 		address: getStringValidation("address"),
-		date_of_birth: dateSchema,
+		date_of_birth,
 		applicant_details: z.object({
 			// work details
 			avatar: imageSchema,
@@ -103,10 +163,6 @@ const ValidationSchema = {
 	image: imageSchema,
 
 	cv_resumeSchema: fileSchema,
-	/* 
-
-
-	*/
 
 	updateCompanyDetails: z.object({
 		company_name: getOptionalStringValidation("company_name"),

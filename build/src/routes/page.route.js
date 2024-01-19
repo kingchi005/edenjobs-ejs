@@ -71,7 +71,10 @@ pageRoute.get("/recruiter/dashboard", (0, response_controller_1.middlewareWapper
 });
 pageRoute.get("/recruiter/job/:id", (0, response_controller_1.middlewareWapper)(job_controller_1.getJobDetail), (req, res) => res.render("applicant/job", { title: "Edenjobs | job", page: "job" }));
 pageRoute.get("/recruiter/jobs", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyEmployers), (req, res) => {
-    res.render("employer/jobs", { title: "Created Jobs", page: "jobs" });
+    res.render("employer/jobs", {
+        title: "Created Jobs",
+        page: "jobs",
+    });
 });
 pageRoute.get("/recruiter/applications", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyEmployers), (req, res) => {
     res.render("employer/applications", {
@@ -92,6 +95,32 @@ pageRoute.get("/recruiter/profile", (0, response_controller_1.middlewareWapper)(
         STATES: jobs_json_1.default.states,
         COMPANY_SIZE: jobs_json_1.default.company_size,
         JOB_FIELD: jobs_json_1.default.job_field,
+    });
+});
+pageRoute.get("/recruiter/create-job", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyEmployers), (req, res) => {
+    res.render("employer/create-job", {
+        title: "Create Job",
+        page: "create-job",
+        JOB: null,
+        DATA: {
+            employment_type: jobs_json_1.default.job_type,
+            min_quaification: jobs_json_1.default.qualifications,
+            STATES: jobs_json_1.default.states,
+            experience_level: jobs_json_1.default.job_level,
+            salary_period: ["Monthly", "Bi-monthly", "Yearly", "Weekly"],
+        },
+    });
+});
+pageRoute.get("/recruiter/edit-job/:id", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyEmployers), (0, response_controller_1.middlewareWapper)(job_controller_1.getJobToBeEdited), (req, res) => {
+    res.render("employer/create-job", {
+        page: "edit-job",
+        DATA: {
+            employment_type: jobs_json_1.default.job_type,
+            min_quaification: jobs_json_1.default.qualifications,
+            STATES: jobs_json_1.default.states,
+            experience_level: jobs_json_1.default.job_level,
+            salary_period: ["Monthly", "Bi-monthly", "Yearly", "Weekly"],
+        },
     });
 });
 exports.default = pageRoute;

@@ -79,9 +79,9 @@ model Job {
   is_remote                   Boolean
   city_location               String
   state_location              String
-  benefits                    String
+  benefits                    String?
   expires_at                  DateTime
-  required_experience_years   Int
+  required_experience_years   Int?
   experience_level            String
   required_skills             String?
   min_salary                  Int

@@ -6,6 +6,7 @@ import {
 import {
 	getJobCategory,
 	getJobDetail,
+	getJobToBeEdited,
 	getJobs,
 	getRecentJobs,
 	getRecomendedJobs,
@@ -156,7 +157,10 @@ pageRoute.get(
 	middlewareWapper(onlyAuthenticated),
 	middlewareWapper(onlyEmployers),
 	(req, res) => {
-		res.render("employer/jobs", { title: "Created Jobs", page: "jobs" });
+		res.render("employer/jobs", {
+			title: "Created Jobs",
+			page: "jobs",
+		});
 	}
 );
 pageRoute.get(
@@ -194,6 +198,43 @@ pageRoute.get(
 			STATES: jobsMetaData.states,
 			COMPANY_SIZE: jobsMetaData.company_size,
 			JOB_FIELD: jobsMetaData.job_field,
+		});
+	}
+);
+pageRoute.get(
+	"/recruiter/create-job",
+	middlewareWapper(onlyAuthenticated),
+	middlewareWapper(onlyEmployers),
+	(req, res) => {
+		res.render("employer/create-job", {
+			title: "Create Job",
+			page: "create-job",
+			JOB: null,
+			DATA: {
+				employment_type: jobsMetaData.job_type,
+				min_quaification: jobsMetaData.qualifications,
+				STATES: jobsMetaData.states,
+				experience_level: jobsMetaData.job_level,
+				salary_period: ["Monthly", "Bi-monthly", "Yearly", "Weekly"],
+			},
+		});
+	}
+);
+pageRoute.get(
+	"/recruiter/edit-job/:id",
+	middlewareWapper(onlyAuthenticated),
+	middlewareWapper(onlyEmployers),
+	middlewareWapper(getJobToBeEdited),
+	(req, res) => {
+		res.render("employer/create-job", {
+			page: "edit-job",
+			DATA: {
+				employment_type: jobsMetaData.job_type,
+				min_quaification: jobsMetaData.qualifications,
+				STATES: jobsMetaData.states,
+				experience_level: jobsMetaData.job_level,
+				salary_period: ["Monthly", "Bi-monthly", "Yearly", "Weekly"],
+			},
 		});
 	}
 );

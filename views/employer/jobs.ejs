@@ -1,4 +1,6 @@
+<script></script>
 <%- include('./partials/head.ejs') %>
+<link href="/quill/dist/quill.snow.css" rel="stylesheet" />
 <script>
 	/**
 	 * @typedef {{id: string; title: string; employment_type: string; summary: string; description_and_requirement: string; min_quaification: string;    is_remote: boolean; city_location: string; state_location: string;		 benefits: string; expires_at: string; required_experience_years: number; experience_level: string; required_skills: string; min_salary: number; max_salary: number; salary_period: string;		responsibilities: string; category_id: number; publisher_id: string; published_at: string; created_at: string; updated_at: string; category: { id: number; name: string; created_at: string; };_count: { applications: number; }} } Tjob
@@ -23,26 +25,33 @@
 					aria-label="Search"
 					aria-describedby="button-addon1"
 				/>
-				<button
-					id="update-pd"
+
+				<a
+					href="/recruiter/create-job"
+					id="createAction"
 					type="submit"
 					class="inline-block w-full sm:w-fit s rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
 					data-te-ripple-init
 					data-te-ripple-color="light"
 				>
 					Create Job
-				</button>
+				</a>
 			</div>
 		</div>
 		<div id="datatable" data-te-clickable-rows="false"></div>
 	</div>
 </main>
-
+<!--  -->
 <%- include('./partials/footer.ejs') %>
 <script>
-	const { createApp, onMounted, ref, watchEffect } = Vue;
-	/**@type {{value:Tjob[]}} */
-	const JOBS = ref([]);
+	// const { createApp, onMounted, ref, watchEffect } = Vue;
+	/**@type {{value:Tjob[],watchEffect:()}} */
+	const JOBS = {
+		value: [],
+		watchEffect() {
+			renderTable();
+		},
+	};
 	const url = "/api/job";
 
 	async function fetchJob() {
@@ -59,12 +68,14 @@
 	/**@param {Tjob} job  */
 	function addJob(job) {
 		JOBS.value.push(job);
+		JOBS.watchEffect();
 	}
 
 	/**@param {string} id  */
 	function removeJob(id) {
 		console.log("removing");
 		JOBS.value = JOBS.value.filter((job) => job.id !== id);
+		JOBS.watchEffect();
 	}
 
 	/**@param {string} id  */
@@ -77,14 +88,15 @@
 </script>
 
 <!-- vue -->
-<script>
+<!-- <script>
 	createApp({
 		setup() {
 			onMounted(() => {});
 			return { JOBS, addJob, removeJob, updateJob };
 		},
-	}).mount("#app");
+	}).mount("#app"); 
 </script>
+-->
 <script>
 	const _applicationsTable = document.getElementById("datatable");
 
@@ -123,9 +135,9 @@
 			renderTable();
 		});
 
-	watchEffect(() => {
-		renderTable();
-	});
+	// watchEffect(() => {
+	// 	renderTable();
+	// });
 	document
 		.getElementById("datatable-search-input")
 		.addEventListener("input", (e) => {
@@ -162,13 +174,13 @@
 							<path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z" clip-rule="evenodd" />
 						</svg>
 		      </a>
-		      <a role="button"  class="delete-email-button text-neutral-300 ms-2" data-te-index="${i}" title="Edit job" >
+		      <a role="button"   href="/recruiter/edit-job/${row.id}" class="delete-email-button text-neutral-300 ms-2" data-te-index="${i}" title="Edit job" >
 		        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="green" class="w-6 h-6">
 	            <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
 	            <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
 	          </svg>
 		      </a>
-		      <a role="button"  @click="()=>{removeJob('${row.id}')}" class="delete-email-button text-neutral-300 ms-2" data-te-index="${i}" title="Delete job" >
+		      <a role="button"  @click="()=>{handleDeleteAction('${row.id}')}" class="delete-email-button text-neutral-300 ms-2" data-te-index="${i}" title="Delete job" >
 		      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" class="w-6 h-6">
 	          <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
 	        </svg>
@@ -180,8 +192,14 @@
 			{ loading: false }
 		);
 	}
-	async function handleDelete(id) {
+</script>
+
+<script>
+	async function handleDeleteAction(id) {
 		const url = "/api/job/" + id;
+		const ok = confirm("Are you sure?");
+		if (!ok) return;
+
 		/**@type {TRes<{deletedJob:Tjob}>} */
 		const res = await (await fetch(url, { method: "delete" })).json();
 		console.log(res);
@@ -192,12 +210,36 @@
 			showToast({ type: "error", text: res.error.message });
 		}
 	}
-</script>
+	// async function handleEditAction(id) {
+	// 	const url = "/api/job/" + id;
+	// 	const name = prompt("Job name");
+	// 	return console.log(
+	// 		"editing",
+	// 		JOBS.value.find((j) => j.id === id)
+	// 	);
+	// 	/**@type {TRes<{deletedJob:Tjob}>} */
+	// 	const res = await (await fetch(url, { method: "put" })).json();
+	// 	console.log(res);
+	// 	if (res.ok) {
+	// 		showToast({ type: "success", text: res.message });
+	// 		removeJob(res.details.deletedJob.id);
+	// 	} else {
+	// 		showToast({ type: "error", text: res.error.message });
+	// 	}
+	// }
+	// async function handleCreateAction() {
+	// 	console.log("creating");
+	// 	const url = "/api/job";
 
-<%#- include('./partials/head.ejs') %>
-<main class="max-w-7xl mx-auto px-5 md:flex flex-row gap-5">Jobs</main>
-<li>See a table of jobs created by you</li>
-<li>click on Create job button to created new Job</li>
-<li>click on view action button (eye icon) to view a job details in a modal</li>
-<li>click on edit action button (pencil icon) to edit a particula job</li>
-<%#- include('./partials/footer.ejs') %>
+	// 	return createActionModal.show();
+	// 	/**@type {TRes<{deletedJob:Tjob}>} */
+	// 	const res = await (await fetch(url, { method: "post" })).json();
+	// 	console.log(res);
+	// 	if (res.ok) {
+	// 		showToast({ type: "success", text: res.message });
+	// 		removeJob(res.details.deletedJob.id);
+	// 	} else {
+	// 		showToast({ type: "error", text: res.error.message });
+	// 	}
+	// }
+</script>

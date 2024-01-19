@@ -6,16 +6,6 @@ export const dateSchema = z
 	.refine((value) => !isNaN(Date.parse(value)), {
 		message: "Invalid date format",
 	})
-	.refine(
-		(value) => {
-			const date = new Date(value);
-			const now = new Date();
-			return date < now;
-		},
-		{
-			message: "Date must be in the past",
-		}
-	)
 	.transform((v) => new Date(v));
 
 export const imageSchema = z.custom<
@@ -55,6 +45,15 @@ export const getStringValidation = (key: string) =>
 		})
 		.min(3, { message: `'${key}' must be 3 or more characters` });
 
+export const getStrNumValidation = (key: string) =>
+	z
+		.string({
+			required_error: `'${key}' is required`,
+		})
+		.refine((v) => !isNaN(+v), {
+			message: `'${key}' must be a number`,
+		})
+		.transform((v) => +v);
 export const getOptionalStringValidation = (key: string) =>
 	z
 		.string({

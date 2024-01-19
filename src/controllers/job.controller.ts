@@ -13,14 +13,63 @@ import {
 	getOptionalStringValidation,
 	getStringValidation,
 } from "../validations/schema";
+import { Validation } from "../../public/tw-elements/src/js/index.es";
+import ValidationSchema from "../validations/input.validation";
 
 const NO_PER_PAGE = 8;
 export const creatJob = async (req: Request, res: Response) => {
-	return new ApiResponse(res, "create jobs here", {});
+	const publisher_id = res.locals.user.employer_details.id as string;
+	const safe = ValidationSchema.createJob.safeParse(req.fields);
+	if (!safe.success) throw new ValidationError(safe.error);
+
+	const { job_location, ...data } = safe.data;
+	const is_remote = job_location === "Remote";
+
+	const createdJob = await db.job.create({
+		data: {
+			...data,
+			publisher_id,
+			is_remote,
+		},
+	});
+
+	if (!createdJob)
+		throw new AppError("An Error occoured", resCode.NOT_ACCEPTED, {
+			createdJob,
+		});
+
+	return new ApiResponse(res, "Job Created successfully", { createdJob });
 };
 
 export const editJob = async (req: Request, res: Response) => {
-	return new ApiResponse(res, "edith jobs here", {});
+	const safeParam = z
+		.object({ id: getStringValidation("id") })
+		.safeParse(req.params);
+
+	if (!safeParam.success) throw new ValidationError(safeParam.error);
+	const { id: job_id } = safeParam.data;
+
+	const safe = ValidationSchema.editJob.safeParse(req.fields);
+	if (!safe.success) throw new ValidationError(safe.error);
+
+	const { job_location, ...data } = safe.data;
+	const is_remote = job_location === "Remote";
+
+	const editedJob = await db.job.update({
+		where: { id: job_id },
+		data: {
+			...data,
+
+			is_remote,
+		},
+	});
+
+	if (!editedJob)
+		throw new AppError("An Error occoured", resCode.NOT_ACCEPTED, {
+			editedJob,
+		});
+
+	return new ApiResponse(res, "Job Updated successfully", { editedJob });
 };
 
 export const deleteJob = async (req: Request, res: Response) => {
@@ -210,6 +259,35 @@ export const getPublisherJobs = async (req: Request, res: Response) => {
 	return new ApiResponse(res, "Fetch successful", {
 		publisherJobs,
 	});
+};
+
+export const getJobToBeEdited = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const safeParam = z
+		.object({ id: getStringValidation("id") })
+		.safeParse(req.params);
+	if (!safeParam.success) return res.redirect("back");
+	const { id } = safeParam.data;
+
+	const JOB = await db.job.findFirst({
+		where: { id },
+		include: { category: {} },
+	});
+
+	if (!JOB) {
+		res.locals.error = { message: "Job not found", details: { JOB } };
+		return res.redirect("back");
+	}
+	res.locals.JOB = JOB;
+	res.locals.title = "Edit " + JOB.title;
+
+	const categories = await db.jobCategory.findMany();
+	res.locals.jobCategories = categories;
+
+	next();
 };
 
 // export const searchJobsByTitle = async (req: Request, res: Response) => {
