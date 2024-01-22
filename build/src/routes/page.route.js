@@ -61,7 +61,14 @@ pageRoute.get("/dashboard/profile", (0, response_controller_1.middlewareWapper)(
     });
 });
 pageRoute.get("/recruiter/register", (req, res) => {
-    res.render("employer/register", { title: "Sign up as Recruiter" });
+    res.render("employer/register", {
+        title: "Sign up as Recruiter",
+        initSelOptions: {
+            company_size: jobs_json_1.default.company_size,
+            industry: jobs_json_1.default.job_field,
+            STATES: jobs_json_1.default.states,
+        },
+    });
 });
 pageRoute.get("/recruiter/dashboard", (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyAuthenticated), (0, response_controller_1.middlewareWapper)(middleware_controller_1.onlyEmployers), (0, response_controller_1.middlewareWapper)(employer_controller_1.getEmployerDetails), (req, res) => {
     res.render("employer/index", {

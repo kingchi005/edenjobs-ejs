@@ -132,7 +132,14 @@ pageRoute.get(
 
 // Employer pages
 pageRoute.get("/recruiter/register", (req, res) => {
-	res.render("employer/register", { title: "Sign up as Recruiter" });
+	res.render("employer/register", {
+		title: "Sign up as Recruiter",
+		initSelOptions: {
+			company_size: jobsMetaData.company_size,
+			industry: jobsMetaData.job_field,
+			STATES: jobsMetaData.states,
+		},
+	});
 });
 pageRoute.get(
 	"/recruiter/dashboard",

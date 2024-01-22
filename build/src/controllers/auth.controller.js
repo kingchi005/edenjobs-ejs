@@ -106,7 +106,34 @@ const registerApplicant = (req, res) => __awaiter(void 0, void 0, void 0, functi
 });
 exports.registerApplicant = registerApplicant;
 const registerEmployer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    return new response_controller_1.ApiResponse(res, "register here", {});
+    const safe = input_validation_1.default.registerEmployer.safeParse(req.fields);
+    if (!safe.success)
+        throw new response_controller_1.ValidationError(safe.error);
+    const safeFiles = input_validation_1.default.registerEmployerFile.safeParse(req.files);
+    if (!safeFiles.success)
+        throw new response_controller_1.ValidationError(safeFiles.error);
+    const { company_logo: avatar_file } = safeFiles.data;
+    const _b = safe.data, { password: rawPass, address, date_of_birth, email, first_name, gender, username, last_name, is_applicant: no } = _b, employer_details = __rest(_b, ["password", "address", "date_of_birth", "email", "first_name", "gender", "username", "last_name", "is_applicant"]);
+    const uploadAvFileRes = yield (0, helpers_controller_1.uploadFile)(avatar_file.path);
+    if (uploadAvFileRes.error)
+        throw new response_controller_1.AppError("An error Occoured", response_controller_1.resCode.BAD_GATEWAY, uploadAvFileRes.error);
+    const company_logo = uploadAvFileRes.url;
+    const password = bcrypt_1.default.hashSync(rawPass, bcrypt_1.default.genSaltSync(10));
+    const user = yield prisma_1.default.user.create({
+        data: {
+            address,
+            date_of_birth,
+            email,
+            first_name,
+            gender,
+            last_name,
+            password,
+            username,
+            is_applicant: false,
+            employer_details: { create: Object.assign(Object.assign({}, employer_details), { company_logo }) },
+        },
+    });
+    return new response_controller_1.ApiResponse(res, "Registration successful", {});
 });
 exports.registerEmployer = registerEmployer;
 //# sourceMappingURL=auth.controller.js.map

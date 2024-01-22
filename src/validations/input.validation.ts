@@ -26,10 +26,7 @@ const ValidationSchema = {
 		identifier: getStringValidation("Email or username"),
 		password: getStringValidation("password"),
 	}),
-	registerApplicantFile: z.object({
-		avatar: imageSchema,
-		cv_resume: fileSchema,
-	}),
+
 	createJob: z.object({
 		title: getStringValidation("title"),
 		category_id: getStrNumValidation("category_id"),
@@ -113,6 +110,10 @@ const ValidationSchema = {
 		location_type: getStringValidation("location_type"),
 		location: getStringValidation("location"), // ref from address
 	}),
+	registerApplicantFile: z.object({
+		avatar: imageSchema,
+		cv_resume: fileSchema,
+	}),
 	registerEmployer: z.object({
 		is_applicant: getBooleanValidation("is_applicant"),
 		username: getStringValidation("username"),
@@ -120,25 +121,28 @@ const ValidationSchema = {
 		password: getStringValidation("password"),
 		first_name: getStringValidation("first_name"),
 		last_name: getStringValidation("last_name"),
-		gender: getStringValidation("gender"),
+		gender: z
+			.string({
+				required_error: `'gender' is required`,
+				invalid_type_error: `'gender' must be a string`,
+			})
+			.min(1, { message: `'gender' is required` }),
 		address: getStringValidation("address"),
 		date_of_birth,
-		applicant_details: z.object({
-			// work details
-			avatar: imageSchema,
-			cv_resume_url: fileSchema,
-			job_field: getStringValidation("job_field"),
-			qualifications: getJsonArrayValidation("qualifications"),
-			skill_set: getJsonArrayValidation("skill_set"),
-			skill_level: getStringValidation("skill_level"),
-			// job preferences
-			years_of_experience: getNumberValidation("years_of_experience"), // ref from skill_level
-			preferred_job_type: getStringValidation("preferred_job_type"),
-			work_schedule: getStringValidation("work_schedule"),
-			job_stability: getStringValidation("job_stability"),
-			location_type: getStringValidation("location_type"),
-			location: getStringValidation("location"), // ref from address
-		}),
+		// wmployer_details
+		company_name: getStringValidation("company_name"),
+		company_email: getStringValidation("company_email"),
+		company_description: getStringValidation("company_description"),
+		company_location_state: getStringValidation("company_location_state"),
+		company_location_city: getStringValidation("company_location_city"),
+		company_location_street: getStringValidation("company_location_street"),
+		company_website: getStringValidation("company_website"),
+		company_size: getStringValidation("company_size"),
+		industry: getStringValidation("industry"),
+		culture: getJsonArrayValidation("culture"),
+	}),
+	registerEmployerFile: z.object({
+		company_logo: imageSchema,
 	}),
 	appliyForJob: z.object({
 		job_id: getStringValidation("job_id"),
@@ -160,10 +164,6 @@ const ValidationSchema = {
 		last_name: getOptionalStringValidation("last_name"),
 		address: getOptionalStringValidation("address"),
 	}),
-	image: imageSchema,
-
-	cv_resumeSchema: fileSchema,
-
 	updateCompanyDetails: z.object({
 		company_name: getOptionalStringValidation("company_name"),
 		company_email: getOptionalStringValidation("company_email"),
@@ -181,6 +181,8 @@ const ValidationSchema = {
 		industry: getOptionalStringValidation("industry"),
 		culture: getJsonArrayValidation("culture"),
 	}),
+	image: imageSchema,
+	cv_resumeSchema: fileSchema,
 } as const;
 
 export default ValidationSchema;

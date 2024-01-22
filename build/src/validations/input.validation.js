@@ -14,10 +14,6 @@ const ValidationSchema = {
         identifier: (0, schema_1.getStringValidation)("Email or username"),
         password: (0, schema_1.getStringValidation)("password"),
     }),
-    registerApplicantFile: zod_1.z.object({
-        avatar: schema_1.imageSchema,
-        cv_resume: schema_1.fileSchema,
-    }),
     createJob: zod_1.z.object({
         title: (0, schema_1.getStringValidation)("title"),
         category_id: (0, schema_1.getStrNumValidation)("category_id"),
@@ -89,6 +85,10 @@ const ValidationSchema = {
         location_type: (0, schema_1.getStringValidation)("location_type"),
         location: (0, schema_1.getStringValidation)("location"),
     }),
+    registerApplicantFile: zod_1.z.object({
+        avatar: schema_1.imageSchema,
+        cv_resume: schema_1.fileSchema,
+    }),
     registerEmployer: zod_1.z.object({
         is_applicant: (0, schema_1.getBooleanValidation)("is_applicant"),
         username: (0, schema_1.getStringValidation)("username"),
@@ -96,23 +96,27 @@ const ValidationSchema = {
         password: (0, schema_1.getStringValidation)("password"),
         first_name: (0, schema_1.getStringValidation)("first_name"),
         last_name: (0, schema_1.getStringValidation)("last_name"),
-        gender: (0, schema_1.getStringValidation)("gender"),
+        gender: zod_1.z
+            .string({
+            required_error: `'gender' is required`,
+            invalid_type_error: `'gender' must be a string`,
+        })
+            .min(1, { message: `'gender' is required` }),
         address: (0, schema_1.getStringValidation)("address"),
         date_of_birth,
-        applicant_details: zod_1.z.object({
-            avatar: schema_1.imageSchema,
-            cv_resume_url: schema_1.fileSchema,
-            job_field: (0, schema_1.getStringValidation)("job_field"),
-            qualifications: (0, schema_1.getJsonArrayValidation)("qualifications"),
-            skill_set: (0, schema_1.getJsonArrayValidation)("skill_set"),
-            skill_level: (0, schema_1.getStringValidation)("skill_level"),
-            years_of_experience: (0, schema_1.getNumberValidation)("years_of_experience"),
-            preferred_job_type: (0, schema_1.getStringValidation)("preferred_job_type"),
-            work_schedule: (0, schema_1.getStringValidation)("work_schedule"),
-            job_stability: (0, schema_1.getStringValidation)("job_stability"),
-            location_type: (0, schema_1.getStringValidation)("location_type"),
-            location: (0, schema_1.getStringValidation)("location"),
-        }),
+        company_name: (0, schema_1.getStringValidation)("company_name"),
+        company_email: (0, schema_1.getStringValidation)("company_email"),
+        company_description: (0, schema_1.getStringValidation)("company_description"),
+        company_location_state: (0, schema_1.getStringValidation)("company_location_state"),
+        company_location_city: (0, schema_1.getStringValidation)("company_location_city"),
+        company_location_street: (0, schema_1.getStringValidation)("company_location_street"),
+        company_website: (0, schema_1.getStringValidation)("company_website"),
+        company_size: (0, schema_1.getStringValidation)("company_size"),
+        industry: (0, schema_1.getStringValidation)("industry"),
+        culture: (0, schema_1.getJsonArrayValidation)("culture"),
+    }),
+    registerEmployerFile: zod_1.z.object({
+        company_logo: schema_1.imageSchema,
     }),
     appliyForJob: zod_1.z.object({
         job_id: (0, schema_1.getStringValidation)("job_id"),
@@ -134,8 +138,6 @@ const ValidationSchema = {
         last_name: (0, schema_1.getOptionalStringValidation)("last_name"),
         address: (0, schema_1.getOptionalStringValidation)("address"),
     }),
-    image: schema_1.imageSchema,
-    cv_resumeSchema: schema_1.fileSchema,
     updateCompanyDetails: zod_1.z.object({
         company_name: (0, schema_1.getOptionalStringValidation)("company_name"),
         company_email: (0, schema_1.getOptionalStringValidation)("company_email"),
@@ -149,6 +151,8 @@ const ValidationSchema = {
         industry: (0, schema_1.getOptionalStringValidation)("industry"),
         culture: (0, schema_1.getJsonArrayValidation)("culture"),
     }),
+    image: schema_1.imageSchema,
+    cv_resumeSchema: schema_1.fileSchema,
 };
 exports.default = ValidationSchema;
 //# sourceMappingURL=input.validation.js.map

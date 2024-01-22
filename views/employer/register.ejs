@@ -1,0 +1,886 @@
+<%- include('../partials/head.ejs') %>
+<!--   -->
+<% if (process.env.CURRENT_ENV ==="production") { %>
+<script src="/vue/vue.global.prod.js"></script>
+<% } else { %>
+
+<script src="/vue/vue.global.js"></script>
+<% } %>
+<link rel="stylesheet" href="/toast-notification/toast.css" />
+<script>
+	const _STATES = JSON.parse(`<%- JSON.stringify(initSelOptions.STATES) %>`);
+	const cultureArr = new Set();
+</script>
+
+<div
+	id="app"
+	class="sm:flex sm:flex-col flex-wrap items-center justify-center py-10"
+>
+	<div class="flex justify-center items-center w-full">
+		<a href="/" class="p-5 justify-center items-center flex">
+			<img class="w-10 rounded-md" src="/logo.jpg" alt="logo" />
+		</a>
+		<h1 class="text-4xl">Sign up as Recruiter</h1>
+	</div>
+
+	<!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com -->
+	<ul
+		class="relative m-0 max-w-4xl w-full list-none overflow-hidden p-0 transition-[height] duration-200 ease-in-out"
+		data-te-stepper-init
+		data-te-stepper-type="vertical"
+	>
+		<!--First item-->
+		<li
+			data-te-stepper-step-ref
+			class="relative h-fit after:absolute after:left-[2.45rem] after:top-[3.6rem] after:mt-px after:h-[calc(100%-2.45rem)] after:w-px after:bg-[#e0e0e0] after:content-[''] dark:after:bg-neutral-600"
+		>
+			<div
+				data-te-stepper-head-ref
+				class="flex cursor-pointer items-center p-6 leading-[1.3rem] no-underline after:bg-[#e0e0e0] after:content-[''] hover:bg-[#f9f9f9] focus:outline-none dark:after:bg-neutral-600 dark:hover:bg-[#3b3b3b]"
+			>
+				<span
+					data-te-stepper-head-icon-ref
+					class="mr-3 flex h-[1.938rem] w-[1.938rem] items-center justify-center rounded-full bg-[#ebedef] text-sm font-medium text-[#40464f]"
+				>
+					1
+				</span>
+				<span data-te-stepper-head-text-ref class="text-xl font-semibold"
+					>Personal information
+				</span>
+			</div>
+			<div
+				data-te-stepper-content-ref
+				class="transition-[height, margin-bottom, padding-top, padding-bottom] left-0 overflow-hidden pb-6 pl-[3.75rem] pr-6 duration-300 ease-in-out"
+				style="height: 100%"
+			>
+				<div
+					class="w-full mx-auto rounded-lg p-6 border dark:bg-neutral-700 h-full relative"
+				>
+					<h3 v-if="false" class="text-xl mb-5 font-semibold">
+						Personal information
+					</h3>
+
+					<form
+						id="form-personal-detail"
+						data-te-validation-init
+						data-te-active-validation="true"
+					>
+						<div class="sm:flex flex-wrap items-center justify-between gap-5">
+							<!--Email input-->
+							<div
+								class="relative mb-4 flex-auto"
+								data-te-input-wrapper-init
+								data-te-validate="input"
+								data-te-validation-ruleset="isRequired|isEmail"
+								data-te-invalid-feedback="Enter a valid email"
+								data-te-valid-feedback=" "
+							>
+								<input
+									name="email"
+									v-model="PdFormData.email"
+									type="email"
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="email"
+									aria-describedby="emailHelp"
+									placeholder="Enter email"
+								/>
+								<label
+									for="email"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>Email</label
+								>
+							</div>
+
+							<!--Password input-->
+							<div
+								class="relative mb-4 flex-auto"
+								data-te-input-wrapper-init
+								data-te-validate="input"
+								data-te-validation-ruleset="isRequired"
+								data-te-input-wrapper-init
+								data-te-invalid-feedback="Password is required"
+								data-te-valid-feedback=" "
+							>
+								<input
+									v-model="PdFormData.password"
+									name="password"
+									type="password"
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="password"
+									placeholder="Password"
+								/>
+								<label
+									for="password"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>Password</label
+								>
+							</div>
+
+							<!--Comfirm Password input-->
+							<div
+								class="relative mb-4 flex-auto"
+								data-te-input-wrapper-init
+								data-te-validate="input"
+								data-te-validation-ruleset="isRequired|matchPass"
+								data-te-input-wrapper-init
+								data-te-invalid-feedback="Passwords don't match"
+								data-te-valid-feedback=" "
+							>
+								<input
+									v-model="c_password"
+									name="c_password"
+									type="password"
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="c_password"
+									placeholder="ReEnter Password"
+								/>
+								<label
+									for="c_password"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>Confirm Password</label
+								>
+							</div>
+
+							<!--Username input-->
+							<div
+								class="relative mb-4 flex-auto"
+								data-te-input-wrapper-init
+								data-te-validate="input"
+								data-te-validation-ruleset="isRequired"
+								data-te-invalid-feedback="Username is required"
+								data-te-valid-feedback=" "
+							>
+								<input
+									name="username"
+									v-model="PdFormData.username"
+									type="username"
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="username"
+									aria-describedby="emailHelp"
+									placeholder="Enter username"
+								/>
+								<label
+									for="username"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>Username</label
+								>
+							</div>
+
+							<!--First name input-->
+							<div
+								class="relative mb-4 flex-auto"
+								data-te-input-wrapper-init
+								data-te-validate="input"
+								data-te-validation-ruleset="isRequired"
+								data-te-invalid-feedback="First name is required"
+								data-te-valid-feedback=" "
+							>
+								<input
+									name="first_name"
+									v-model="PdFormData.first_name"
+									type="first_name"
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="first_name"
+									aria-describedby="emailHelp"
+									placeholder="Enter first name"
+								/>
+								<label
+									for="first_name"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>First name</label
+								>
+							</div>
+
+							<!--Last name input-->
+							<div
+								class="relative mb-4 flex-auto"
+								data-te-input-wrapper-init
+								data-te-validate="input"
+								data-te-validation-ruleset="isRequired"
+								data-te-invalid-feedback="Last name is required"
+								data-te-valid-feedback=" "
+							>
+								<input
+									name="last_name"
+									v-model="PdFormData.last_name"
+									type="last_name"
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="last_name"
+									aria-describedby="emailHelp"
+									placeholder="Enter username"
+								/>
+								<label
+									for="last_name"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>Last name</label
+								>
+							</div>
+
+							<!-- Gender input-->
+							<div
+								class="mb-4 flex-auto"
+								data-te-validate="input"
+								data-te-validation-ruleset="isRequired"
+								data-te-invalid-feedback="Gender is required"
+								data-te-valid-feedback=" "
+							>
+								<select
+									class=""
+									name="gender"
+									id="gender-sel"
+									v-model="PdFormData.gender"
+									data-te-select-init
+								>
+									<option hidden selected></option>
+									<option value="M">Male</option>
+									<option value="F">Female</option>
+								</select>
+								<label data-te-select-label-ref>Gender</label>
+							</div>
+
+							<!--Date of birth input-->
+							<div
+								class="relative mb-3 flex-auto"
+								id="date_of_birth-wrapper"
+								data-te-input-wrapper-init
+								data-te-validate="input"
+								data-te-validation-ruleset="isRequired|isDate"
+								data-te-invalid-feedback="Enter a valid date"
+								data-te-valid-feedback=" "
+							>
+								<input
+									type="date"
+									id="date_of_birth"
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									placeholder="Select a date"
+									v-model="PdFormData.date_of_birth"
+									name="date_of_birth"
+								/>
+								<label
+									for="date_of_birth"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>Date of birth</label
+								>
+							</div>
+
+							<!--Home Address input-->
+							<div
+								class="relative mb-4 flex-auto"
+								data-te-input-wrapper-init
+								data-te-validate="input"
+								data-te-validation-ruleset="isRequired"
+								data-te-invalid-feedback="Address is required"
+								data-te-valid-feedback=" "
+							>
+								<input
+									name="address"
+									v-model="PdFormData.address"
+									type=""
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="address"
+									aria-describedby="emailHelp"
+									placeholder="Enter username"
+								/>
+								<label
+									for="address"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>Location Address</label
+								>
+							</div>
+						</div>
+
+						<!--Agree checkbox-->
+						<div class="sm:flex items-center justify-between">
+							<div
+								class="block min-h-[1.5rem] pl-[1.5rem]"
+								data-te-input-wrapper-init
+								data-te-invalid-feedback=" "
+								data-te-validate="checkbox"
+								data-te-validation-ruleset="isChecked"
+								data-te-valid-feedback=" "
+							>
+								<input
+									class="relative float-left -ml-[1.5rem] mr-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:border-solid checked:after:border-white checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 checked:focus:after:border-solid checked:focus:after:border-white checked:focus:after:bg-transparent dark:border-neutral-600 dark:checked:border-primary dark:checked:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
+									type="checkbox"
+									value=""
+									id="exampleCheck2"
+								/>
+								<label
+									class="inline-block pl-[0.15rem] hover:cursor-pointer"
+									for="exampleCheck2"
+								>
+									I agree to terms and conditions
+								</label>
+							</div>
+						</div>
+
+						<!--Sign in button-->
+						<!-- <div class="flex"> -->
+						<button
+							id="submit"
+							type="submit"
+							name="btn"
+							class="mb-3 sm:mb-auto dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full sm:w-fit float-right rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+							data-te-ripple-init
+							data-te-submit-btn-ref
+							data-te-ripple-color="light"
+						>
+							Next Step
+						</button>
+
+						<!-- </div> -->
+
+						<!--Register link-->
+						<p class="mt-6 text-start text-neutral-800 dark:text-neutral-200">
+							Already have an account?
+							<a
+								href="/login"
+								class="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
+								>Login</a
+							>
+						</p>
+					</form>
+				</div>
+			</div>
+		</li>
+
+		<!--Second item-->
+		<li
+			data-te-stepper-step-ref
+			class="relative h-fit after:absolute after:left-[2.45rem] after:top-[3.6rem] after:mt-px after:h-[calc(100%-2.45rem)] after:w-px after:bg-[#e0e0e0] after:content-[''] dark:after:bg-neutral-600"
+		>
+			<div
+				data-te-stepper-head-ref
+				class="flex cursor-pointer items-center p-6 leading-[1.3rem] no-underline after:bg-[#e0e0e0] after:content-[''] hover:bg-[#f9f9f9] focus:outline-none dark:after:bg-neutral-600 dark:hover:bg-[#3b3b3b]"
+			>
+				<span
+					data-te-stepper-head-icon-ref
+					class="mr-3 flex h-[1.938rem] w-[1.938rem] items-center justify-center rounded-full bg-[#ebedef] text-sm font-medium text-[#40464f]"
+				>
+					2
+				</span>
+				<span data-te-stepper-head-text-ref class="text-xl font-semibold"
+					>Company information
+				</span>
+			</div>
+			<div
+				data-te-stepper-content-ref
+				class="transition-[height, margin-bottom, padding-top, padding-bottom] left-0 overflow-hidden pb-6 pl-[3.75rem] pr-6 duration-300 ease-in-out"
+				style="height: 100%"
+			>
+				<div
+					class="block w-full mx-auto rounded-lg p-6 border dark:bg-neutral-700 h-full relative"
+				>
+					<div
+						v-if="current_step < 2"
+						class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-black bg-fixed opacity-50 z-10 rounded-lg"
+					></div>
+
+					<h3 v-if="false" class="text-xl mb-5 font-semibold">
+						Company information
+					</h3>
+
+					<form
+						@submit.prevent="handleSubmit"
+						id="form-company-info"
+						data-te-validation-init
+						data-te-active-validation="true"
+					>
+						<div class="sm:flex flex-wrap items-center justify-between gap-5">
+							<!-- Company Logo input-->
+							<div
+								class="flex justify-start gap-5 items-center mb-5 relative flex-auto"
+							>
+								<div class="flex justify-center">
+									<label for="file-input-logo" class="cursor-pointer">
+										<img
+											id="avater"
+											class="rounded-lg w-20 h-16 align-middle"
+											:src="logoUrl"
+											alt=""
+										/>
+										<div
+											class="image-upload absolute bottom-0 cursor-pointer w-5"
+											data-te-validate="file"
+											data-te-validation-ruleset="isRequired"
+											data-te-input-wrapper-init
+											data-te-invalid-feedback="Logo is required"
+											data-te-valid-feedback=" "
+										>
+											<div>
+												<input
+													id="file-input-logo"
+													class="hidden"
+													type="file"
+													accept=".jpeg,.jpg"
+													name="company_logo"
+													@change="handleLogoFileLoad"
+												/>
+											</div>
+										</div>
+									</label>
+								</div>
+								<label for="file-input-logo">Company Logo</label>
+							</div>
+
+							<!-- company_name -->
+							<div class="relative flex-auto mb-6" data-te-input-wrapper-init>
+								<input
+									type="text"
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="company-name"
+									aria-describedby="emailHelp123"
+									placeholder="Comapny name"
+									name="company_name"
+									v-model="CoFormData.company_name"
+								/>
+								<label
+									for="company-name"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>Company Name
+								</label>
+							</div>
+							<!-- company_email -->
+							<div class="relative flex-auto mb-6" data-te-input-wrapper-init>
+								<input
+									type="email"
+									name="company_email"
+									v-model="CoFormData.company_email"
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="company-email"
+									placeholder="recruit@edenjobs.com"
+								/>
+								<label
+									for="company-email"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-neutral-200"
+									>Company Email
+								</label>
+							</div>
+						</div>
+						<div class="sm:flex gap-5 flex-wrap items-center">
+							<!-- company_description -->
+							<div class="relative mb-6 flex-1" data-te-input-wrapper-init>
+								<textarea
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="company-description"
+									name="company_description"
+									v-model="CoFormData.company_description"
+									rows="3"
+									placeholder="Tell about your company"
+								></textarea>
+								<label
+									for="company-description"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>Company Description</label
+								>
+							</div>
+							<!-- culture  -->
+							<div class="mb-6 flex-1">
+								<div
+									id="culture"
+									data-te-chips-initial
+									data-te-toggle="tooltip"
+									title="press enter after typing each sentence"
+									class="mb-0 min-h-[45px] border-none pb-0 shadow-none outline-none transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:cursor-text flex-1"
+								></div>
+							</div>
+						</div>
+
+						<div
+							class="sm:flex gap-5 flex-wrap items-center"
+							id="company-address"
+						>
+							<!-- company_location_street -->
+							<div
+								class="relative mb-4 flex-auto"
+								data-te-input-wrapper-init
+								data-te-validate="input"
+								data-te-validation-ruleset="isRequired"
+								data-te-invalid-feedback="Address is required"
+								data-te-valid-feedback=" "
+							>
+								<input
+									name="company_location_street"
+									v-model="CoFormData.company_location_street"
+									type=""
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="company-location-street"
+									aria-describedby="emailHelp"
+									placeholder="Enter address"
+								/>
+								<label
+									for="address"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>Street Address</label
+								>
+							</div>
+							<!-- company_location_state -->
+							<div class="mb-6 flex-auto">
+								<select
+									class=""
+									id="company-location-state"
+									data-te-select-init
+									name="company_location_state"
+									v-model="CoFormData.company_location_state"
+								>
+									<option hidden selected></option>
+
+									<option v-for="item in STATES" :value="item.name">
+										{{ item.name }}
+									</option>
+								</select>
+								<label data-te-select-label-ref>Company Address State</label>
+							</div>
+
+							<!-- company_location_city -->
+							<div class="mb-6 flex-auto">
+								<select
+									class=""
+									id="company-location-city"
+									data-te-select-init
+									name="company_location_city"
+									v-model="CoFormData.company_location_city"
+								></select>
+								<label data-te-select-label-ref>Company Address City</label>
+							</div>
+
+							<!-- company_website -->
+							<div
+								class="relative mb-6 flex-auto"
+								data-te-input-wrapper-init
+								data-te-validate="input"
+								data-te-validation-ruleset="isRequired"
+								data-te-invalid-feedback="Address is required"
+								data-te-valid-feedback=" "
+							>
+								<input
+									name="company_website"
+									v-model="CoFormData.company_website"
+									type="url"
+									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+									id="company-website"
+									aria-describedby="email"
+								/>
+								<label
+									for="company-website"
+									class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+									>Company Website</label
+								>
+							</div>
+
+							<!-- company_size -->
+							<div class="mb-6 flex-auto">
+								<select
+									class=""
+									id="company-size"
+									data-te-select-init
+									name="company_size"
+									v-model="CoFormData.company_size"
+								>
+									<option hidden selected></option>
+									<option
+										v-for="item in initSelOptions.company_size"
+										:value="item"
+									>
+										{{ item }}
+									</option>
+								</select>
+								<label data-te-select-label-ref>Company Size</label>
+							</div>
+
+							<!-- industry -->
+							<div class="mb-6 flex-auto">
+								<select
+									class=""
+									id="industry"
+									data-te-select-init
+									name="industry"
+									v-model="CoFormData.industry"
+								>
+									<option hidden selected></option>
+
+									<option v-for="item in initSelOptions.industry" :value="item">
+										{{ item }}
+									</option>
+								</select>
+								<label data-te-select-label-ref>Industry</label>
+							</div>
+						</div>
+
+						<button
+							v-if="loading"
+							id="submit-registration"
+							type="submit"
+							name="btn"
+							class="mb-3 sm:mb-auto dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full sm:w-fit float-right rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+							data-te-ripple-init
+							data-te-submit-btn-ref
+							data-te-ripple-color="light"
+						>
+							<div
+								class="inline-block h-3 w-3 mr-2 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+								role="status"
+							>
+								<span
+									class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+								>
+									Loading...
+								</span>
+							</div>
+							Please wait
+						</button>
+						<button
+							v-else
+							:disabled="loading"
+							id="submit-registration"
+							type="submit"
+							name="btn"
+							class="mb-3 sm:mb-auto dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full sm:w-fit float-right rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+							data-te-ripple-init
+							data-te-submit-btn-ref
+							data-te-ripple-color="light"
+						>
+							Register
+						</button>
+
+						<p class="mt-6 text-start text-neutral-800 dark:text-neutral-200">
+							<a
+								href="/login"
+								class="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
+							></a>
+						</p>
+					</form>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+
+<!-- state variiables -->
+<script>
+	const { createApp, onMounted, ref } = Vue;
+	/**@type {{ qualifications: string[]; job_field: string[]; job_level: string[]; job_type: string[]; work_schedule: string[];}} */
+	const initSelOptions = JSON.parse(`<%- JSON.stringify(initSelOptions) %>`);
+	const identifier = ref("emal");
+	const password = ref("pass");
+	const logoUrl = ref("/images/upload-image.png");
+	const logoFile = ref();
+	const loading = ref(false);
+	const step = ref({});
+
+	const PdFormData = ref({
+		username: "",
+		email: "",
+		password: "",
+		first_name: "",
+		last_name: "",
+		gender: "",
+		address: "",
+		date_of_birth: "",
+	});
+	const CoFormData = ref({
+		company_name: "",
+		is_applicant: false,
+		company_logo: logoFile,
+		company_email: "",
+		company_description: "",
+		company_location_state: "",
+		company_location_city: "",
+		company_location_street: "",
+		company_website: "",
+		company_size: "",
+		industry: "",
+		culture: [],
+	});
+	const c_password = ref();
+	const genderArr = ref([
+		{ name: "Male", code: "M" },
+		{ name: "Female", code: "F" },
+	]);
+	const current_step = ref(5);
+	const STATES = _STATES;
+</script>
+<!-- functions -->
+<script>
+	const init = () => {
+		console.log("Welocome");
+	};
+
+	const handleSubmit = async (e) => {
+		// e.preventDefault();
+		if (!checkValiditiy()) return;
+		loading.value = true;
+		const fields = {
+			...PdFormData.value,
+			...CoFormData.value,
+			culture: JSON.stringify([...cultureArr]),
+		};
+
+		// return console.log(fields);
+
+		const formData = new FormData();
+		for (const key in fields) {
+			if (fields[key] instanceof File) {
+				formData.set(key, fields[key]);
+				// console.log("file:", key, fields[key]);
+			} else {
+				// console.log(typeof fields[key], key, fields[key]);
+				formData.append(key, fields[key]);
+			} // formData.append(key, dat*a[key]);
+		}
+
+		// return console.log([...formData.entries()]);
+		const url = "/api/auth/employer/register";
+		const res = await (
+			await fetch(url, {
+				method: "post",
+				headers: {},
+				body: formData,
+			})
+		).json();
+
+		loading.value = false;
+		console.log(res);
+		if (!res.ok) {
+			showToast({ duration: 5000, text: res.error.message, type: "error" });
+			return;
+		}
+		showToast({ duration: 5000, text: res.message, type: "success" });
+		location.assign("/login");
+	};
+
+	const handleLogoFileLoad = (ev) => {
+		logoFile.value = ev.target.files[0];
+		// const formData = new FormData(document.querySelector("form#cv-form"));
+
+		const reader = new FileReader();
+
+		reader.onload = function (e) {
+			logoUrl.value = reader.result;
+		};
+		// files[0]
+		reader.readAsDataURL(logoFile.value);
+	};
+
+	const increaseStep = (num) => {
+		nextStep(num);
+		current_step.value++;
+	};
+</script>
+<!-- vue -->
+<script>
+	createApp({
+		setup() {
+			onMounted(() => {
+				init();
+			});
+			return {
+				init,
+				handleSubmit,
+				identifier,
+				password,
+				logoUrl,
+				logoFile,
+				handleLogoFileLoad,
+				genderArr,
+				loading,
+				PdFormData,
+				CoFormData,
+				c_password,
+				initSelOptions,
+				increaseStep,
+				current_step,
+				STATES,
+			};
+		},
+	}).mount("#app");
+</script>
+<%- include('../partials/footer.ejs',{footer:false}) %>
+<script>
+	// const datepickerWithLimits = document.getElementById("date_of_birth-wrapper");
+	// const datepickerWithLimitsInstance = new te.Datepicker(datepickerWithLimits, {
+	// 	// min: new Date("1/1/2022"),
+	// 	max: new Date("1/1/2013"),
+	// });
+
+	const personDetailForm = document.querySelector("#form-personal-detail");
+	const companyInfoForm = document.querySelector("#form-company-info");
+	const chipsInitial = document.querySelector("#culture");
+
+	const chipsInitialInstance = new te.ChipsInput(chipsInitial, {
+		initialValues: [],
+		labelText: "Your Company's culture & Values",
+	});
+	chipsInitialInstance._element
+		.querySelector("input")
+		.addEventListener("keypress", (e) => {
+			if (e.key === "Enter") {
+				e.preventDefault();
+				cultureArr.add(e.target.value);
+			}
+		});
+	const alertContainer = document.getElementById("alert");
+	const alertInstance = te.Alert.getInstance(alertContainer);
+	const _personDetailForm = new te.Validation(personDetailForm, {
+		customErrorMessages: {
+			contains: "The field must contain the '{contains}' word",
+			matchPass: "Passwords don't match",
+			isDate: "Enter a valid date",
+			isEmail: "Enter a valid email",
+		},
+		customRules: {
+			contains: (value, message, string) => {
+				return value.includes(string)
+					? true
+					: message.replace("{contains}", string);
+			},
+			matchPass: (value, message) => {
+				return value === PdFormData.value.password ? true : message;
+			},
+			isDate: (value, message, string) => {
+				return !isNaN(Date.parse(value)) ? true : message;
+			},
+		},
+		submitCallback: async (e, valid) => {
+			e.preventDefault();
+
+			if (valid) {
+				increaseStep(1);
+			}
+		},
+	});
+
+	const _companyInfoForm = new te.Validation(companyInfoForm, {
+		// submitCallback: handleSubmit,
+	});
+
+	function checkValiditiy() {
+		return _companyInfoForm._isValid;
+	}
+</script>
+<script>
+	const stepper = new te.Stepper(
+		document.querySelector("[data-te-stepper-init]")
+	);
+	function nextStep(num) {
+		stepper._toggleStep(num);
+	}
+
+	const stateSelectInstance = te.Select.getInstance(
+		document.querySelector("#company-location-state")
+	);
+
+	const citySelectInstance = te.Select.getInstance(
+		document.querySelector("#company-location-city")
+	);
+
+	stateSelectInstance._element.addEventListener("change", (e) => {
+		console.log(e.target.value);
+		console.log(e.target.selectedIndex);
+		citySelectInstance._element.innerHTML =
+			`<option hidden selected></option>` +
+			STATES[e.target.selectedIndex - 1].cities.map(
+				(city) => `<option value="${city}">${city}</option>`
+			);
+	});
+</script>
