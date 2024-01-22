@@ -1,10 +1,27 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const tw_elements_es_min_js_1 = require("/tw-elements/dist/js/tw-elements.es.min.js");
-(0, tw_elements_es_min_js_1.initTE)({ Modal: tw_elements_es_min_js_1.Modal, Ripple: tw_elements_es_min_js_1.Ripple });
-(0, tw_elements_es_min_js_1.initTE)({ Carousel: tw_elements_es_min_js_1.Carousel }, true);
+// import "./css/style.css";
+// import javascriptLogo from "/javascript.svg";
+// import viteLogo from "/vite.svg";
+// import { setupCounter } from "./counter.js";
+// import { linkBtn } from "./js/components.js";
+// import { setUpHeader } from "./js/layouts.js";
+
+import {
+	Collapse,
+	initTE,
+	Modal,
+	Ripple,
+	Carousel,
+} from "/tw-elements/dist/js/tw-elements.es.min.js";
+initTE({ Modal, Ripple });
+
+initTE({ Carousel }, true);
+
+// alert("ready");
+// initTE({ Collapse });
+
 document.querySelector(".recent-jobs").innerHTML = [...Array(7)]
-    .map(() => `<a>	<div class="recent-card shadow-md p-5 rounded-md ">
+	.map(
+		() => `<a>	<div class="recent-card shadow-md p-5 rounded-md ">
 						<div class="recent-head flex items-center mb-4">
 							<img
 								src="/images/brendan.jpg"
@@ -47,6 +64,10 @@ document.querySelector(".recent-jobs").innerHTML = [...Array(7)]
 							<div class="salary">Salary: N210,000 - N300,000</div>
 							<div class="posted">Posted 2 hours ago</div>
 						</div>
-					</div></a>`)
-    .join("");
-//# sourceMappingURL=index.js.map
+					</div></a>`
+	)
+	.join("");
+
+// Initialization for ES Users
+
+// set second parameter to true if you want to use a debugger

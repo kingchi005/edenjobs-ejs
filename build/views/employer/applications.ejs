@@ -1,15 +1,124 @@
 <%- include('./partials/head.ejs') %>
+
 <main class="max-w-7xl mx-auto px-5 md:flex flex-row gap-5">
-	Applications by applicants
+	<div x-data class="mt-5 w-full border rounded-md p-5 bg-white">
+		<h2 class="text-lg font-semibold mb-5">Applications</h2>
+		<div class="mb-3">
+			<div class="relative mb-4 flex w-full flex-wrap items-stretch">
+				<input
+					id="datatable-search-input"
+					type="search"
+					class="relative m-0 -mr-0.5 block min-w-0 flex-1 rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+					placeholder="Search"
+					aria-label="Search"
+					aria-describedby="button-addon1"
+				/>
+				<div class="flex-1"></div>
+			</div>
+		</div>
+		<div id="datatable" data-te-clickable-rows="false"></div>
+	</div>
 </main>
-<li>See accordon list of jobs card</li>
-<li>open an accordon to see a table of that job's applications</li>
-<li>
-	click on view action button (eye icon) to view application details in a modal
-</li>
-<li>
-	click on invite action button (will find icon) to invite the applicant for
-	interview
-</li>
 
 <%- include('./partials/footer.ejs') %>
+<script>
+	const url = "/api/job-application";
+	const _applicationsTable = document.getElementById("datatable");
+
+	const applicationsTable = new te.Datatable(
+		_applicationsTable,
+		{
+			columns: [
+				{
+					label: "Avatar",
+					field: "avatar",
+					sort: false,
+					/**@param {HTMLTableRowElement} el */
+					format(el) {
+						el.classList.remove("px-[1.4rem]");
+						el.classList.add("flex", "justify-center");
+						el.style.paddingInline = "3px";
+					},
+				},
+				{ label: "Job Title", field: "job_title", sort: true },
+				{ label: "Full name", field: "full_name", sort: true },
+				// { label: "Last name", field: "last_name", sort: false },
+				{ label: "Email", field: "email", sort: true },
+				{ label: "Content", field: "content", sort: false },
+				{ label: "Date", field: "applied_at", sort: true },
+				{ label: "View / Invite", field: "actions", sort: false },
+			],
+		},
+		{ loading: true }
+	);
+
+	fetch(url)
+		.then((response) => response.json())
+		.then((data) => {
+			// console.log(data);
+			applicationsTable.update(
+				{
+					rows: data.details.applications.map((row, i) => ({
+						job_title: row.job.title,
+						avatar: `<img
+											id="${row.id}"
+											class="rounded-xl align-middle"
+											src="${row.applicant.avatar}"
+											width="40"
+											alt="avatar"
+										/>`,
+						full_name: `${row.applicant.user.first_name} ${row.applicant.user.last_name}`,
+						email: `${row.applicant.user.email}`,
+						content: `${row.content.slice(0, 15)} ...`,
+						applied_at: `${new Date(row.created_at).toLocaleDateString()}`,
+						actions: `
+	    <div class="flex">
+	      <a role="button" href="/recruiter/application/${
+					row.id
+				}" class="star-email-button text-warning" data-te-index="${i}">
+	        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+						<path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+						<path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z" clip-rule="evenodd" />
+					</svg>
+	      </a>
+	      <a role="button" class="delete-email-button text-neutral-300 ms-2" data-te-index="${i}" title="${
+							row.invited ? "Invited" : "Not Invited"
+						}">
+	        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${
+						row.invited ? "green" : "currentColor"
+					}" class="w-6 h-6">
+						<path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+					</svg>
+	      </a>
+	    </div>
+	 `,
+					})),
+				},
+				{ loading: false }
+			);
+
+			// _applicationsTable.addEventListener("click", (ev) => {
+			// 	if (ev?.delegateTarget?.querySelector("img")) {
+			// 		location.assign(
+			// 			`/recruiter/application/${
+			// 				ev.delegateTarget.querySelector("img").id
+			// 			}`
+			// 		);
+			// 	}
+			// });
+		});
+	document
+		.getElementById("datatable-search-input")
+		.addEventListener("input", (e) => {
+			applicationsTable.search(e.target.value);
+		});
+	function formatHead(_) {
+		_.querySelector("thead")
+			.querySelectorAll("th")[0]
+			.querySelector("span")
+			.classList.remove("pl-[18px]");
+	}
+	window.onload = () => {
+		formatHead(_applicationsTable);
+	};
+</script>

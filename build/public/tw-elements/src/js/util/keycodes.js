@@ -1,44 +1,53 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Z = exports.Y = exports.X = exports.W = exports.V = exports.U = exports.T = exports.S = exports.R = exports.Q = exports.P = exports.O = exports.N = exports.M = exports.L = exports.K = exports.J = exports.I = exports.H = exports.G = exports.F = exports.E = exports.D = exports.C = exports.B = exports.A = exports.DELETE = exports.BACKSPACE = exports.TAB = exports.ESCAPE = exports.SPACE = exports.ENTER = exports.PAGE_DOWN = exports.PAGE_UP = exports.END = exports.HOME = exports.DOWN_ARROW = exports.RIGHT_ARROW = exports.UP_ARROW = exports.LEFT_ARROW = void 0;
-exports.LEFT_ARROW = 37;
-exports.UP_ARROW = 38;
-exports.RIGHT_ARROW = 39;
-exports.DOWN_ARROW = 40;
-exports.HOME = 36;
-exports.END = 35;
-exports.PAGE_UP = 33;
-exports.PAGE_DOWN = 34;
-exports.ENTER = 13;
-exports.SPACE = 32;
-exports.ESCAPE = 27;
-exports.TAB = 9;
-exports.BACKSPACE = 8;
-exports.DELETE = 46;
-exports.A = 65;
-exports.B = 66;
-exports.C = 67;
-exports.D = 68;
-exports.E = 69;
-exports.F = 70;
-exports.G = 71;
-exports.H = 72;
-exports.I = 73;
-exports.J = 74;
-exports.K = 75;
-exports.L = 76;
-exports.M = 77;
-exports.N = 78;
-exports.O = 79;
-exports.P = 80;
-exports.Q = 81;
-exports.R = 82;
-exports.S = 83;
-exports.T = 84;
-exports.U = 85;
-exports.V = 86;
-exports.W = 87;
-exports.X = 88;
-exports.Y = 89;
-exports.Z = 90;
-//# sourceMappingURL=keycodes.js.map
+/*
+--------------------------------------------------------------------------
+TW Elements is an open-source UI kit of advanced components for TailwindCSS.
+Copyright © 2023 MDBootstrap.com
+
+Unless a custom, individually assigned license has been granted, this program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+In addition, a custom license may be available upon request, subject to the terms and conditions of that license. Please contact tailwind@mdbootstrap.com for more information on obtaining a custom license.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+
+If you would like to purchase a COMMERCIAL, non-AGPL license for TWE, please check out our pricing: https://tw-elements.com/pro/
+--------------------------------------------------------------------------
+*/
+
+export const LEFT_ARROW = 37;
+export const UP_ARROW = 38;
+export const RIGHT_ARROW = 39;
+export const DOWN_ARROW = 40;
+export const HOME = 36;
+export const END = 35;
+export const PAGE_UP = 33;
+export const PAGE_DOWN = 34;
+export const ENTER = 13;
+export const SPACE = 32;
+export const ESCAPE = 27;
+export const TAB = 9;
+export const BACKSPACE = 8;
+export const DELETE = 46;
+export const A = 65;
+export const B = 66;
+export const C = 67;
+export const D = 68;
+export const E = 69;
+export const F = 70;
+export const G = 71;
+export const H = 72;
+export const I = 73;
+export const J = 74;
+export const K = 75;
+export const L = 76;
+export const M = 77;
+export const N = 78;
+export const O = 79;
+export const P = 80;
+export const Q = 81;
+export const R = 82;
+export const S = 83;
+export const T = 84;
+export const U = 85;
+export const V = 86;
+export const W = 87;
+export const X = 88;
+export const Y = 89;
+export const Z = 90;

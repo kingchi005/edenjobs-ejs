@@ -1,6 +1,5 @@
 <%- include('./partials/head.ejs') %>
 <main class="m-auto">
-	scrip
 	<div>
 		<div class="lg:flex-1">
 			<div class="border bg-white p-12 max-w-7xl m-auto">
@@ -26,461 +25,182 @@
 
 					Back
 				</button>
+
 				<div
 					class="flex flex-col justify-start gap-10 rounded-md transition duration-200 md:flex-row md:justify-between md:gap-0"
 				>
-					<div class="flex h-fit justify-between items-center gap-6">
-						<div class="w-fit flex-auto flex justify-center items-center">
-							<img
-								alt="SalesPlat Recruitment logo"
-								src="<%= applicationDetails.applicant.avatar %>"
-								class="rounded-xl"
-								width="500"
-								height="500"
-								decoding="async"
-								data-nimg="1"
-								loading="lazy"
-								style="color: transparent"
-							/>
-						</div>
-						<div>
-							<div class="flex items-start justify-between">
-								<div>
-									<h2 class="text-left text-sm font-bold sm:text-base">
-										<%= applicationDetails.applicant.user?.first_name+" "+
-										applicationDetails.applicant.user?.last_name %>
-									</h2>
-									<p
-										class="flex items-center text-left text-xs text-gray-400 sm:text-sm"
-									>
-										<button type="button" class="hover:underline">
-											<%= applicationDetails.applicant.user.email %>
-										</button>
-									</p>
-								</div>
+					<div class="sm:flex justify-center items-center gap-6">
+						<div class="flex-1 mb-5 justify-center">
+							<div class="w-fit flex-1 flex justify-center items-center mb-5">
+								<img
+									alt="SalesPlat Recruitment logo"
+									src="<%= applicationDetails.applicant.avatar %>"
+									class="rounded-xl min-w-full"
+									width="350"
+									height="350"
+									decoding="async"
+									data-nimg="1"
+									loading="lazy"
+									style="color: transparent"
+								/>
 							</div>
-							<div
-								class="items mt-2 flex flex-wrap items-center gap-1 whitespace-nowrap text-[10px]"
-							>
-								<span class="text-xs">Qualifications: </span>
-								<!-- prettier-ignore -->
-								<% JSON.parse(`${applicationDetails?.applicant?.qualifications}`).map((item,i) => {%>
-								<span class="text-blue-400" id="no-of-applicant">
-									<%= item %>
-								</span>
-
-								<!-- prettier-ignore -->
-								<% if ( i < JSON.parse(`${applicationDetails?.applicant?.qualifications}`).length-1) { %>
-								<div class="text-base text-gray-400">
-									<svg
-										stroke="currentColor"
-										fill="currentColor"
-										stroke-width="0"
-										viewBox="0 0 16 16"
-										height="1em"
-										width="1em"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<path
-											d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
-										></path>
-									</svg>
+							<div class="flex-1">
+								<div class="flex items-start justify-between">
+									<div>
+										<h2 class="text-left text-2xl font-bold sm:text-xl">
+											<%= applicationDetails.applicant.user?.first_name+" "+
+											applicationDetails.applicant.user?.last_name %>
+										</h2>
+										<p
+											class="flex items-center text-left text-xs text-gray-400 sm:text-sm"
+										>
+											<button type="button" class="hover:underline">
+												<%= applicationDetails.applicant.user.email %>
+											</button>
+										</p>
+										<p
+											class="flex items-center text-left text-xs text-gray-800 sm:text-sm"
+										>
+											<%= applicationDetails.applicant.user.address %>
+										</p>
+									</div>
 								</div>
-								<% } %>
-								<!--  -->
-								<% }) %>
-								<div class="flex flex-wrap justify-start gap-5 mt-5">
-									<h4 class="text-xs">Skills</h4>
+								<div
+									class="items mt-2 flex flex-wrap items-center gap-1 whitespace-nowrap text-[10px]"
+								>
+									<span class="text-xs">Qualifications: </span>
 									<!-- prettier-ignore -->
-									<% JSON.parse(applicationDetails.applicant.skill_set).map(el=>{ %>
+									<% JSON.parse(`${applicationDetails?.applicant?.qualifications}`).map((item,i) => {%>
+									<span class="text-blue-400" id="no-of-applicant">
+										<%= item %>
+									</span>
+
+									<!-- prettier-ignore -->
+									<% if ( i < JSON.parse(`${applicationDetails?.applicant?.qualifications}`).length-1) { %>
+									<div class="text-base text-gray-400">
+										<svg
+											stroke="currentColor"
+											fill="currentColor"
+											stroke-width="0"
+											viewBox="0 0 16 16"
+											height="1em"
+											width="1em"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
+											></path>
+										</svg>
+									</div>
+									<% } %>
+									<!--  -->
+									<% }) %>
+									<div class="flex flex-wrap justify-start gap-5 mt-5">
+										<h4 class="text-xs">Skills</h4>
+										<!-- prettier-ignore -->
+										<% JSON.parse(applicationDetails.applicant.skill_set).map(el=>{ %>
                   <%- include('../components/badge',{text:el}) %>
                 <% }) %>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div>
-							<div class="flex items-start justify-between">
-								<div>
-									<h2 class="text-left text-sm font-bold sm:text-base">
-										<%= applicationDetails.applicant.user?.first_name+" "+
-										applicationDetails.applicant.user?.last_name %>
-									</h2>
-									<p
-										class="flex items-center text-left text-xs text-gray-400 sm:text-sm"
-									>
-										<button type="button" class="hover:underline">
-											<%= applicationDetails.applicant.user.email %>
-										</button>
-									</p>
-								</div>
-							</div>
-							<div
-								class="items mt-2 flex flex-wrap items-center gap-1 whitespace-nowrap text-[10px]"
-							>
-								<span class="text-xs">Qualifications: </span>
-								<!-- prettier-ignore -->
-								<% JSON.parse(`${applicationDetails?.applicant?.qualifications}`).map((item,i) => {%>
-								<span class="text-blue-400" id="no-of-applicant">
-									<%= item %>
-								</span>
-
-								<!-- prettier-ignore -->
-								<% if ( i < JSON.parse(`${applicationDetails?.applicant?.qualifications}`).length-1) { %>
-								<div class="text-base text-gray-400">
-									<svg
-										stroke="currentColor"
-										fill="currentColor"
-										stroke-width="0"
-										viewBox="0 0 16 16"
-										height="1em"
-										width="1em"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<path
-											d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
-										></path>
-									</svg>
-								</div>
-								<% } %>
-								<!--  -->
-								<% }) %>
-								<div class="flex flex-wrap justify-start gap-5 mt-5">
-									<h4 class="text-xs">Skills</h4>
-									<!-- prettier-ignore -->
-									<% JSON.parse(applicationDetails.applicant.skill_set).map(el=>{ %>
-                  <%- include('../components/badge',{text:el}) %>
-                <% }) %>
-								</div>
+						<div
+							class="border h-full w-full rounded-lg text-center bg-white p-6 mb-5 dark:bg-neutral-700 flex-1"
+						>
+							<h2 class="text-xl font-semibold mb-5">CV / Resume</h2>
+							<div class="w-full flex-1 h-full">
+								<iframe
+									id="view-cv"
+									src="<%= applicationDetails.applicant.cv_resume_url %>"
+									width="100%"
+									height="90%"
+									style="border: none"
+								></iframe>
 							</div>
 						</div>
-					</div>
-					<div class="flex flex-col items-start justify-between">
-						<div class="flex items-center justify-between space-x-2"></div>
 					</div>
 				</div>
+				<section class="p-5 mb-5">
+					<h6 class="my-4 font-semibold text-xl">Cover Letter</h6>
+					<div class="px-5"><%- applicationDetails.content %></div>
+				</section>
 				<div
 					class="mt-10 grid gap-4 rounded-lg border border-[#E6E5E5] py-6 px-4 md:grid-cols-3 md:flex-row"
 				>
 					<div class="border-r border-[#E6E5E5] px-2">
-						<p class="whitespace-nowrap text-xs">Job Location</p>
+						<p class="whitespace-nowrap text-xs">Job stability</p>
 						<p
-							class="mt-1 cursor-pointer truncate whitespace-nowrap text-sm font-medium"
+							class="mt-1 cursor-pointer truncate whitespace-nowrap text-sm font-medium capitalize"
 							aria-label="Lagos"
 						>
-							<%#= job.city_location %>
+							<%= applicationDetails.applicant.job_stability %>
 						</p>
-						<hr class="my-2" />
-						<p class="whitespace-nowrap text-xs">Minimum Qualification</p>
+						<!-- <hr class="my-2" /> -->
+						<!-- <p class="whitespace-nowrap text-xs">Skill Level</p>
 						<p class="mt-1 whitespace-nowrap text-sm font-medium">
 							Bachelor's Degree
-						</p>
+						</p> -->
 					</div>
 					<div class="border-r border-[#E6E5E5] px-2">
 						<p class="whitespace-nowrap text-xs">Experience Level</p>
 						<p
 							class="mt-1 whitespace-nowrap text-sm font-medium line-clamp-1 capitalize"
 						>
-							<%#= job.experience_level %>
+							<%= applicationDetails.applicant.skill_level %>
 						</p>
-						<hr class="my-2" />
-						<p class="whitespace-nowrap text-xs">Experience Length</p>
+						<!-- <hr class="my-2" /> -->
+						<!-- <p class="whitespace-nowrap text-xs">Experience Length</p>
 						<p class="mt-1 whitespace-nowrap text-sm font-medium">
 							<%#= job.required_experience_years %> years
-						</p>
+						</p> -->
 					</div>
 					<div class="px-2">
-						<p class="whitespace-nowrap text-xs">Employment Type</p>
+						<p class="whitespace-nowrap text-xs">Prefered Employment Type</p>
 						<p class="mt-1 whitespace-nowrap text-sm font-medium capitalize">
-							<%#= job.employment_type %> (<%#=
-							job.is_remote?"Remote":"Onsite"%>)
+							<%= applicationDetails.applicant.preferred_job_type %> (<%=
+							applicationDetails.applicant.Job_location?"Remote":"Onsite"%>)
 						</p>
-						<hr class="my-2" />
-						<p class="whitespace-nowrap text-xs">Salary</p>
+						<!-- <hr class="my-2" /> -->
+						<!-- <p class="whitespace-nowrap text-xs">Salary</p>
 						<p class="mt-1 whitespace-nowrap text-sm font-medium line-clamp-1">
 							₦<%#= job.min_salary %>
 							<span> - ₦<%#= job.max_salary %> </span>
 							<span> (<%#= job.salary_period %>) </span>
-						</p>
+						</p> -->
 					</div>
 				</div>
-				<div class="mt-5 border-b p-2 text-sm font-light">
-					<h5 class="text-[16px] font-normal">Job Summary</h5>
-					<p class="mb-4 mt-2 leading-6"><%#= job.summary %></p>
-				</div>
-				<h5 class="pt-6 text-[18px]">Job Description/Requirements</h5>
-				<div class="job-description text-base">
-					<%#- job.description_and_requirement %>
+				<div x-data="Invite" class="mx-auto">
+					<button
+						@click="sendInvite"
+						type="button"
+						class="inline-block rounded bg-primary-700 border-primary px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-primary-50 transition duration-150 ease-in-out hover:border-primary-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-primary-600 focus:border-primary-600 focus:outline-none focus:ring-0 active:border-primary-700 active:text-primary-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
+						data-te-ripple-init
+						x-text="text"
+						data-te-ripple-color="light"
+					></button>
 				</div>
 			</div>
 		</div>
 	</div>
 </main>
-<pre class="whitespace-pre-wrap w-full flex-wrap">
-  <%#- JSON.stringify(applicationDetails,null,2) %>
-</pre>
 
 <%- include('./partials/footer.ejs') %>
-<!-- <script>
-	const personDetailForm = document.querySelector("#personal-details");
-	const avaterInput = document.querySelector("input#file-input-avater");
-	const avaterImg = document.querySelector("#avater");
-	const saveAvatarCont = document.querySelector("#save-avater-container");
-	const cvInput = document.querySelector("input#file-input-cv");
-	/**@type {HTMLIFrameElement} */
-	const cvResumeView = document.querySelector("#view-cv");
-	/**@type {HTMLButtonElement} */
-	const saveCvBtn = document.querySelector("#save-cv-btn");
 
-	avaterInput.addEventListener("change", (e) => {
-		const formData = new FormData(document.querySelector("form#avatar-form"));
-
-		const reader = new FileReader();
-
-		reader.onload = function (e) {
-			avaterImg.setAttribute("src", reader.result);
-			saveAvatarCont.innerHTML = `<button
-						type="button" id="save-avatar-btn"
-						data-te-ripple-init
-						data-te-ripple-color="light"
-						class="flex rounded bg-primary px-4 pb-[5px] pt-[6px] font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							fill="currentColor"
-							class="mr-1 h-4 w-4"
-						>
-							<path
-								fill-rule="evenodd"
-								d="M19.5 21a3 3 0 003-3V9a3 3 0 00-3-3h-5.379a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H4.5a3 3 0 00-3 3v12a3 3 0 003 3h15zm-6.75-10.5a.75.75 0 00-1.5 0v4.19l-1.72-1.72a.75.75 0 00-1.06 1.06l3 3a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V10.5z"
-								clip-rule="evenodd"
-							/>
-						</svg>
-						Save
-					</button>`;
-
-			document
-				.querySelector("#save-avatar-btn")
-				.addEventListener("click", () => {
-					handleAvatarUpload(formData);
-				});
-		};
-		// files[0]
-		reader.readAsDataURL(formData.get("avatar"));
-	});
-
-	cvInput.addEventListener("change", (e) => {
-		const formData = new FormData(document.querySelector("form#cv-form"));
-
-		const reader = new FileReader();
-
-		reader.onload = function (e) {
-			cvResumeView.setAttribute("src", reader.result);
-			saveCvBtn.classList.remove("hidden");
-			saveCvBtn.classList.add("flex");
-
-			saveCvBtn.addEventListener("click", () => {
-				handleCvUpload(formData);
-			});
-		};
-		// files[0]
-		reader.readAsDataURL(formData.get("cv_resume"));
-	});
-
-	personDetailForm.addEventListener("submit", async (e) => {
-		e.preventDefault();
-		const url = "/api/applicant/personal-details";
-
-		const formData = new FormData(e.target);
-		// for (const key in data) {
-		// 	formData.append(key, data[key]);
-		// }
-
-		const res = await (
-			await fetch(url, {
-				method: "put",
-				headers: {},
-				body: formData,
-			})
-		).json();
-
-		console.log(res);
-		if (!res.ok) {
-			showToast({ duration: 5000, text: res.error.message, type: "error" });
-			return;
-		}
-		showToast({ duration: 5000, text: res.message, type: "success" });
-	});
-
-	async function handleCvUpload(formData) {
-		const url = "/api/applicant/cv-resume";
-		console.log("Avatar:", formData, "File", formData.get("cv_resume"));
-		const res = await (
-			await fetch(url, {
-				method: "put",
-				headers: {},
-				body: formData,
-			})
-		).json();
-
-		console.log(res);
-		if (!res.ok) {
-			showToast({ duration: 5000, text: res.error.message, type: "error" });
-			return;
-		}
-		showToast({ duration: 5000, text: res.message, type: "success" });
-	}
-	async function handleAvatarUpload(formData) {
-		const url = "/api/applicant/avatar";
-		console.log("Avatar:", formData, "File", formData.get("file"));
-		const res = await (
-			await fetch(url, {
-				method: "put",
-				headers: {},
-				body: formData,
-			})
-		).json();
-
-		console.log(res);
-		if (!res.ok) {
-			showToast({ duration: 5000, text: res.error.message, type: "error" });
-			return;
-		}
-		showToast({ duration: 5000, text: res.message, type: "success" });
-	}
-</script>
 <script>
-	const workDetailsForm = document.querySelector("#work-details");
+	document.addEventListener("alpine:init", () => {
+		Alpine.data("Invite", () => ({
+			text: "Invite for interview",
+			async sendInvite() {
+				const url = "/api/job-application/invite/<%= applicationDetails.id %>";
+				const res = await (await fetch(url, { method: "put" })).json();
 
-	// console.log(JSON.parse(`<%#- user.applicant_details.qualifications %>`));
-	const qualSelectInstance = te.Select.getInstance(
-		document.querySelector("#qualifications-sel")
-	);
-	qualSelectInstance.setValue(
-		JSON.parse(`<%#- user.applicant_details.qualifications %>`)
-	);
-	console.log(JSON.parse(`<%#- user.applicant_details.qualifications %>`));
-	const jobFieldSelectInstance = te.Select.getInstance(
-		document.querySelector("#job-field-sel")
-	);
-	jobFieldSelectInstance.setValue("<%#= user.applicant_details.job_field %>");
-	// console.log("<%#= user.applicant_details.job_field %>");
-
-	const skillLevelSelectInstance = te.Select.getInstance(
-		document.querySelector("#skill-level-sel")
-	);
-	skillLevelSelectInstance.setValue(
-		"<%#= user.applicant_details.skill_level %>"
-	);
-	// console.log("<%#= user.applicant_details.skill_level %>");
-
-	const jobTypeSelectInstance = te.Select.getInstance(
-		document.querySelector("#job-type-sel")
-	);
-	jobTypeSelectInstance.setValue(
-		"<%#= user.applicant_details.preferred_job_type %>"
-	);
-	// console.log("<%#= user.applicant_details.job_field %>");
-
-	const workScheduleSelectInstance = te.Select.getInstance(
-		document.querySelector("#work-schedule-sel")
-	);
-	workScheduleSelectInstance.setValue(
-		"<%#= user.applicant_details.work_schedule %>"
-	);
-	// console.log("<%#= user.applicant_details.job_field %>");
-
-	const jobLocationSelectInstance = te.Select.getInstance(
-		document.querySelector("#job-location-sel")
-	);
-	jobLocationSelectInstance.setValue(
-		"<%#= user.applicant_details.location_type %>"
-	);
-	// console.log("<%#= user.applicant_details.job_field %>");
-
-	const chipsInitial = document.querySelector("#skil-set");
-
-	const chipsInitialInstance = new te.ChipsInput(chipsInitial, {
-		initialValues: JSON.parse(`<%#- user.applicant_details.skill_set %>`).map(
-			(it) => ({ tag: it })
-		),
-		labelText: "Skill set",
+				if (res.ok) {
+					showToast({ type: "success", text: res.message });
+				} else {
+					showToast({ type: "error", text: res.error.message });
+				}
+			},
+		}));
 	});
-
-	// console.log(JSON.parse(`<%#- user.applicant_details.skill_set %>`));
-
-	workDetailsForm.addEventListener("submit", (e) => {
-		e.preventDefault();
-		console.log("not submit");
-	});
-
-	workDetailsForm
-		.querySelector("button[type='save']")
-		.addEventListener("click", async (e) => {
-			const url = "/api/applicant/work-details";
-
-			const skills = [];
-			document
-				.querySelectorAll("#skil-set span[data-te-chip-text]")
-				.forEach((e) => skills.push(e.textContent));
-
-			const data = {
-				job_field: jobFieldSelectInstance.value,
-				qualifications: JSON.stringify(qualSelectInstance.value),
-				skill_set: JSON.stringify(skills),
-				skill_level: skillLevelSelectInstance.value,
-			};
-			console.log(data);
-			const formData = new FormData();
-			for (const key in data) {
-				formData.append(key, data[key]);
-			}
-
-			// console.log(formData);
-
-			const res = await (
-				await fetch(url, {
-					method: "put",
-					headers: {},
-					body: formData,
-				})
-			).json();
-
-			console.log(res);
-			if (!res.ok) {
-				showToast({ duration: 5000, text: res.error.message, type: "error" });
-				return;
-			}
-			showToast({ duration: 5000, text: res.message, type: "success" });
-		});
-
-	document
-		.querySelector("#save-job-pref")
-		.addEventListener("click", async (e) => {
-			const url = "/api/applicant/job-preference";
-			const data = {
-				Job_location: jobLocationSelectInstance.value,
-				work_schedule: workScheduleSelectInstance.value,
-				job_type: jobTypeSelectInstance.value,
-			};
-			const formData = new FormData();
-			for (const key in data) {
-				formData.append(key, data[key]);
-			}
-
-			const res = await (
-				await fetch(url, {
-					method: "put",
-					headers: {},
-					body: formData,
-				})
-			).json();
-
-			console.log(res);
-			if (!res.ok) {
-				showToast({ duration: 5000, text: res.error.message, type: "error" });
-				return;
-			}
-			showToast({ duration: 5000, text: res.message, type: "success" });
-		});
-</script> -->
+</script>
