@@ -111,7 +111,9 @@
 				class="block rounded-lg mb-5 border bg-white p-6 dark:bg-neutral-700 flex-1"
 			>
 				<h2 class="text-xl font-semibold mb-5">Recent Job Application</h2>
+				<% if (employerDetails?.jobs?.[0]) { %>
 				<div>
+					<!--  -->
 					<% employerDetails?.jobs.map(job=>{ %>
 					<a href="#!" class="cursor-pointer">
 						<div
@@ -147,18 +149,30 @@
 						</div>
 					</a>
 					<% }) %>
+					<!--  -->
 				</div>
 				<div x-data>
 					<h2 class="text-lg font-semibold mb-5">Applications</h2>
 					<div id="datatable" data-te-clickable-rows="true"></div>
 				</div>
+
 				<div class="flex justify-end">
 					<a
-						href="/dashboard/applications"
+						href="/recruiter/applications"
 						class="mr-3 inline-block rounded px-6 pb-2 pt-2.5 text-base font-medium justify-end leading-normal text-primary transition duration-150 ease-in-out hover:bg-neutral-100 hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 motion-reduce:transition-none"
 						>See more ...</a
 					>
 				</div>
+				<% } else {%>
+				<h3 class="text-xl">You have not posted any job</h3>
+				<div class="flex justify-end">
+					<a
+						href="/recruiter/create-job"
+						class="mr-3 inline-block rounded px-6 pb-2 pt-2.5 text-base font-medium justify-end leading-normal text-primary transition duration-150 ease-in-out hover:bg-neutral-100 hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 motion-reduce:transition-none"
+						>Post a job</a
+					>
+				</div>
+				<% } %>
 			</div>
 		</div>
 	</section>
@@ -227,7 +241,7 @@
 		}));
 	});
 </script>
-<%- include('./partials/footer.ejs') %>
+<%- include('./partials/footer.ejs') %> <% if (employerDetails?.jobs?.[0]) { %>
 
 <script>
 	const _applicationsTable = document.getElementById("datatable");
@@ -284,3 +298,4 @@
 			// console.log(data);
 		});
 </script>
+<% } %>
