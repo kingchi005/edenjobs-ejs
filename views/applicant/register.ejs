@@ -238,8 +238,6 @@
 							<div
 								class="relative mb-3 flex-auto"
 								id="date_of_birth-wrapper"
-								data-te-datepicker-init
-								data-te-inline="true"
 								data-te-input-wrapper-init
 								data-te-validate="input"
 								data-te-validation-ruleset="isRequired|isDate"
@@ -247,7 +245,7 @@
 								data-te-valid-feedback=" "
 							>
 								<input
-									type="text"
+									type="date"
 									id="date_of_birth"
 									class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
 									placeholder="Select a date"
@@ -908,11 +906,11 @@
 </script>
 <%- include('../partials/footer.ejs',{footer:false}) %>
 <script>
-	const datepickerWithLimits = document.getElementById("date_of_birth-wrapper");
-	const datepickerWithLimitsInstance = new te.Datepicker(datepickerWithLimits, {
-		// min: new Date("1/1/2022"),
-		max: new Date("1/1/2013"),
-	});
+	// const datepickerWithLimits = document.getElementById("date_of_birth-wrapper");
+	// const datepickerWithLimitsInstance = new te.Datepicker(datepickerWithLimits, {
+	// 	// min: new Date("1/1/2022"),
+	// 	max: new Date("1/1/2013"),
+	// });
 	const chipsInitial = document.querySelector("#skil-set");
 
 	const chipsInitialInstance = new te.ChipsInput(chipsInitial, {
